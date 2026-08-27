@@ -1,0 +1,20 @@
+{
+  "name": "taolivetuongtac-overlay-local",
+  "version": "1.0.0",
+  "description": "Local runner for TaoLiveTuongTac Overlay",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "serve": "node server.js"
+  },
+  "keywords": [
+    "tiktok-live",
+    "overlay",
+    "taolivetuongtac"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "socket.io": "^4.8.3"
+  }
+}

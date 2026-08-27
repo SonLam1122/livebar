@@ -1,0 +1,624 @@
+{
+  "id": "cmta2zkpq00aokx08uyc7iys2",
+  "name": "Live Bar",
+  "gameType": "live_bar",
+  "config": {
+    "gameType": "live_bar",
+    "teams": [
+      {
+        "name": "Sàn nhảy",
+        "color": "#a855f7",
+        "emoji": "🍸",
+        "backgroundUrl": ""
+      }
+    ],
+    "scene": "neon_club",
+    "maxGuests": 60,
+    "spotlightSeconds": 5,
+    "spotlightOnJoin": true,
+    "strollSeconds": 9,
+    "jumpSeconds": 4,
+    "jumpHeight": 1.2,
+    "partySeconds": 7,
+    "vipSeconds": 0,
+    "vipSkins": [],
+    "vipSkinLibrary": [
+      {
+        "id": "cmsla49vr001inu16e4xmcvfl",
+        "label": "Yêu tinh Dobby",
+        "imageUrl": "/bar/vips/dobby.gif"
+      },
+      {
+        "id": "cmsla49vr001jnu16e70768ho",
+        "label": "Anh áo khoác xám",
+        "imageUrl": "/bar/vips/anh-ao-xam.gif"
+      },
+      {
+        "id": "cmsla49vr001knu16sqxovgwf",
+        "label": "Vũ công áo xanh",
+        "imageUrl": "/bar/vips/vu-cong-xanh.gif"
+      },
+      {
+        "id": "cmsla49vr001lnu16ezi08gmm",
+        "label": "Lính hồng mặt nạ",
+        "imageUrl": "/bar/vips/linh-hong.gif"
+      },
+      {
+        "id": "cmsla49vr001mnu16kayve8kd",
+        "label": "Người xanh lá",
+        "imageUrl": "/bar/vips/nguoi-xanh-la.gif"
+      },
+      {
+        "id": "cmsla49vr001nnu1636bmu8qd",
+        "label": "Thầy hiệu trưởng",
+        "imageUrl": "/bar/vips/thay-hieu-truong.gif"
+      },
+      {
+        "id": "cmsla49vr001onu16ove02cw4",
+        "label": "Gà cao su",
+        "imageUrl": "/bar/vips/ga-cao-su.gif"
+      },
+      {
+        "id": "cmsla49vr001pnu164xcul2jj",
+        "label": "Anh vest xanh",
+        "imageUrl": "/bar/vips/anh-vest-xanh.gif"
+      }
+    ],
+    "skinSeconds": 0,
+    "skins": [],
+    "skinLibrary": [
+      {
+        "id": "cmsla49vr000hnu16cqd59yt1",
+        "label": "Vũ công 1",
+        "imageUrl": "/bar/dancers/1.gif"
+      },
+      {
+        "id": "cmsla49vr000inu16kdxj8nei",
+        "label": "Vũ công 2",
+        "imageUrl": "/bar/dancers/2.gif"
+      },
+      {
+        "id": "cmsla49vr000jnu16h2tvva65",
+        "label": "Vũ công 3",
+        "imageUrl": "/bar/dancers/3.gif"
+      },
+      {
+        "id": "cmsla49vr000knu1637ny3n7g",
+        "label": "Vũ công 4",
+        "imageUrl": "/bar/dancers/4.gif"
+      },
+      {
+        "id": "cmsla49vr000lnu16sby27mpk",
+        "label": "Vũ công 5",
+        "imageUrl": "/bar/dancers/5.gif"
+      },
+      {
+        "id": "cmsla49vr000mnu16tkliw8cw",
+        "label": "Vũ công 6",
+        "imageUrl": "/bar/dancers/6.gif"
+      },
+      {
+        "id": "cmsla49vr000nnu16g54gnz18",
+        "label": "Vũ công 7",
+        "imageUrl": "/bar/dancers/7.gif"
+      },
+      {
+        "id": "cmsla49vr000onu16ud7czc4n",
+        "label": "Vũ công 8",
+        "imageUrl": "/bar/dancers/8.gif"
+      },
+      {
+        "id": "cmsla49vr000pnu16vwk7f6ym",
+        "label": "Nhảy dây",
+        "imageUrl": "/bar/dancers/nhay-day.gif"
+      },
+      {
+        "id": "cmsla49vr000qnu16f9pd10yi",
+        "label": "Váy đỏ nhún nhảy",
+        "imageUrl": "/bar/dancers/vay-do-nhun.gif"
+      },
+      {
+        "id": "cmsla49vr000rnu16jpi8o2pe",
+        "label": "Ôm má nhõng nhẽo",
+        "imageUrl": "/bar/dancers/om-ma.gif"
+      },
+      {
+        "id": "cmsla49vr000snu165rhh2xvp",
+        "label": "Chơi đàn hạc",
+        "imageUrl": "/bar/dancers/dan-hac.gif"
+      },
+      {
+        "id": "cmsla49vr000tnu160r18wzf7",
+        "label": "Váy đỏ dang tay",
+        "imageUrl": "/bar/dancers/vay-do-dang-tay.gif"
+      },
+      {
+        "id": "cmsla49vr000unu166veoku0v",
+        "label": "Cưỡi heo",
+        "imageUrl": "/bar/dancers/cuoi-heo.gif"
+      },
+      {
+        "id": "cmsla49vr000vnu16k2xjc175",
+        "label": "Quần đỏ quẩy",
+        "imageUrl": "/bar/dancers/quan-do-quay.gif"
+      },
+      {
+        "id": "cmsla49vr000wnu16pb5oa0mf",
+        "label": "Múa quạt",
+        "imageUrl": "/bar/dancers/mua-quat.gif"
+      },
+      {
+        "id": "cmsla49vr000xnu16m5ii2s85",
+        "label": "Mũ cao bồi",
+        "imageUrl": "/bar/dancers/mu-cao-boi.gif"
+      },
+      {
+        "id": "cmsla49vr000ynu16nxcwjj26",
+        "label": "Cười toe",
+        "imageUrl": "/bar/dancers/cuoi-toe.gif"
+      },
+      {
+        "id": "cmsla49vr000znu169p17k48t",
+        "label": "Quẩy tung tay",
+        "imageUrl": "/bar/dancers/quay-tung-tay.gif"
+      },
+      {
+        "id": "cmsla49vr0010nu16wyyimf7y",
+        "label": "Quay lưng lắc",
+        "imageUrl": "/bar/dancers/quay-lung.gif"
+      },
+      {
+        "id": "cmsla49vr0011nu1677ziox1i",
+        "label": "Áo hồng quần đỏ",
+        "imageUrl": "/bar/dancers/ao-hong.gif"
+      },
+      {
+        "id": "cmsla49vr0012nu16o79gto2k",
+        "label": "Chống hông nhún",
+        "imageUrl": "/bar/dancers/chong-hong.gif"
+      },
+      {
+        "id": "cmsla49vr0013nu16t0rhrg6f",
+        "label": "Dang tay xoay",
+        "imageUrl": "/bar/dancers/dang-tay-xoay.gif"
+      },
+      {
+        "id": "cmsla49vr0014nu16z2fuwgeh",
+        "label": "Váy tutu hồng",
+        "imageUrl": "/bar/dancers/vay-tutu.gif"
+      },
+      {
+        "id": "cmsla49vr0015nu16fnsjor9p",
+        "label": "Đứng ngơ",
+        "imageUrl": "/bar/dancers/dung-ngo.gif"
+      },
+      {
+        "id": "cmsla49vr0016nu16u0esve4p",
+        "label": "Chỉ tay",
+        "imageUrl": "/bar/dancers/chi-tay.gif"
+      },
+      {
+        "id": "cmsla49vr0017nu16wyimh0de",
+        "label": "Hai bông hoa",
+        "imageUrl": "/bar/dancers/hai-bong-hoa.gif"
+      },
+      {
+        "id": "cmsla49vr0018nu160ek5g0us",
+        "label": "Ba lê xoay",
+        "imageUrl": "/bar/dancers/ba-le-xoay.gif"
+      },
+      {
+        "id": "cmsla49vr0019nu16tnpos779",
+        "label": "Quần hoa",
+        "imageUrl": "/bar/dancers/quan-hoa.gif"
+      },
+      {
+        "id": "cmsla49vr001anu16r1d2ayan",
+        "label": "Bắt chéo tay",
+        "imageUrl": "/bar/dancers/bat-cheo-tay.gif"
+      },
+      {
+        "id": "cmsla49vr001bnu16tfeo9jxl",
+        "label": "Nhún nhẹ",
+        "imageUrl": "/bar/dancers/nhun-nhe.gif"
+      },
+      {
+        "id": "cmsla49vr001cnu16yb4wcten",
+        "label": "Mặt bự",
+        "imageUrl": "/bar/dancers/mat-bu.gif"
+      },
+      {
+        "id": "cmsla49vr001dnu16b7hsdf7r",
+        "label": "Vẫy tay",
+        "imageUrl": "/bar/dancers/vay-tay.gif"
+      },
+      {
+        "id": "cmsla49vr001enu1677qun785",
+        "label": "Lắc mông",
+        "imageUrl": "/bar/dancers/lac-mong.gif"
+      },
+      {
+        "id": "cmsla49vr001fnu16nck3d7ls",
+        "label": "Nhăn mặt quẩy",
+        "imageUrl": "/bar/dancers/nhan-mat.gif"
+      },
+      {
+        "id": "cmsla49vr001gnu16duxtojep",
+        "label": "Lè lưỡi bay",
+        "imageUrl": "/bar/dancers/le-luoi-bay.gif"
+      },
+      {
+        "id": "cmsla49vr001hnu1651eg01hr",
+        "label": "Tuần lộc Noel",
+        "imageUrl": "/bar/dancers/tuan-loc.gif"
+      }
+    ],
+    "wingSeconds": 0,
+    "wings": [],
+    "wingLibrary": [
+      {
+        "id": "cmsyjn6yx000hdyd8h95830ov",
+        "label": "Cánh bạch kim",
+        "imageUrl": "/bar/wings/nguoi-dan-dau-trai.webp",
+        "secondaryImageUrl": "/bar/wings/nguoi-dan-dau-phai.webp"
+      },
+      {
+        "id": "cmsyjn6yx000idyd8tjcyajqw",
+        "label": "Cánh rồng vàng",
+        "imageUrl": "/bar/wings/ong-hoang-trai.webp",
+        "secondaryImageUrl": "/bar/wings/ong-hoang-phai.webp"
+      },
+      {
+        "id": "cmsyjn6yx000jdyd8k7vtdtm8",
+        "label": "Cánh lục bảo",
+        "imageUrl": "/bar/wings/dai-gia-trai.webp",
+        "secondaryImageUrl": "/bar/wings/dai-gia-phai.webp"
+      },
+      {
+        "id": "cmsyjn6yx000kdyd8tx8lgozj",
+        "label": "Cánh phượng hồng",
+        "imageUrl": "/bar/wings/ba-chua-trai.webp",
+        "secondaryImageUrl": "/bar/wings/ba-chua-phai.webp"
+      },
+      {
+        "id": "cmsyjn6yx000ldyd8h3letr6i",
+        "label": "Cánh thuyền trưởng",
+        "imageUrl": "/bar/wings/thuyen-truong-trai.webp",
+        "secondaryImageUrl": "/bar/wings/thuyen-truong-phai.webp"
+      },
+      {
+        "id": "cmsyjn6yx000mdyd8hkzgid0h",
+        "label": "Cánh thiên thần",
+        "imageUrl": "/bar/wings/tha-thinh-trai.webp",
+        "secondaryImageUrl": "/bar/wings/tha-thinh-phai.webp"
+      }
+    ],
+    "badgeSeconds": 0,
+    "badges": [],
+    "badgeLibrary": [
+      {
+        "id": "cmsla49vr001qnu16lzo2spf8",
+        "label": "Người dẫn đầu",
+        "imageUrl": "/bar/badges/nguoi-dan-dau.webp"
+      },
+      {
+        "id": "cmsla49vr001rnu16wstb5qhf",
+        "label": "Đại gia",
+        "imageUrl": "/bar/badges/dai-gia.webp"
+      },
+      {
+        "id": "cmsla49vr001snu16hcwqtrjt",
+        "label": "Ông hoàng sàn nhảy",
+        "imageUrl": "/bar/badges/ong-hoang.webp"
+      },
+      {
+        "id": "cmsla49vr001tnu16viiab444",
+        "label": "Bà chúa vũ trường",
+        "imageUrl": "/bar/badges/ba-chua.webp"
+      },
+      {
+        "id": "cmsla49vr001unu16ws5ulamr",
+        "label": "Thuyền trưởng",
+        "imageUrl": "/bar/badges/thuyen-truong.webp"
+      },
+      {
+        "id": "cmsla49vr001vnu16l6wfgx7w",
+        "label": "Thả thính",
+        "imageUrl": "/bar/badges/tha-thinh.webp"
+      }
+    ],
+    "idleLeaveMinutes": 10,
+    "djScreenUrl": "",
+    "djScreen": "visualizer",
+    "djScreenAudio": false,
+    "djScreenVolume": 0.6,
+    "cameraSway": true,
+    "cameraOrbitSeconds": 26,
+    "cameraZoom": 1.55,
+    "lightShow": true,
+    "bgmUrl": "",
+    "bgmVolume": 0.45,
+    "bgmDuckVolume": 0.12,
+    "mappings": [
+      {
+        "trigger": "comment_any",
+        "action": "join_bar",
+        "points": 0
+      },
+      {
+        "trigger": "gift_any",
+        "action": "join_bar",
+        "points": 0
+      },
+      {
+        "trigger": "like",
+        "action": "join_bar",
+        "points": 0
+      },
+      {
+        "trigger": "follow",
+        "action": "join_bar",
+        "points": 0
+      },
+      {
+        "trigger": "share",
+        "action": "join_bar",
+        "points": 0
+      },
+      {
+        "trigger": "gift_any",
+        "action": "spotlight",
+        "points": 0
+      },
+      {
+        "trigger": "gift_any",
+        "action": "contribute",
+        "points": 1
+      }
+    ],
+    "roundSeconds": 3600,
+    "showLeaderboard": true,
+    "theme": {
+      "preset": "neon",
+      "accent": "#22d3ee",
+      "accentAlt": "#a855f7",
+      "textColor": "#ffffff",
+      "fontFamily": "roboto",
+      "panelOpacity": 0.55,
+      "scale": 1,
+      "logoUrl": null,
+      "backgroundUrl": null,
+      "backgroundColor": "",
+      "backgroundOpacity": 1,
+      "showToasts": true,
+      "toastPosition": "bottom-left",
+      "leaderboardPosition": "top-right",
+      "leaderboardSize": 5,
+      "giftGuideSize": 6,
+      "giftGuideTitle": "",
+      "giftGuideStyle": "panel",
+      "chatGuideSize": 6,
+      "chatGuideTitle": "",
+      "chatGuideStyle": "panel",
+      "layout": {
+        "leaderboard": {
+          "x": 97,
+          "y": 88.45,
+          "alignX": "end",
+          "alignY": "end",
+          "scale": 1,
+          "hidden": false
+        },
+        "clock": {
+          "x": 50,
+          "y": 3,
+          "alignX": "center",
+          "alignY": "start",
+          "scale": 1,
+          "hidden": false
+        },
+        "winner": {
+          "x": 50,
+          "y": 42,
+          "alignX": "center",
+          "alignY": "center",
+          "scale": 1,
+          "hidden": false
+        },
+        "toast": {
+          "x": 3,
+          "y": 97,
+          "alignX": "start",
+          "alignY": "end",
+          "scale": 1,
+          "hidden": false
+        },
+        "goal": {
+          "x": 50,
+          "y": 15,
+          "alignX": "center",
+          "alignY": "start",
+          "scale": 1,
+          "hidden": true
+        },
+        "barCrowd": {
+          "x": 3,
+          "y": 3,
+          "alignX": "start",
+          "alignY": "start",
+          "scale": 1,
+          "hidden": false
+        },
+        "spotlightQueue": {
+          "x": 3,
+          "y": 12,
+          "alignX": "start",
+          "alignY": "start",
+          "scale": 1,
+          "hidden": false
+        },
+        "fishBoard": {
+          "x": 97,
+          "y": 88.45,
+          "alignX": "end",
+          "alignY": "end",
+          "scale": 1,
+          "hidden": false
+        },
+        "fishCount": {
+          "x": 3,
+          "y": 3,
+          "alignX": "start",
+          "alignY": "start",
+          "scale": 1,
+          "hidden": false
+        },
+        "sharkCountdown": {
+          "x": 50,
+          "y": 8,
+          "alignX": "center",
+          "alignY": "start",
+          "scale": 1,
+          "hidden": false
+        },
+        "armyRope": {
+          "x": 50,
+          "y": 12,
+          "alignX": "center",
+          "alignY": "start",
+          "scale": 1,
+          "hidden": false
+        },
+        "armyScore": {
+          "x": 50,
+          "y": 3,
+          "alignX": "center",
+          "alignY": "start",
+          "scale": 1,
+          "hidden": false
+        },
+        "sawBoard": {
+          "x": 97,
+          "y": 88.45,
+          "alignX": "end",
+          "alignY": "end",
+          "scale": 1,
+          "hidden": false
+        },
+        "sawPodium": {
+          "x": 50,
+          "y": 40,
+          "alignX": "center",
+          "alignY": "center",
+          "scale": 1,
+          "hidden": false
+        },
+        "voteBoard": {
+          "x": 97,
+          "y": 88.45,
+          "alignX": "end",
+          "alignY": "end",
+          "scale": 1,
+          "hidden": false
+        },
+        "mcMessage": {
+          "x": 50,
+          "y": 25,
+          "alignX": "center",
+          "alignY": "center",
+          "scale": 1,
+          "hidden": false
+        }
+      },
+      "texts": [],
+      "accentColor": "#22d3ee",
+      "transparent": true
+    },
+    "sound": {
+      "enabled": true,
+      "volume": 0.6,
+      "pack": "arcade",
+      "muted": [],
+      "custom": {}
+    },
+    "alerts": {
+      "enabled": true,
+      "minDiamonds": 50,
+      "showFollow": true,
+      "showShare": true,
+      "durationSeconds": 5,
+      "tts": {
+        "enabled": false,
+        "lang": "vi-VN",
+        "voiceId": "",
+        "volume": 1,
+        "rate": 1,
+        "minDiamonds": 10,
+        "giftTemplate": "Cảm ơn {name} đã tặng {gift}",
+        "readFollow": false,
+        "followTemplate": "{name} vừa theo dõi kênh"
+      }
+    },
+    "goal": {
+      "enabled": false,
+      "label": "Mục tiêu kim cương",
+      "target": 10000,
+      "scope": "session"
+    },
+    "uiTexts": {},
+    "rules": [
+      {
+        "trigger": "gift_any",
+        "action": "join_bar",
+        "points": 0,
+        "enabled": true
+      },
+      {
+        "trigger": "gift_any",
+        "action": "spotlight",
+        "points": 0,
+        "enabled": true
+      },
+      {
+        "trigger": "gift_any",
+        "action": "contribute",
+        "points": 1,
+        "enabled": true
+      },
+      {
+        "trigger": "like",
+        "action": "join_bar",
+        "points": 0,
+        "enabled": true
+      },
+      {
+        "trigger": "follow",
+        "action": "join_bar",
+        "points": 0,
+        "enabled": true
+      },
+      {
+        "trigger": "share",
+        "action": "join_bar",
+        "points": 0,
+        "enabled": true
+      },
+      {
+        "trigger": "chat_any",
+        "action": "join_bar",
+        "points": 0,
+        "enabled": true
+      }
+    ],
+    "idleMinutes": 10,
+    "cameraIdleOrbit": true,
+    "showDjScreen": true,
+    "zoom": 1.55,
+    "orbitSeconds": 20
+  },
+  "token": "SSsss9xEp6B5GGMf0e1xHyFl56Tj2fqI",
+  "overlayUrl": "https://overlay.taolivetuongtac.com/?token=SSsss9xEp6B5GGMf0e1xHyFl56Tj2fqI",
+  "tiktokUsername": null,
+  "enabled": true,
+  "createdAt": "2026-08-26T12:39:38.655Z"
+}

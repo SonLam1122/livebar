@@ -1,0 +1,2966 @@
+[
+  {
+    "id": "cmta2zkpq00aokx08uyc7iys2",
+    "name": "Live Bar",
+    "gameType": "live_bar",
+    "config": {
+      "gameType": "live_bar",
+      "teams": [
+        {
+          "name": "Sàn nhảy",
+          "color": "#a855f7",
+          "emoji": "🍸",
+          "backgroundUrl": ""
+        }
+      ],
+      "scene": "club",
+      "maxGuests": 60,
+      "spotlightSeconds": 5,
+      "spotlightOnJoin": true,
+      "strollSeconds": 9,
+      "jumpSeconds": 4,
+      "jumpHeight": 1.2,
+      "partySeconds": 7,
+      "vipSeconds": 0,
+      "vipSkins": [],
+      "vipSkinLibrary": [
+        {
+          "id": "cmsla49vr001inu16e4xmcvfl",
+          "label": "Yêu tinh Dobby",
+          "imageUrl": "/bar/vips/dobby.gif"
+        },
+        {
+          "id": "cmsla49vr001jnu16e70768ho",
+          "label": "Anh áo khoác xám",
+          "imageUrl": "/bar/vips/anh-ao-xam.gif"
+        },
+        {
+          "id": "cmsla49vr001knu16sqxovgwf",
+          "label": "Vũ công áo xanh",
+          "imageUrl": "/bar/vips/vu-cong-xanh.gif"
+        },
+        {
+          "id": "cmsla49vr001lnu16ezi08gmm",
+          "label": "Lính hồng mặt nạ",
+          "imageUrl": "/bar/vips/linh-hong.gif"
+        },
+        {
+          "id": "cmsla49vr001mnu16kayve8kd",
+          "label": "Người xanh lá",
+          "imageUrl": "/bar/vips/nguoi-xanh-la.gif"
+        },
+        {
+          "id": "cmsla49vr001nnu1636bmu8qd",
+          "label": "Thầy hiệu trưởng",
+          "imageUrl": "/bar/vips/thay-hieu-truong.gif"
+        },
+        {
+          "id": "cmsla49vr001onu16ove02cw4",
+          "label": "Gà cao su",
+          "imageUrl": "/bar/vips/ga-cao-su.gif"
+        },
+        {
+          "id": "cmsla49vr001pnu164xcul2jj",
+          "label": "Anh vest xanh",
+          "imageUrl": "/bar/vips/anh-vest-xanh.gif"
+        }
+      ],
+      "skinSeconds": 0,
+      "skins": [],
+      "skinLibrary": [
+        {
+          "id": "cmsla49vr000hnu16cqd59yt1",
+          "label": "Vũ công 1",
+          "imageUrl": "/bar/dancers/1.gif"
+        },
+        {
+          "id": "cmsla49vr000inu16kdxj8nei",
+          "label": "Vũ công 2",
+          "imageUrl": "/bar/dancers/2.gif"
+        },
+        {
+          "id": "cmsla49vr000jnu16h2tvva65",
+          "label": "Vũ công 3",
+          "imageUrl": "/bar/dancers/3.gif"
+        },
+        {
+          "id": "cmsla49vr000knu1637ny3n7g",
+          "label": "Vũ công 4",
+          "imageUrl": "/bar/dancers/4.gif"
+        },
+        {
+          "id": "cmsla49vr000lnu16sby27mpk",
+          "label": "Vũ công 5",
+          "imageUrl": "/bar/dancers/5.gif"
+        },
+        {
+          "id": "cmsla49vr000mnu16tkliw8cw",
+          "label": "Vũ công 6",
+          "imageUrl": "/bar/dancers/6.gif"
+        },
+        {
+          "id": "cmsla49vr000nnu16g54gnz18",
+          "label": "Vũ công 7",
+          "imageUrl": "/bar/dancers/7.gif"
+        },
+        {
+          "id": "cmsla49vr000onu16ud7czc4n",
+          "label": "Vũ công 8",
+          "imageUrl": "/bar/dancers/8.gif"
+        },
+        {
+          "id": "cmsla49vr000pnu16vwk7f6ym",
+          "label": "Nhảy dây",
+          "imageUrl": "/bar/dancers/nhay-day.gif"
+        },
+        {
+          "id": "cmsla49vr000qnu16f9pd10yi",
+          "label": "Váy đỏ nhún nhảy",
+          "imageUrl": "/bar/dancers/vay-do-nhun.gif"
+        },
+        {
+          "id": "cmsla49vr000rnu16jpi8o2pe",
+          "label": "Ôm má nhõng nhẽo",
+          "imageUrl": "/bar/dancers/om-ma.gif"
+        },
+        {
+          "id": "cmsla49vr000snu165rhh2xvp",
+          "label": "Chơi đàn hạc",
+          "imageUrl": "/bar/dancers/dan-hac.gif"
+        },
+        {
+          "id": "cmsla49vr000tnu160r18wzf7",
+          "label": "Váy đỏ dang tay",
+          "imageUrl": "/bar/dancers/vay-do-dang-tay.gif"
+        },
+        {
+          "id": "cmsla49vr000unu166veoku0v",
+          "label": "Cưỡi heo",
+          "imageUrl": "/bar/dancers/cuoi-heo.gif"
+        },
+        {
+          "id": "cmsla49vr000vnu16k2xjc175",
+          "label": "Quần đỏ quẩy",
+          "imageUrl": "/bar/dancers/quan-do-quay.gif"
+        },
+        {
+          "id": "cmsla49vr000wnu16pb5oa0mf",
+          "label": "Múa quạt",
+          "imageUrl": "/bar/dancers/mua-quat.gif"
+        },
+        {
+          "id": "cmsla49vr000xnu16m5ii2s85",
+          "label": "Mũ cao bồi",
+          "imageUrl": "/bar/dancers/mu-cao-boi.gif"
+        },
+        {
+          "id": "cmsla49vr000ynu16nxcwjj26",
+          "label": "Cười toe",
+          "imageUrl": "/bar/dancers/cuoi-toe.gif"
+        },
+        {
+          "id": "cmsla49vr000znu169p17k48t",
+          "label": "Quẩy tung tay",
+          "imageUrl": "/bar/dancers/quay-tung-tay.gif"
+        },
+        {
+          "id": "cmsla49vr0010nu16wyyimf7y",
+          "label": "Quay lưng lắc",
+          "imageUrl": "/bar/dancers/quay-lung.gif"
+        },
+        {
+          "id": "cmsla49vr0011nu1677ziox1i",
+          "label": "Áo hồng quần đỏ",
+          "imageUrl": "/bar/dancers/ao-hong.gif"
+        },
+        {
+          "id": "cmsla49vr0012nu16o79gto2k",
+          "label": "Chống hông nhún",
+          "imageUrl": "/bar/dancers/chong-hong.gif"
+        },
+        {
+          "id": "cmsla49vr0013nu16t0rhrg6f",
+          "label": "Dang tay xoay",
+          "imageUrl": "/bar/dancers/dang-tay-xoay.gif"
+        },
+        {
+          "id": "cmsla49vr0014nu16z2fuwgeh",
+          "label": "Váy tutu hồng",
+          "imageUrl": "/bar/dancers/vay-tutu.gif"
+        },
+        {
+          "id": "cmsla49vr0015nu16fnsjor9p",
+          "label": "Đứng ngơ",
+          "imageUrl": "/bar/dancers/dung-ngo.gif"
+        },
+        {
+          "id": "cmsla49vr0016nu16u0esve4p",
+          "label": "Chỉ tay",
+          "imageUrl": "/bar/dancers/chi-tay.gif"
+        },
+        {
+          "id": "cmsla49vr0017nu16wyimh0de",
+          "label": "Hai bông hoa",
+          "imageUrl": "/bar/dancers/hai-bong-hoa.gif"
+        },
+        {
+          "id": "cmsla49vr0018nu160ek5g0us",
+          "label": "Ba lê xoay",
+          "imageUrl": "/bar/dancers/ba-le-xoay.gif"
+        },
+        {
+          "id": "cmsla49vr0019nu16tnpos779",
+          "label": "Quần hoa",
+          "imageUrl": "/bar/dancers/quan-hoa.gif"
+        },
+        {
+          "id": "cmsla49vr001anu16r1d2ayan",
+          "label": "Bắt chéo tay",
+          "imageUrl": "/bar/dancers/bat-cheo-tay.gif"
+        },
+        {
+          "id": "cmsla49vr001bnu16tfeo9jxl",
+          "label": "Nhún nhẹ",
+          "imageUrl": "/bar/dancers/nhun-nhe.gif"
+        },
+        {
+          "id": "cmsla49vr001cnu16yb4wcten",
+          "label": "Mặt bự",
+          "imageUrl": "/bar/dancers/mat-bu.gif"
+        },
+        {
+          "id": "cmsla49vr001dnu16b7hsdf7r",
+          "label": "Vẫy tay",
+          "imageUrl": "/bar/dancers/vay-tay.gif"
+        },
+        {
+          "id": "cmsla49vr001enu1677qun785",
+          "label": "Lắc mông",
+          "imageUrl": "/bar/dancers/lac-mong.gif"
+        },
+        {
+          "id": "cmsla49vr001fnu16nck3d7ls",
+          "label": "Nhăn mặt quẩy",
+          "imageUrl": "/bar/dancers/nhan-mat.gif"
+        },
+        {
+          "id": "cmsla49vr001gnu16duxtojep",
+          "label": "Lè lưỡi bay",
+          "imageUrl": "/bar/dancers/le-luoi-bay.gif"
+        },
+        {
+          "id": "cmsla49vr001hnu1651eg01hr",
+          "label": "Tuần lộc Noel",
+          "imageUrl": "/bar/dancers/tuan-loc.gif"
+        }
+      ],
+      "wingSeconds": 60,
+      "wings": [
+        "cmsyjn6yx000hdyd8h95830ov",
+        "cmsyjn6yx000idyd8tjcyajqw",
+        "cmsyjn6yx000jdyd8k7vtdtm8",
+        "cmsyjn6yx000kdyd8tx8lgozj",
+        "cmsyjn6yx000ldyd8h3letr6i",
+        "cmsyjn6yx000mdyd8hkzgid0h"
+      ],
+      "wingLibrary": [
+        {
+          "id": "cmsyjn6yx000hdyd8h95830ov",
+          "label": "Cánh bạch kim",
+          "imageUrl": "/bar/wings/nguoi-dan-dau-trai.webp",
+          "secondaryImageUrl": "/bar/wings/nguoi-dan-dau-phai.webp"
+        },
+        {
+          "id": "cmsyjn6yx000idyd8tjcyajqw",
+          "label": "Cánh rồng vàng",
+          "imageUrl": "/bar/wings/ong-hoang-trai.webp",
+          "secondaryImageUrl": "/bar/wings/ong-hoang-phai.webp"
+        },
+        {
+          "id": "cmsyjn6yx000jdyd8k7vtdtm8",
+          "label": "Cánh lục bảo",
+          "imageUrl": "/bar/wings/dai-gia-trai.webp",
+          "secondaryImageUrl": "/bar/wings/dai-gia-phai.webp"
+        },
+        {
+          "id": "cmsyjn6yx000kdyd8tx8lgozj",
+          "label": "Cánh phượng hồng",
+          "imageUrl": "/bar/wings/ba-chua-trai.webp",
+          "secondaryImageUrl": "/bar/wings/ba-chua-phai.webp"
+        },
+        {
+          "id": "cmsyjn6yx000ldyd8h3letr6i",
+          "label": "Cánh thuyền trưởng",
+          "imageUrl": "/bar/wings/thuyen-truong-trai.webp",
+          "secondaryImageUrl": "/bar/wings/thuyen-truong-phai.webp"
+        },
+        {
+          "id": "cmsyjn6yx000mdyd8hkzgid0h",
+          "label": "Cánh thiên thần",
+          "imageUrl": "/bar/wings/tha-thinh-trai.webp",
+          "secondaryImageUrl": "/bar/wings/tha-thinh-phai.webp"
+        }
+      ],
+      "badgeSeconds": 0,
+      "badges": [
+        "cmsla49vr001qnu16lzo2spf8",
+        "cmsla49vr001rnu16wstb5qhf",
+        "cmsla49vr001snu16hcwqtrjt",
+        "cmsla49vr001tnu16viiab444",
+        "cmsla49vr001unu16ws5ulamr",
+        "cmsla49vr001vnu16l6wfgx7w"
+      ],
+      "badgeLibrary": [
+        {
+          "id": "cmsla49vr001qnu16lzo2spf8",
+          "label": "Người dẫn đầu",
+          "imageUrl": "/bar/badges/nguoi-dan-dau.webp"
+        },
+        {
+          "id": "cmsla49vr001rnu16wstb5qhf",
+          "label": "Đại gia",
+          "imageUrl": "/bar/badges/dai-gia.webp"
+        },
+        {
+          "id": "cmsla49vr001snu16hcwqtrjt",
+          "label": "Ông hoàng sàn nhảy",
+          "imageUrl": "/bar/badges/ong-hoang.webp"
+        },
+        {
+          "id": "cmsla49vr001tnu16viiab444",
+          "label": "Bà chúa vũ trường",
+          "imageUrl": "/bar/badges/ba-chua.webp"
+        },
+        {
+          "id": "cmsla49vr001unu16ws5ulamr",
+          "label": "Thuyền trưởng",
+          "imageUrl": "/bar/badges/thuyen-truong.webp"
+        },
+        {
+          "id": "cmsla49vr001vnu16l6wfgx7w",
+          "label": "Thả thính",
+          "imageUrl": "/bar/badges/tha-thinh.webp"
+        }
+      ],
+      "idleLeaveMinutes": 10,
+      "djScreenUrl": "",
+      "djScreen": "visualizer",
+      "djScreenAudio": false,
+      "djScreenVolume": 0.6,
+      "cameraSway": true,
+      "cameraOrbitSeconds": 26,
+      "cameraZoom": 1.55,
+      "lightShow": true,
+      "bgmUrl": "",
+      "bgmVolume": 0.45,
+      "bgmDuckVolume": 0.12,
+      "mappings": [
+        {
+          "trigger": "comment_any",
+          "action": "join_bar",
+          "points": 0
+        },
+        {
+          "trigger": "gift_any",
+          "action": "join_bar",
+          "points": 0
+        },
+        {
+          "trigger": "like",
+          "action": "join_bar",
+          "points": 0
+        },
+        {
+          "trigger": "follow",
+          "action": "join_bar",
+          "points": 0
+        },
+        {
+          "trigger": "share",
+          "action": "join_bar",
+          "points": 0
+        },
+        {
+          "trigger": "gift_any",
+          "action": "spotlight",
+          "points": 0
+        },
+        {
+          "trigger": "gift_any",
+          "action": "contribute",
+          "points": 1
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Doughnut",
+          "action": "wing",
+          "points": 20
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Nước hoa",
+          "action": "wing",
+          "points": 20
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Mũ Bóng Chày",
+          "action": "wing",
+          "points": 20
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Vương Miện",
+          "action": "wing",
+          "points": 20
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Pháo Hoa",
+          "action": "wing",
+          "points": 20
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Vua Sư Tử",
+          "action": "wing",
+          "points": 20
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Vũ Trụ TikTok",
+          "action": "wing",
+          "points": 20
+        }
+      ],
+      "roundSeconds": 3600,
+      "showLeaderboard": true,
+      "theme": {
+        "preset": "neon",
+        "accent": "#22d3ee",
+        "accentAlt": "#a855f7",
+        "textColor": "#ffffff",
+        "fontFamily": "roboto",
+        "panelOpacity": 0.55,
+        "scale": 1,
+        "logoUrl": null,
+        "backgroundUrl": null,
+        "backgroundColor": "",
+        "backgroundOpacity": 1,
+        "showToasts": true,
+        "toastPosition": "bottom-left",
+        "leaderboardPosition": "top-right",
+        "leaderboardSize": 5,
+        "giftGuideSize": 6,
+        "giftGuideTitle": "",
+        "giftGuideStyle": "panel",
+        "chatGuideSize": 6,
+        "chatGuideTitle": "",
+        "chatGuideStyle": "panel",
+        "layout": {
+          "leaderboard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "clock": {
+            "x": 50,
+            "y": 3,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "winner": {
+            "x": 50,
+            "y": 42,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "toast": {
+            "x": 3,
+            "y": 97,
+            "alignX": "start",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "goal": {
+            "x": 50,
+            "y": 15,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": true
+          },
+          "barCrowd": {
+            "x": 3,
+            "y": 3,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "spotlightQueue": {
+            "x": 3,
+            "y": 12,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "fishBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "fishCount": {
+            "x": 3,
+            "y": 3,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "sharkCountdown": {
+            "x": 50,
+            "y": 8,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "armyRope": {
+            "x": 50,
+            "y": 12,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "armyScore": {
+            "x": 50,
+            "y": 3,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "sawBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "sawPodium": {
+            "x": 50,
+            "y": 40,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "voteBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "mcMessage": {
+            "x": 50,
+            "y": 25,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          }
+        },
+        "texts": [],
+        "accentColor": "#22d3ee",
+        "transparent": true
+      },
+      "sound": {
+        "enabled": true,
+        "volume": 0.6,
+        "pack": "arcade",
+        "muted": [],
+        "custom": {}
+      },
+      "alerts": {
+        "enabled": true,
+        "minDiamonds": 50,
+        "showFollow": true,
+        "showShare": true,
+        "durationSeconds": 5,
+        "tts": {
+          "enabled": false,
+          "lang": "vi-VN",
+          "voiceId": "",
+          "volume": 1,
+          "rate": 1,
+          "minDiamonds": 10,
+          "giftTemplate": "Cảm ơn {name} đã tặng {gift}",
+          "readFollow": false,
+          "followTemplate": "{name} vừa theo dõi kênh"
+        }
+      },
+      "goal": {
+        "enabled": false,
+        "label": "Mục tiêu kim cương",
+        "target": 10000,
+        "scope": "session"
+      },
+      "uiTexts": {},
+      "rules": [
+        {
+          "trigger": "gift_any",
+          "action": "join_bar",
+          "points": 0,
+          "enabled": true
+        },
+        {
+          "trigger": "gift_any",
+          "action": "spotlight",
+          "points": 0,
+          "enabled": true
+        },
+        {
+          "trigger": "gift_any",
+          "action": "contribute",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "like",
+          "action": "join_bar",
+          "points": 0,
+          "enabled": true
+        },
+        {
+          "trigger": "follow",
+          "action": "join_bar",
+          "points": 0,
+          "enabled": true
+        },
+        {
+          "trigger": "share",
+          "action": "join_bar",
+          "points": 0,
+          "enabled": true
+        },
+        {
+          "trigger": "chat_any",
+          "action": "join_bar",
+          "points": 0,
+          "enabled": true
+        }
+      ],
+      "idleMinutes": 10,
+      "cameraIdleOrbit": true,
+      "showDjScreen": true,
+      "zoom": 1.55,
+      "orbitSeconds": 20
+    },
+    "token": "SSsss9xEp6B5GGMf0e1xHyFl56Tj2fqI",
+    "overlayUrl": "https://overlay.taolivetuongtac.com/?token=SSsss9xEp6B5GGMf0e1xHyFl56Tj2fqI",
+    "tiktokUsername": null,
+    "enabled": true,
+    "createdAt": "2026-08-26T12:39:38.655Z"
+  },
+  {
+    "id": "cmta2p19d00alkx08nqke0l1s",
+    "name": "Bình Chọn Đổ Nước",
+    "gameType": "vote_tank",
+    "config": {
+      "gameType": "vote_tank",
+      "teams": [
+        {
+          "name": "Việt Nam",
+          "color": "#ef4444",
+          "emoji": "🇻🇳",
+          "backgroundUrl": ""
+        },
+        {
+          "name": "Thái Lan",
+          "color": "#3b82f6",
+          "emoji": "🇹🇭",
+          "backgroundUrl": ""
+        }
+      ],
+      "winPoints": 300,
+      "unitLabel": "PHIẾU",
+      "useTimer": false,
+      "voteMode": "share",
+      "voteChaos": false,
+      "showPercent": true,
+      "backdropOpacity": 0.9,
+      "scene": "studio",
+      "liquid": "plasma",
+      "bgmUrl": "",
+      "bgmVolume": 0.5,
+      "bgmDuckVolume": 0.12,
+      "mappings": [
+        {
+          "trigger": "comment",
+          "keyword": "1",
+          "action": "boost_team_1",
+          "points": 1
+        },
+        {
+          "trigger": "comment",
+          "keyword": "2",
+          "action": "boost_team_2",
+          "points": 1
+        }
+      ],
+      "roundSeconds": 300,
+      "showLeaderboard": true,
+      "theme": {
+        "preset": "tet",
+        "accent": "#ffd700",
+        "accentAlt": "#ff4d4d",
+        "textColor": "#fff8e7",
+        "fontFamily": "roboto",
+        "panelOpacity": 0.55,
+        "scale": 1,
+        "logoUrl": null,
+        "backgroundUrl": null,
+        "backgroundColor": "",
+        "backgroundOpacity": 1,
+        "showToasts": true,
+        "toastPosition": "bottom-left",
+        "leaderboardPosition": "top-right",
+        "leaderboardSize": 5,
+        "giftGuideSize": 6,
+        "giftGuideTitle": "",
+        "giftGuideStyle": "panel",
+        "chatGuideSize": 6,
+        "chatGuideTitle": "",
+        "chatGuideStyle": "panel",
+        "layout": {
+          "leaderboard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "clock": {
+            "x": 50,
+            "y": 3,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "winner": {
+            "x": 50,
+            "y": 42,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "toast": {
+            "x": 3,
+            "y": 65,
+            "alignX": "start",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "goal": {
+            "x": 50,
+            "y": 95.1,
+            "alignX": "center",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "barCrowd": {
+            "x": 3,
+            "y": 3,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "spotlightQueue": {
+            "x": 3,
+            "y": 12,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "fishBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "fishCount": {
+            "x": 3,
+            "y": 3,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "sharkCountdown": {
+            "x": 50,
+            "y": 8,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "armyRope": {
+            "x": 50,
+            "y": 12,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "armyScore": {
+            "x": 50,
+            "y": 3,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "sawBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "sawPodium": {
+            "x": 50,
+            "y": 40,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "voteBoard": {
+            "x": 3,
+            "y": 76,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "mcMessage": {
+            "x": 50,
+            "y": 25,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "giftGuide": {
+            "x": 2,
+            "y": 50,
+            "alignX": "start",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "chatGuide": {
+            "x": 97,
+            "y": 57.47,
+            "alignX": "end",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "voteTanks": {
+            "x": 50,
+            "y": 38,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "voteTeams": {
+            "x": 50,
+            "y": 68,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          }
+        },
+        "texts": [],
+        "accentColor": "#ffd700",
+        "transparent": true
+      },
+      "sound": {
+        "enabled": true,
+        "volume": 0.6,
+        "pack": "arcade",
+        "muted": [],
+        "custom": {}
+      },
+      "alerts": {
+        "enabled": true,
+        "minDiamonds": 50,
+        "showFollow": true,
+        "showShare": true,
+        "durationSeconds": 5,
+        "tts": {
+          "enabled": false,
+          "lang": "vi-VN",
+          "voiceId": "",
+          "volume": 1,
+          "rate": 1,
+          "minDiamonds": 10,
+          "giftTemplate": "Cảm ơn {name} đã tặng {gift}",
+          "readFollow": false,
+          "followTemplate": "{name} vừa theo dõi kênh"
+        }
+      },
+      "goal": {
+        "enabled": false,
+        "label": "Mục tiêu kim cương",
+        "target": 10000,
+        "scope": "session"
+      },
+      "uiTexts": {},
+      "scale": 1.1,
+      "customTexts": {
+        "lbTitle": "BẢNG VÀNG BỎ PHIẾU",
+        "unitLabel": "ĐIỂM NƯỚC",
+        "alertVote": "{name} vừa bơm +{points} điểm cho {team}",
+        "winnerBanner": "🏆 {team} VÔ ĐỊCH VÒNG ĐẤU NÀY! 🏆"
+      },
+      "widgets": {
+        "leaderboard": true,
+        "timer": true,
+        "percent": true,
+        "recentPours": true,
+        "winnerFx": true,
+        "guide": true,
+        "chaosFx": true,
+        "logo": false
+      },
+      "mode": "race",
+      "enableChaos": true
+    },
+    "token": "IaU-dowILScpy4h4xe7L9IoU9SO9UsMI",
+    "overlayUrl": "https://overlay.taolivetuongtac.com/?token=IaU-dowILScpy4h4xe7L9IoU9SO9UsMI",
+    "tiktokUsername": null,
+    "enabled": true,
+    "createdAt": "2026-08-26T12:31:26.881Z"
+  },
+  {
+    "id": "cmta8m1mj00b1kx08kjei4jfv",
+    "name": "Cá lớn nuốt cá bé",
+    "gameType": "fish_tank",
+    "config": {
+      "gameType": "fish_tank",
+      "scene": "reef",
+      "maxFish": 50,
+      "maxLevel": 10,
+      "expLevel1": 8,
+      "swimSpeed": 1.5,
+      "expPerFood": 1,
+      "foodDecaySeconds": 20,
+      "ambientFoodInterval": 3,
+      "glowSeconds": 4,
+      "idleMinutes": 10,
+      "glowOnDrop": true,
+      "sharkMinMinutes": 5,
+      "sharkMaxMinutes": 10,
+      "huntLevelDiff": 1,
+      "huntCooldown": 4,
+      "invincibleOnDrop": 3,
+      "escapeReactionSeconds": 3,
+      "escapeSafetySeconds": 4,
+      "frenzyDuration": 15,
+      "frenzyCooldownRate": 0.5,
+      "frenzyFoodInterval": 0.8,
+      "bgmUrl": "",
+      "bgmVolume": 0.5,
+      "bgmDuckVolume": 0.12,
+      "mappings": [
+        {
+          "trigger": "comment",
+          "keyword": "1",
+          "action": "spawn_fish",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift_any",
+          "action": "feed_fish",
+          "fishAmount": 1,
+          "points": 10,
+          "enabled": true
+        },
+        {
+          "trigger": "like_any",
+          "action": "grow_fish",
+          "fishAmount": 5,
+          "points": 5,
+          "enabled": true
+        }
+      ],
+      "theme": {
+        "preset": "neon",
+        "accent": "#22d3ee",
+        "accentAlt": "#a855f7",
+        "textColor": "#ffffff",
+        "fontFamily": "roboto",
+        "panelOpacity": 0.55,
+        "scale": 1,
+        "logoUrl": null,
+        "backgroundUrl": null,
+        "backgroundColor": "",
+        "backgroundOpacity": 1,
+        "showToasts": true,
+        "toastPosition": "bottom-left",
+        "leaderboardPosition": "top-right",
+        "leaderboardSize": 5,
+        "giftGuideSize": 6,
+        "giftGuideTitle": "",
+        "giftGuideStyle": "panel",
+        "chatGuideSize": 6,
+        "chatGuideTitle": "",
+        "chatGuideStyle": "panel",
+        "layout": {
+          "leaderboard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "clock": {
+            "x": 50,
+            "y": 3,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "winner": {
+            "x": 50,
+            "y": 42,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "toast": {
+            "x": 3,
+            "y": 97,
+            "alignX": "start",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "goal": {
+            "x": 50,
+            "y": 15,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": true
+          },
+          "barCrowd": {
+            "x": 3,
+            "y": 3,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "spotlightQueue": {
+            "x": 3,
+            "y": 12,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "fishBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "fishCount": {
+            "x": 3,
+            "y": 3,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "sharkCountdown": {
+            "x": 50,
+            "y": 8,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "armyRope": {
+            "x": 50,
+            "y": 12,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "armyScore": {
+            "x": 50,
+            "y": 3,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "sawBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "sawPodium": {
+            "x": 50,
+            "y": 40,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "voteBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "mcMessage": {
+            "x": 50,
+            "y": 25,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          }
+        },
+        "texts": [],
+        "accentColor": "#22d3ee",
+        "transparent": true
+      },
+      "customTexts": {
+        "boardTitle": "🐟 CÁ TO NHẤT HỒ",
+        "count": "🐟 {alive} CON ĐANG BƠI",
+        "countEaten": "🐟 {alive} CON ĐANG BƠI · 🦈 {eaten} CON BỊ NUỐT",
+        "sharkNext": "CÁ MẬP TIẾP THEO",
+        "sharkSoon": "CÁ MẬP SẮP VÀO HỒ",
+        "sharkDanger": "🦈 NGUY HIỂM",
+        "sharkEscape": "THẢ TIM / BÌNH LUẬN ĐỂ THOÁT",
+        "sharkBanner": "🦈 CÁ MẬP KHỔNG LỒ SẮP ĐẾN!",
+        "sharkBannerHint": "THẢ TIM / BÌNH LUẬN ĐỂ THOÁT!",
+        "frenzyBanner": "🌪️ BÃO SĂN",
+        "warnTitle": "CẢNH BÁO",
+        "warnText": "Cá mập sắp quét hồ — bình luận hoặc thả tim khi bị hút để thoát!",
+        "sharkName": "Cá mập khổng lồ",
+        "sharkAte": "đã nuốt {names}{more}",
+        "sharkAteMore": " và {count} cá khác",
+        "escaped": "đã thoát khỏi {predator}!",
+        "predator": "cá săn mồi",
+        "escapedShark": "đã tương tác và thoát khỏi luồng hút cá mập!",
+        "levelUp": "lên cá cấp {level}!",
+        "levelUpJump": "lên thẳng {levels} cấp — cá cấp {level}!",
+        "ate": "vừa nuốt cá của {prey}",
+        "ateStreak": "đã nuốt {prey} · chuỗi {streak} hạ gục!",
+        "frenzyOpen": "vừa mở Bão săn cho cả hồ",
+        "frenzyExtend": "vừa gia hạn Bão săn"
+      },
+      "widgets": {
+        "fishBoard": true,
+        "fishCount": true,
+        "sharkCountdown": true,
+        "leaderboard": true,
+        "goal": false,
+        "toast": true,
+        "bigAlert": true,
+        "mc": true,
+        "logo": false,
+        "giftGuide": false,
+        "chatGuide": false
+      },
+      "sound": {
+        "enabled": true,
+        "volume": 0.6,
+        "pack": "arcade",
+        "muted": [],
+        "custom": {}
+      },
+      "alerts": {
+        "enabled": true,
+        "minDiamonds": 50,
+        "showFollow": true,
+        "showShare": true,
+        "durationSeconds": 5,
+        "tts": {
+          "enabled": false,
+          "lang": "vi-VN",
+          "voiceId": "",
+          "volume": 1,
+          "rate": 1,
+          "minDiamonds": 10,
+          "giftTemplate": "Cảm ơn {name} đã tặng {gift}",
+          "readFollow": false,
+          "followTemplate": "{name} vừa theo dõi kênh"
+        }
+      },
+      "goal": {
+        "enabled": false,
+        "label": "Mục tiêu kim cương",
+        "target": 10000,
+        "current": 0
+      },
+      "uiTexts": {},
+      "pvpEnabled": true,
+      "shieldSeconds": 5,
+      "giantSharkEnabled": true,
+      "sharkIntervalMinutes": 5,
+      "frenzyDurationSeconds": 20
+    },
+    "token": "3KxYT2dV3H7nLracHFmhqMUQxIyj2QNf",
+    "overlayUrl": "https://overlay.taolivetuongtac.com/?token=3KxYT2dV3H7nLracHFmhqMUQxIyj2QNf",
+    "tiktokUsername": null,
+    "enabled": true,
+    "createdAt": "2026-08-26T14:15:20.123Z"
+  },
+  {
+    "id": "cmtabct2w00bikx08f4zhsfh5",
+    "name": "So Tài Sân Cỏ",
+    "gameType": "football_duel",
+    "config": {
+      "gameType": "football_duel",
+      "fieldUrl": "/football-duel/stadium-field-sunset.png",
+      "fieldsLibrary": [
+        {
+          "url": "/football-duel/stadium-field.png",
+          "label": "Sân cỏ truyền thống"
+        },
+        {
+          "url": "/football-duel/stadium-field-night.png",
+          "label": "Đêm xanh"
+        },
+        {
+          "url": "/football-duel/stadium-field-sunset.png",
+          "label": "Hoàng hôn"
+        },
+        {
+          "url": "/football-duel/stadium-field-neon.png",
+          "label": "Cúp neon"
+        }
+      ],
+      "playersLibrary": [
+        {
+          "idleUrl": "/football-duel/ronaldo-idle.png",
+          "kickUrl": "/football-duel/ronaldo-kick.png",
+          "label": "🇵🇹 Cristiano Ronaldo · 7"
+        },
+        {
+          "idleUrl": "/football-duel/messi-idle.png",
+          "kickUrl": "/football-duel/messi-kick.png",
+          "label": "🇦🇷 Lionel Messi · 10"
+        },
+        {
+          "idleUrl": "/football-duel/mbappe-idle.png",
+          "kickUrl": "/football-duel/mbappe-kick.png",
+          "label": "🇫🇷 Kylian Mbappé · 10"
+        },
+        {
+          "idleUrl": "/football-duel/haaland-idle.png",
+          "kickUrl": "/football-duel/haaland-kick.png",
+          "label": "🇳🇴 Erling Haaland · 9"
+        },
+        {
+          "idleUrl": "/football-duel/neymar-idle.png",
+          "kickUrl": "/football-duel/neymar-kick.png",
+          "label": "🇧🇷 Neymar · 10"
+        },
+        {
+          "idleUrl": "/football-duel/yamal-idle.png",
+          "kickUrl": "/football-duel/yamal-kick.png",
+          "label": "🇪🇸 Lamine Yamal · 19"
+        },
+        {
+          "idleUrl": "/football-duel/vinicius-idle.png",
+          "kickUrl": "/football-duel/vinicius-kick.png",
+          "label": "🇧🇷 Vinícius Júnior · 7"
+        },
+        {
+          "idleUrl": "/football-duel/kane-idle.png",
+          "kickUrl": "/football-duel/kane-kick.png",
+          "label": "🏴󠁧󠁢󠁥󠁮󠁧󠁿 Harry Kane · 9"
+        }
+      ],
+      "goalPoints": 50,
+      "powerLabel": "LỰC SÚT",
+      "bgmUrl": "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=stadium-rock-111584.mp3",
+      "bgmVolume": 0.5,
+      "bgmDuckVolume": 0.12,
+      "teams": [
+        {
+          "name": "ĐỘI XANH",
+          "color": "#3b82f6",
+          "emoji": "🔵",
+          "backgroundUrl": "/football-duel/mbappe-idle.png"
+        },
+        {
+          "name": "ĐỘI ĐỎ",
+          "color": "#ef4444",
+          "emoji": "🔴",
+          "backgroundUrl": "/football-duel/yamal-idle.png"
+        }
+      ],
+      "mappings": [
+        {
+          "trigger": "comment",
+          "keyword": "1",
+          "action": "boost_team_1",
+          "points": 1
+        },
+        {
+          "trigger": "comment",
+          "keyword": "2",
+          "action": "boost_team_2",
+          "points": 1
+        },
+        {
+          "trigger": "like",
+          "minCount": 20,
+          "action": "boost_team_1",
+          "points": 20
+        },
+        {
+          "trigger": "share",
+          "action": "boost_team_2",
+          "points": 50
+        }
+      ],
+      "roundSeconds": 3600,
+      "showLeaderboard": true,
+      "theme": {
+        "preset": "classic",
+        "accent": "#f5c518",
+        "accentAlt": "#a855f7",
+        "textColor": "#ffffff",
+        "fontFamily": "roboto",
+        "panelOpacity": 0.55,
+        "scale": 1,
+        "logoUrl": null,
+        "backgroundUrl": null,
+        "backgroundColor": "",
+        "backgroundOpacity": 1,
+        "showToasts": true,
+        "toastPosition": "bottom-left",
+        "leaderboardPosition": "top-right",
+        "leaderboardSize": 5,
+        "giftGuideSize": 6,
+        "giftGuideTitle": "",
+        "giftGuideStyle": "panel",
+        "chatGuideSize": 6,
+        "chatGuideTitle": "",
+        "chatGuideStyle": "panel",
+        "layout": {
+          "leaderboard": {
+            "x": 97,
+            "y": 3,
+            "alignX": "end",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "clock": {
+            "x": 50,
+            "y": 3,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "winner": {
+            "x": 50,
+            "y": 42,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "toast": {
+            "x": 3,
+            "y": 65,
+            "alignX": "start",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "goal": {
+            "x": 50,
+            "y": 15,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": true
+          },
+          "barCrowd": {
+            "x": 3,
+            "y": 3,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "spotlightQueue": {
+            "x": 3,
+            "y": 12,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "fishBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "fishCount": {
+            "x": 3,
+            "y": 3,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "sharkCountdown": {
+            "x": 50,
+            "y": 8,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "armyRope": {
+            "x": 50,
+            "y": 12,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "armyScore": {
+            "x": 50,
+            "y": 3,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "sawBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "sawPodium": {
+            "x": 50,
+            "y": 40,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "voteBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "mcMessage": {
+            "x": 50,
+            "y": 25,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "footballScore": {
+            "x": 50,
+            "y": 3.5,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "footballPower": {
+            "x": 50,
+            "y": 12.7,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "giftGuide": {
+            "x": 2,
+            "y": 50,
+            "alignX": "start",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "chatGuide": {
+            "x": 97,
+            "y": 57.47,
+            "alignX": "end",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          }
+        },
+        "texts": [],
+        "accentColor": "#f5c518",
+        "transparent": true,
+        "bgColor": "#0b0e14",
+        "bgImage": ""
+      },
+      "sound": {
+        "enabled": true,
+        "volume": 0.6,
+        "pack": "arcade",
+        "muted": [],
+        "custom": {}
+      },
+      "alerts": {
+        "enabled": true,
+        "minDiamonds": 50,
+        "showFollow": true,
+        "showShare": true,
+        "durationSeconds": 5,
+        "tts": {
+          "enabled": false,
+          "lang": "vi-VN",
+          "voiceId": "",
+          "volume": 1,
+          "rate": 1,
+          "minDiamonds": 10,
+          "giftTemplate": "Cảm ơn {name} đã tặng {gift}",
+          "readFollow": false,
+          "followTemplate": "{name} vừa theo dõi kênh"
+        }
+      },
+      "goal": {
+        "enabled": false,
+        "label": "Mục tiêu kim cương",
+        "target": 10000,
+        "scope": "session"
+      },
+      "uiTexts": {},
+      "customTexts": {
+        "football.goalRule": "⚽ {points} = 1 BÀN",
+        "football.goal": "⚽ {team} GHI BÀN!",
+        "winner.win": "{emoji} {team} THẮNG VÁN {round}!",
+        "winner.draw": "🤝 HOÀ VÁN {round}!",
+        "football.power": "LỰC SÚT",
+        "football.target": "MỐC GHI BÀN: {points}",
+        "leaderboard.title": "TOP TẶNG QUÀ",
+        "leaderboard.rank1": "👑 QUÁN QUÂN",
+        "clock.label": "THỜI GIAN",
+        "alert.follow": "{name} vừa theo dõi kênh",
+        "alert.share": "{name} vừa chia sẻ livestream",
+        "alert.gift": "👑 {name} TẶNG {gift} ×{count}",
+        "guide.chat": "💬 GÕ CHỮ ĐƯỢC GÌ",
+        "guide.gift": "🎁 QUÀ NÀO ĐƯỢC GÌ",
+        "status.reconnect": "Đang kết nối lại TikTok Live...",
+        "status.pause": "Trò chơi đang tạm dừng",
+        "status.ended": "Cảm ơn mọi người đã tham gia!",
+        "winner.title": "👑 {name} CHIẾN THẮNG!",
+        "winner.mvp": "🏆 CẦU THỦ XUẤT SẮC NHẤT"
+      },
+      "widgets": {
+        "footballScore": true,
+        "footballPower": true,
+        "giftGuide": true,
+        "chatGuide": true,
+        "winner": true,
+        "leaderboard": true,
+        "goal": false,
+        "toast": true,
+        "alert": true,
+        "mcMessage": true,
+        "logo": false
+      },
+      "chatGuideTitle": "💬 GÕ CHỮ ĐƯỢC GÌ",
+      "giftGuideTitle": "🎁 QUÀ NÀO ĐƯỢC GÌ"
+    },
+    "token": "cmtabct2w00bikx08f4zhsfh5_token_football",
+    "overlayUrl": "https://overlay.taolivetuongtac.com/?token=cmtabct2w00bikx08f4zhsfh5_token_football",
+    "tiktokUsername": null,
+    "enabled": true,
+    "createdAt": "2026-08-26T16:30:00.000Z"
+  },
+  {
+    "id": "cmtabeza100bokx08q9dm9q2z",
+    "name": "Cuộc Chiến Ngàn Quân",
+    "gameType": "army_clash",
+    "token": "cmtabeza100bokx08q9dm9q2z_token_army",
+    "createdAt": "2026-08-27T00:00:00.000Z",
+    "updatedAt": "2026-08-27T00:00:00.000Z",
+    "config": {
+      "gameType": "army_clash",
+      "maxSoldiers": 200,
+      "soldiersPerJoin": 1,
+      "joinPower": 1,
+      "defaultPushPower": 100,
+      "baseDamage": 2,
+      "hitIntervalMs": 700,
+      "respawnSeconds": 6,
+      "baseHp": 600,
+      "winDistance": 300,
+      "maxLineSpeed": 3,
+      "summonSeconds": 45,
+      "summonPower": 400,
+      "buffMult": 1.25,
+      "buffSeconds": 30,
+      "battleGround": "desert",
+      "idleLeaveMinutes": 15,
+      "roundSeconds": 600,
+      "showLeaderboard": true,
+      "teams": [
+        {
+          "name": "ĐỘI XANH",
+          "color": "#3b82f6",
+          "emoji": "🔵",
+          "backgroundUrl": "/army/hero-panda.webp"
+        },
+        {
+          "name": "ĐỘI ĐỎ",
+          "color": "#ef4444",
+          "emoji": "🔴",
+          "backgroundUrl": "/army/hero-dragon.webp"
+        }
+      ],
+      "mappings": [
+        {
+          "trigger": "comment",
+          "keyword": "1",
+          "action": "join_team_1",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "2",
+          "action": "join_team_2",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "comment_any",
+          "action": "boost_team",
+          "points": 5,
+          "enabled": true
+        },
+        {
+          "trigger": "like",
+          "minCount": 15,
+          "action": "join_least",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "like",
+          "minCount": 15,
+          "action": "boost_team",
+          "points": 20,
+          "enabled": true
+        },
+        {
+          "trigger": "follow",
+          "action": "join_least",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "share",
+          "action": "join_least",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift_any",
+          "giftId": "all",
+          "action": "join_least",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift_any",
+          "giftId": "all",
+          "action": "boost_team",
+          "points": 100,
+          "enabled": true
+        },
+        {
+          "trigger": "gift_any",
+          "giftId": "all",
+          "action": "glow",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift_any",
+          "giftId": "all",
+          "action": "score",
+          "points": 1,
+          "enabled": true
+        }
+      ],
+      "theme": {
+        "preset": "esport",
+        "accent": "#00ff88",
+        "accentAlt": "#ffffff",
+        "textColor": "#ffffff",
+        "fontFamily": "jetbrains_mono",
+        "panelOpacity": 0.55,
+        "scale": 1,
+        "logoUrl": null,
+        "backgroundUrl": null,
+        "backgroundColor": "",
+        "backgroundOpacity": 1,
+        "showToasts": true,
+        "toastPosition": "bottom-left",
+        "leaderboardPosition": "top-right",
+        "leaderboardSize": 5,
+        "giftGuideSize": 6,
+        "giftGuideTitle": "",
+        "giftGuideStyle": "panel",
+        "chatGuideSize": 6,
+        "chatGuideTitle": "",
+        "chatGuideStyle": "panel",
+        "layout": {
+          "leaderboard": {
+            "x": 0.88,
+            "y": 0.35,
+            "visible": true
+          },
+          "clock": {
+            "x": 0.5,
+            "y": 0.24,
+            "visible": true
+          },
+          "winner": {
+            "x": 0.5,
+            "y": 0.5,
+            "visible": true
+          },
+          "toast": {
+            "x": 3,
+            "y": 97,
+            "alignX": "start",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "goal": {
+            "x": 50,
+            "y": 15,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": true
+          },
+          "barCrowd": {
+            "x": 3,
+            "y": 3,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "spotlightQueue": {
+            "x": 3,
+            "y": 12,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "fishBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "fishCount": {
+            "x": 3,
+            "y": 3,
+            "alignX": "start",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "sharkCountdown": {
+            "x": 50,
+            "y": 8,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "armyRope": {
+            "x": 0.5,
+            "y": 0.16,
+            "visible": true
+          },
+          "armyScore": {
+            "x": 0.5,
+            "y": 0.08,
+            "visible": true
+          },
+          "sawBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "sawPodium": {
+            "x": 50,
+            "y": 40,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "voteBoard": {
+            "x": 97,
+            "y": 88.45,
+            "alignX": "end",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "mcMessage": {
+            "x": 50,
+            "y": 25,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          }
+        },
+        "texts": [],
+        "accentColor": "#00ff88",
+        "transparent": true
+      },
+      "sound": {
+        "enabled": true,
+        "volume": 0.6,
+        "pack": "arcade",
+        "muted": []
+      },
+      "alerts": {
+        "enabled": true,
+        "minDiamonds": 10,
+        "showFollow": true,
+        "showShare": true,
+        "durationSeconds": 5,
+        "tts": {
+          "enabled": false,
+          "lang": "vi-VN",
+          "voiceId": "",
+          "volume": 1,
+          "rate": 1,
+          "minDiamonds": 10,
+          "giftTemplate": "Cảm ơn {name} đã tặng {gift}",
+          "readFollow": false,
+          "followTemplate": "{name} vừa theo dõi kênh"
+        }
+      },
+      "customTexts": {
+        "army.boardTitle": "⚔️ TOP QUÂN ĐOÀN",
+        "army.clash": "⚔️ GIAO TRANH!",
+        "winner.win": "{emoji} {team} CHIẾN THẮNG!"
+      },
+      "bgmUrl": "",
+      "bgmVolume": 0.5,
+      "bgmDuckVolume": 0.12,
+      "goal": {
+        "enabled": false,
+        "label": "Mục tiêu kim cương",
+        "target": 10000,
+        "current": 0
+      },
+      "uiTexts": {},
+      "gateDistance": 300,
+      "maxSpeed": 3,
+      "maxSoldiersPerTeam": 200,
+      "powerPerPerson": 10,
+      "defaultRulePower": 100,
+      "attackDamage": 2,
+      "attackIntervalMs": 700,
+      "powerDecayPct": 5,
+      "idleTimeoutMin": 15,
+      "bossDurationSec": 45,
+      "bossPower": 400,
+      "buffMultiplier": 1.25,
+      "buffDurationSec": 30
+    }
+  },
+  {
+    "id": "cmtabetgi00blkx08pxprwvdm",
+    "name": "Cuộc chiến tháp",
+    "gameType": "team_battle",
+    "token": "cmtabetgi00blkx08pxprwvdm_token_teambattle",
+    "createdAt": "2026-08-27T00:00:00.000Z",
+    "updatedAt": "2026-08-27T00:00:00.000Z",
+    "config": {
+      "gameType": "team_battle",
+      "showTower": true,
+      "brickSize": 3.4,
+      "goalPoints": 500,
+      "roundSeconds": 180,
+      "teams": [
+        {
+          "name": "PHE XANH",
+          "color": "#38bdf8",
+          "emoji": "💙",
+          "backgroundUrl": ""
+        },
+        {
+          "name": "PHE HỒNG",
+          "color": "#f472b6",
+          "emoji": "💗",
+          "backgroundUrl": ""
+        }
+      ],
+      "mappings": [
+        {
+          "trigger": "comment",
+          "keyword": "1",
+          "action": "boost_team_0",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "2",
+          "action": "boost_team_1",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "follow",
+          "action": "boost_team_0",
+          "points": 2,
+          "enabled": true
+        },
+        {
+          "trigger": "share",
+          "action": "boost_team_1",
+          "points": 2,
+          "enabled": true
+        }
+      ],
+      "theme": {
+        "preset": "neon",
+        "accent": "#38bdf8",
+        "accentAlt": "#a855f7",
+        "textColor": "#ffffff",
+        "fontFamily": "inter",
+        "panelOpacity": 0.85,
+        "scale": 1,
+        "transparent": false,
+        "layout": {
+          "teamScore": {
+            "x": 50,
+            "y": 2,
+            "alignX": "center",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "matchBadge": {
+            "x": 50,
+            "y": 18.5,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "teamRail1": {
+            "x": 6.5,
+            "y": 46,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "teamRail2": {
+            "x": 93.5,
+            "y": 46,
+            "alignX": "center",
+            "alignY": "center",
+            "scale": 1,
+            "hidden": false
+          },
+          "leaderboard": {
+            "x": 97,
+            "y": 3,
+            "alignX": "end",
+            "alignY": "start",
+            "scale": 1,
+            "hidden": false
+          },
+          "toast": {
+            "x": 3,
+            "y": 97,
+            "alignX": "start",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          },
+          "goal": {
+            "x": 50,
+            "y": 97,
+            "alignX": "center",
+            "alignY": "end",
+            "scale": 1,
+            "hidden": false
+          }
+        },
+        "backgroundColor": "#0a0e1a",
+        "chatGuideTitle": "",
+        "giftGuideTitle": "",
+        "accentColor": "#38bdf8",
+        "leaderboardPosition": "top-right",
+        "leaderboardSize": 5,
+        "toastPosition": "bottom-left",
+        "bgColor": "#0b0e14",
+        "bgImage": ""
+      },
+      "sound": {
+        "enabled": true,
+        "volume": 0.7,
+        "pack": "arcade",
+        "muted": []
+      },
+      "alerts": {
+        "enabled": true,
+        "minDiamonds": 10,
+        "showFollow": true,
+        "showShare": true,
+        "durationSeconds": 5,
+        "tts": {
+          "enabled": true,
+          "lang": "vi-VN",
+          "voiceId": "",
+          "volume": 1,
+          "rate": 1,
+          "minDiamonds": 10,
+          "giftTemplate": "Cảm ơn {name} đã tặng {gift}",
+          "readFollow": false,
+          "followTemplate": "{name} vừa theo dõi kênh"
+        }
+      },
+      "customTexts": {
+        "match.goal": "{points} GẠCH = THẮNG",
+        "winner.win": "👑 {name} THẮNG VÁN NÀY!",
+        "football.power": "LỰC SÚT",
+        "football.goal": "⚽ VÀO! VÀO! VÀO!",
+        "football.target": "MỐC GHI BÀN: {points}",
+        "leaderboard.title": "TOP TẶNG QUÀ",
+        "leaderboard.rank1": "👑 QUÁN QUÂN",
+        "clock.label": "THỜI GIAN",
+        "alert.follow": "{name} vừa theo dõi kênh",
+        "alert.share": "{name} vừa chia sẻ livestream",
+        "alert.gift": "👑 {name} TẶNG {gift} ×{count}",
+        "guide.chat": "💬 GÕ CHỮ ĐƯỢC GÌ",
+        "guide.gift": "🎁 QUÀ NÀO ĐƯỢC GÌ",
+        "status.reconnect": "Đang kết nối lại TikTok Live...",
+        "status.pause": "Trò chơi đang tạm dừng",
+        "status.ended": "Cảm ơn mọi người đã tham gia!",
+        "winner.title": "👑 {name} CHIẾN THẮNG!",
+        "winner.mvp": "🏆 CẦU THỦ XUẤT SẮC NHẤT"
+      },
+      "bgmUrl": "",
+      "bgmVolume": 0.5,
+      "bgmDuckVolume": 0.12,
+      "goal": {
+        "enabled": false,
+        "label": "Mục tiêu kim cương",
+        "target": 10000,
+        "current": 0
+      },
+      "uiTexts": {},
+      "winsLabel": "THẮNG {n}",
+      "unitLabel": "GẠCH",
+      "winPoints": 500,
+      "badgeLabel": "{points} {unit} = THẮNG · VÁN {round}",
+      "persistWins": true,
+      "winLabel": "THẮNG {n}",
+      "winRuleLabel": "{points} {unit} = THẮNG · VÁN {round}",
+      "chatGuideTitle": "💬 GÕ CHỮ ĐƯỢC GÌ",
+      "giftGuideTitle": "🎁 QUÀ NÀO ĐƯỢC GÌ",
+      "powerLabel": "LỰC SÚT"
+    }
+  },
+  {
+    "id": "cmtabchainsaw001",
+    "name": "Cuộc Chiến Cưa Xích",
+    "gameType": "chainsaw_clash",
+    "token": "cmtabchainsaw001_token_chainsaw",
+    "status": "active",
+    "connected": false,
+    "config": {
+      "gameType": "chainsaw_clash",
+      "maxSaws": 36,
+      "spawnHp": 250,
+      "maxHp": 4000,
+      "damage": 10,
+      "hitIntervalMs": 400,
+      "spawnShieldSeconds": 3,
+      "shieldSeconds": 8,
+      "arenaFloor": "concrete",
+      "roundSeconds": 480,
+      "teams": [
+        {
+          "name": "ĐẤU TRƯỜNG CƯA XÍCH",
+          "color": "#f59e0b",
+          "emoji": "🪚",
+          "backgroundUrl": ""
+        }
+      ],
+      "mappings": [
+        {
+          "trigger": "comment_any",
+          "action": "spawn",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "like",
+          "minCount": 10,
+          "action": "spawn",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "like",
+          "minCount": 10,
+          "action": "heal",
+          "hp": 60,
+          "points": 60,
+          "enabled": true
+        },
+        {
+          "trigger": "follow",
+          "action": "spawn",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "share",
+          "action": "spawn",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift_any",
+          "giftId": "all",
+          "action": "spawn",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift_any",
+          "giftId": "all",
+          "action": "heal",
+          "hp": 250,
+          "points": 250,
+          "enabled": true
+        },
+        {
+          "trigger": "gift_any",
+          "giftId": "all",
+          "action": "score",
+          "points": 1,
+          "enabled": true
+        }
+      ],
+      "theme": {
+        "preset": "pastel",
+        "accent": "#fbcfe8",
+        "accentAlt": "#a5b4fc",
+        "textColor": "#fdf4ff",
+        "fontFamily": "inter",
+        "panelOpacity": 0.55,
+        "scale": 1,
+        "transparent": true,
+        "chatGuideTitle": "",
+        "giftGuideTitle": ""
+      },
+      "sound": {
+        "enabled": true,
+        "volume": 0.6,
+        "pack": "soft",
+        "muted": []
+      },
+      "alerts": {
+        "enabled": true,
+        "minDiamonds": 10,
+        "showFollow": true,
+        "showShare": true,
+        "durationSeconds": 5,
+        "tts": {
+          "enabled": true,
+          "lang": "vi-VN",
+          "voiceId": "",
+          "volume": 1,
+          "rate": 1,
+          "minDiamonds": 10,
+          "giftTemplate": "Cảm ơn {name} đã tặng {gift}",
+          "readFollow": false,
+          "followTemplate": "{name} vừa theo dõi kênh"
+        }
+      },
+      "customTexts": {
+        "saw.boardTitle": "🪚 BẢNG XẾP HẠNG CƯA",
+        "saw.chaos": "⚡ BIẾN CỐ HỖN LOẠN BẮT ĐẦU!",
+        "winner.win": "👑 {name} VÔ ĐỊCH ĐẤU TRƯỜNG!"
+      },
+      "bgmUrl": "",
+      "bgmVolume": 0.5,
+      "bgmDuckVolume": 0.12,
+      "goal": {
+        "enabled": false,
+        "label": "Mục tiêu kim cương",
+        "target": 10000,
+        "current": 0
+      },
+      "uiTexts": {},
+      "buffShieldSeconds": 8,
+      "driftSpeed": 1,
+      "idleMinutes": 8,
+      "autoRespawn": true,
+      "respawnDelay": 6,
+      "enableChaos": true,
+      "chaosMinMin": 1.5,
+      "chaosMaxMin": 3,
+      "chaosDuration": 20,
+      "orbHp": 600
+    }
+  },
+  {
+    "id": "cmtb39d1d00chkx08sjrxty0e",
+    "name": "Máy in cảm ơn",
+    "gameType": "receipt_printer",
+    "config": {
+      "gameType": "receipt_printer",
+      "teams": [
+        {
+          "name": "MÁY IN CẢM ƠN",
+          "color": "#22d3ee",
+          "emoji": "🧾"
+        }
+      ],
+      "printer": {
+        "thanks": "Cảm ơn bạn!",
+        "gift": "{gift} ×{count}",
+        "comment": "💬 {comment}",
+        "like": "❤️ Đã thả {count} tim",
+        "follow": "➕ Đã follow kênh",
+        "share": "↗ Đã chia sẻ live",
+        "join": "👋 Đã tham gia live",
+        "maxReceipts": 12,
+        "feedInterval": 780,
+        "showAvatar": true,
+        "showAction": true
+      },
+      "rules": [
+        {
+          "trigger": "gift_any",
+          "giftId": "all",
+          "action": "print_receipt",
+          "style": "classic",
+          "label": "🧾 In bảng tên kiểu Cổ điển",
+          "points": 1,
+          "enabled": true
+        }
+      ],
+      "theme": {
+        "preset": "neon",
+        "accent": "#22d3ee",
+        "accentAlt": "#a855f7",
+        "textColor": "#ffffff",
+        "fontFamily": "roboto",
+        "panelOpacity": 0.55,
+        "scale": 1,
+        "transparent": true,
+        "chatGuideTitle": "",
+        "giftGuideTitle": "🎁 QUÀ NÀO ĐƯỢC GÌ",
+        "leaderboardPosition": "top-right",
+        "toastPosition": "bottom-left",
+        "leaderboardSize": 5
+      },
+      "sound": {
+        "enabled": true,
+        "volume": 0.6,
+        "pack": "arcade",
+        "muted": []
+      },
+      "alerts": {
+        "enabled": true,
+        "minDiamonds": 10,
+        "showFollow": true,
+        "showShare": true,
+        "durationSeconds": 5,
+        "tts": {
+          "enabled": true,
+          "lang": "vi-VN",
+          "voiceId": "",
+          "volume": 1,
+          "rate": 1,
+          "minDiamonds": 10,
+          "giftTemplate": "Cảm ơn {name} đã tặng {gift}",
+          "readFollow": false,
+          "followTemplate": "{name} vừa theo dõi kênh"
+        }
+      },
+      "customTexts": {
+        "printer.title": "🧾 MÁY IN CẢM ƠN",
+        "printer.thanks": "Cảm ơn bạn!",
+        "winner.win": "👑 {name} ĐÃ TẶNG QUÀ NHIỀU NHẤT!"
+      },
+      "bgmUrl": "",
+      "bgmVolume": 0.5,
+      "bgmDuckVolume": 0.12,
+      "goal": {
+        "enabled": false,
+        "label": "Mục tiêu kim cương",
+        "target": 10000,
+        "current": 0
+      },
+      "uiTexts": {},
+      "mappings": [
+        {
+          "trigger": "gift_any",
+          "giftId": "all",
+          "action": "print_receipt",
+          "style": "classic",
+          "label": "🧾 In bảng tên kiểu Cổ điển",
+          "points": 1,
+          "enabled": true
+        }
+      ],
+      "receiptTitle": "DANH SÁCH CẢM ƠN",
+      "receiptThanks": "Cảm ơn bạn!",
+      "receiptGiftTemplate": "{gift} ×{count}",
+      "receiptCommentTemplate": "💬 {comment}",
+      "receiptLikeTemplate": "❤️ Đã thả {count} tim",
+      "receiptFollowText": "➕ Đã follow kênh",
+      "receiptShareText": "↗ Đã chia sẻ live",
+      "receiptJoinText": "👋 Đã tham gia live",
+      "receiptVisible": 12,
+      "receiptSpeedMs": 780,
+      "receiptShowAvatar": true,
+      "receiptShowGift": true
+    }
+  },
+  {
+    "id": "cmtbk6dyh00ekkx08xtg4pc3m",
+    "name": "Live Show 3 Mèo",
+    "emoji": "🎬",
+    "gameType": "video_react",
+    "token": "tok_cmtbk6dyh00ekkx08xtg4pc3m",
+    "createdAt": 1787837951066,
+    "updatedAt": 1787837951066,
+    "config": {
+      "gameType": "video_react",
+      "teams": [
+        {
+          "name": "LIVE SHOW 3 MÈO",
+          "color": "#f43f5e",
+          "emoji": "🐱"
+        }
+      ],
+      "templateId": "tpl_live_show_3_meo",
+      "template": {
+        "id": "tpl_three_cats",
+        "name": "Live Show 3 Mèo",
+        "description": "Nhân vật video chạy nền, có quà là đổi sang clip chuyển động khác.",
+        "idleUrl": "/Meow/idle.mp4",
+        "fit": "cover",
+        "actions": [
+          {
+            "key": "cat_1",
+            "label": "Mèo 1 meo meo",
+            "emoji": "🐱",
+            "durationMs": 7000,
+            "cooldownMs": 2000,
+            "priority": 10,
+            "url": "/Meow/1-keu.mp4",
+            "volume": 1
+          },
+          {
+            "key": "cat_2",
+            "label": "Mèo 2 meo meo",
+            "emoji": "🐱",
+            "durationMs": 7000,
+            "cooldownMs": 0,
+            "priority": 50,
+            "url": "/Meow/2-keu.mp4",
+            "volume": 1
+          },
+          {
+            "key": "cat_3",
+            "label": "Mèo 3 meo meo",
+            "emoji": "🐱",
+            "durationMs": 7000,
+            "cooldownMs": 0,
+            "priority": 10,
+            "url": "/Meow/3-keu.mp4",
+            "volume": 1
+          },
+          {
+            "key": "three_cats",
+            "label": "3 Mèo meo meo",
+            "emoji": "🐾",
+            "durationMs": 7000,
+            "cooldownMs": 0,
+            "priority": 10,
+            "url": "/Meow/3consua.mp4",
+            "volume": 1
+          },
+          {
+            "key": "feed_cat",
+            "label": "Cho mèo ăn",
+            "emoji": "🐟",
+            "durationMs": 7000,
+            "cooldownMs": 0,
+            "priority": 10,
+            "url": "/Meow/an.mp4",
+            "volume": 1
+          },
+          {
+            "key": "white_cat_step",
+            "label": "Mèo trắng bước lên",
+            "emoji": "🤍",
+            "durationMs": 15000,
+            "cooldownMs": 0,
+            "priority": 10,
+            "url": "/Meow/len.mp4",
+            "volume": 1
+          },
+          {
+            "key": "white_cat_play",
+            "label": "Chơi với mèo trắng",
+            "emoji": "🧶",
+            "durationMs": 15000,
+            "cooldownMs": 0,
+            "priority": 10,
+            "url": "/Meow/len.mp4",
+            "volume": 1
+          }
+        ]
+      },
+      "videoNames": {},
+      "bgmMode": "template",
+      "bgmUrl": "",
+      "bgmVolume": 0.6,
+      "bgmDuckVolume": 0.15,
+      "maxQueue": 3,
+      "mappings": [
+        {
+          "trigger": "gift",
+          "giftId": 5655,
+          "giftName": "Rose",
+          "gift": "Rose",
+          "action": "play_video",
+          "videoKey": "cat_1",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "1",
+          "action": "play_video",
+          "videoKey": "cat_1",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftId": 6064,
+          "giftName": "GG",
+          "gift": "GG",
+          "action": "play_video",
+          "videoKey": "cat_2",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "2",
+          "action": "play_video",
+          "videoKey": "cat_2",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftId": 15232,
+          "giftName": "Đỉnh",
+          "gift": "Đỉnh",
+          "action": "play_video",
+          "videoKey": "cat_3",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "3",
+          "action": "play_video",
+          "videoKey": "cat_3",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftId": 5487,
+          "giftName": "Finger Heart",
+          "gift": "Finger Heart",
+          "action": "play_video",
+          "videoKey": "three_cats",
+          "points": 5,
+          "enabled": true
+        },
+        {
+          "trigger": "like",
+          "minCount": 15,
+          "action": "play_video",
+          "videoKey": "three_cats",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftId": 5827,
+          "giftName": "Ice Cream Cone",
+          "gift": "Ice Cream Cone",
+          "action": "play_video",
+          "videoKey": "feed_cat",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "follow",
+          "action": "play_video",
+          "videoKey": "feed_cat",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftId": 5879,
+          "giftName": "Doughnut",
+          "gift": "Doughnut",
+          "action": "play_video",
+          "videoKey": "white_cat_step",
+          "points": 30,
+          "enabled": true
+        },
+        {
+          "trigger": "share",
+          "action": "play_video",
+          "videoKey": "white_cat_step",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftId": 5658,
+          "giftName": "Nước hoa",
+          "gift": "Nước hoa",
+          "action": "play_video",
+          "videoKey": "white_cat_play",
+          "points": 20,
+          "enabled": true
+        }
+      ],
+      "theme": {
+        "preset": "neon",
+        "accent": "#22d3ee",
+        "accentAlt": "#a855f7",
+        "textColor": "#ffffff",
+        "fontFamily": "roboto",
+        "panelOpacity": 0.55,
+        "scale": 1,
+        "transparent": true,
+        "chatGuideTitle": "💬 GÕ CHỮ ĐƯỢC GÌ",
+        "giftGuideTitle": "🎁 TẶNG QUÀ ĐỂ ĐIỀU KHIỂN",
+        "leaderboardPosition": "top-right",
+        "toastPosition": "bottom-left",
+        "leaderboardSize": 5,
+        "widgets": {
+          "giftGuide": true,
+          "chatGuide": true,
+          "leaderboard": false,
+          "goal": false,
+          "toast": true,
+          "alert": true,
+          "mcMessage": true,
+          "logo": false
+        }
+      },
+      "sound": {
+        "enabled": true,
+        "pack": "arcade",
+        "volume": 0.6,
+        "muted": []
+      },
+      "alerts": {
+        "enabled": true,
+        "minDiamonds": 10,
+        "showFollow": true,
+        "showShare": true,
+        "durationSeconds": 5,
+        "tts": {
+          "enabled": true,
+          "lang": "vi-VN",
+          "minDiamonds": 10,
+          "rate": 1,
+          "volume": 1,
+          "voiceId": "",
+          "giftTemplate": "Cảm ơn {name} đã tặng {gift}",
+          "readFollow": false
+        }
+      },
+      "customTexts": {
+        "video.title": "🎬 LIVE SHOW 3 MÈO",
+        "guide.gift": "🎁 TẶNG QUÀ ĐỂ ĐIỀU KHIỂN",
+        "guide.chat": "💬 GÕ CHỮ ĐƯỢC GÌ"
+      },
+      "bgmSource": "template"
+    }
+  },
+  {
+    "id": "cmtbk6asa00ehkx089sr0l2qw",
+    "name": "3 Tuất vàng Live",
+    "gameType": "video_react",
+    "emoji": "🎬",
+    "config": {
+      "gameType": "video_react",
+      "teams": [
+        {
+          "name": "3 Tuất vàng Live",
+          "color": "#f43f5e",
+          "emoji": "🐕"
+        }
+      ],
+      "templateId": "tpl_three_dogs",
+      "bgmMode": "preset",
+      "bgmUrl": null,
+      "bgmVolume": 0.6,
+      "bgmDuckVolume": 0.15,
+      "maxQueue": 5,
+      "template": {
+        "id": "tpl_three_dogs",
+        "name": "3 Tuất vàng Live",
+        "description": "Nhân vật video chạy nền, có quà là đổi sang clip chuyển động khác.",
+        "idleUrl": "/Tuất/idle.mp4",
+        "fit": "cover",
+        "actions": [
+          {
+            "key": "dog_play_ball",
+            "label": "Tuất 2 chơi bóng",
+            "emoji": "🎬",
+            "durationMs": 7000,
+            "cooldownMs": 0,
+            "priority": 10,
+            "url": "/Tuất/2-hatbong.mp4",
+            "volume": 1
+          },
+          {
+            "key": "dog_frisbee",
+            "label": "Ném đĩa tuất 3",
+            "emoji": "🎬",
+            "durationMs": 11000,
+            "cooldownMs": 0,
+            "priority": 10,
+            "url": "/Tuất/3-gapdia.mp4",
+            "volume": 1
+          },
+          {
+            "key": "cat_walk_by",
+            "label": "Mèo đi ngang",
+            "emoji": "🎬",
+            "durationMs": 8000,
+            "cooldownMs": 0,
+            "priority": 10,
+            "url": "/Tuất/meodingang.mp4",
+            "volume": 1
+          },
+          {
+            "key": "dog_feed",
+            "label": "Cho tuất 2 ăn",
+            "emoji": "🎬",
+            "durationMs": 15000,
+            "cooldownMs": 0,
+            "priority": 10,
+            "url": "/Tuất/2-sua.mp4",
+            "volume": 1
+          },
+          {
+            "key": "three_dogs_dance_simple",
+            "label": "3 tuất nhảy đơn giản",
+            "emoji": "🎬",
+            "durationMs": 8000,
+            "cooldownMs": 0,
+            "priority": 10,
+            "url": "/Tuất/nhay.mp4",
+            "volume": 1
+          },
+          {
+            "key": "three_dogs_dance_funny",
+            "label": "3 tuất nhảy funny",
+            "emoji": "🎬",
+            "durationMs": 7300,
+            "cooldownMs": 0,
+            "priority": 10,
+            "url": "/Tuất/nhay2.mp4",
+            "volume": 1
+          },
+          {
+            "key": "three_dogs_lick",
+            "label": "3 tuất liếm nhau",
+            "emoji": "🎬",
+            "durationMs": 8000,
+            "cooldownMs": 0,
+            "priority": 10,
+            "url": "/Tuất/liem.mp4",
+            "volume": 1
+          }
+        ]
+      },
+      "videoNames": {},
+      "mappings": [
+        {
+          "trigger": "gift",
+          "giftId": 5655,
+          "giftName": "Rose",
+          "gift": "Rose",
+          "action": "play_video",
+          "videoKey": "dog_play_ball",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "1",
+          "action": "play_video",
+          "videoKey": "dog_play_ball",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftId": 6064,
+          "giftName": "GG",
+          "gift": "GG",
+          "action": "play_video",
+          "videoKey": "dog_frisbee",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "2",
+          "action": "play_video",
+          "videoKey": "dog_frisbee",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftId": 15232,
+          "giftName": "Đỉnh",
+          "gift": "Đỉnh",
+          "action": "play_video",
+          "videoKey": "cat_walk_by",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "3",
+          "action": "play_video",
+          "videoKey": "cat_walk_by",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftId": 5827,
+          "giftName": "Ice Cream Cone",
+          "gift": "Ice Cream Cone",
+          "action": "play_video",
+          "videoKey": "dog_feed",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "follow",
+          "action": "play_video",
+          "videoKey": "dog_feed",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftId": 5487,
+          "giftName": "Finger Heart",
+          "gift": "Finger Heart",
+          "action": "play_video",
+          "videoKey": "three_dogs_dance_simple",
+          "points": 5,
+          "enabled": true
+        },
+        {
+          "trigger": "like",
+          "minCount": 15,
+          "action": "play_video",
+          "videoKey": "three_dogs_dance_simple",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftId": 5879,
+          "giftName": "Doughnut",
+          "gift": "Doughnut",
+          "action": "play_video",
+          "videoKey": "three_dogs_dance_funny",
+          "points": 30,
+          "enabled": true
+        },
+        {
+          "trigger": "share",
+          "action": "play_video",
+          "videoKey": "three_dogs_dance_funny",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftId": 5658,
+          "giftName": "Nước hoa",
+          "gift": "Nước hoa",
+          "action": "play_video",
+          "videoKey": "three_dogs_lick",
+          "points": 20,
+          "enabled": true
+        }
+      ],
+      "theme": {
+        "preset": "neon",
+        "accent": "#22d3ee",
+        "accentAlt": "#a855f7",
+        "textColor": "#ffffff",
+        "fontFamily": "roboto",
+        "panelOpacity": 0.55,
+        "scale": 1,
+        "transparent": true,
+        "chatGuideTitle": "💬 GÕ CHỮ ĐƯỢC GÌ",
+        "giftGuideTitle": "🎁 TẶNG QUÀ ĐỂ ĐIỀU KHIỂN",
+        "leaderboardPosition": "top-right",
+        "toastPosition": "bottom-left",
+        "leaderboardSize": 5,
+        "widgets": {
+          "giftGuide": true,
+          "chatGuide": true,
+          "leaderboard": false,
+          "goal": false,
+          "toast": true,
+          "alert": true,
+          "mcMessage": true,
+          "logo": false
+        }
+      },
+      "sound": {
+        "enabled": true,
+        "pack": "arcade",
+        "volume": 0.6,
+        "muted": []
+      },
+      "bgmSource": "template",
+      "alerts": {
+        "tts": {
+          "enabled": true,
+          "lang": "vi-VN",
+          "minDiamonds": 10,
+          "rate": 1,
+          "volume": 1,
+          "voiceId": "",
+          "giftTemplate": "Cảm ơn {name} đã tặng {gift}",
+          "readFollow": false
+        }
+      },
+      "customTexts": {
+        "video.unselected": "🎬 Màn hình chưa chọn mẫu video — chọn trong dashboard",
+        "video.loading": "⏳ Đang tải video {done}/{total}…",
+        "video.blocked": "▶️ Trình duyệt đang chặn tự phát — bấm vào khung để bắt đầu",
+        "video.muted": "🔇 Bấm vào khung để bật tiếng (OBS thì tự bật)"
+      },
+      "version": 1
+    }
+  }
+]

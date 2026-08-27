@@ -1,0 +1,42 @@
+<!-- TAB 3: LUẬT CHƠI & SỰ KIỆN -->
+    <section id="tab-rules" class="tab-content hidden space-y-6">
+      
+      <!-- LUẬT CỘNG ĐIỂM CARD -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-5">
+        
+        <!-- Header -->
+        <div class="flex items-start justify-between border-b border-slate-800/80 pb-4">
+          <div>
+            <h3 class="text-base font-bold text-white flex items-center gap-2">
+              Luật cộng điểm
+            </h3>
+            <p class="text-xs text-slate-400 mt-1">
+              Mỗi dòng là một câu: NGƯỜI XEM LÀM GÌ → AI ĐƯỢC ĐIỂM.
+            </p>
+          </div>
+          <button class="btn-save-config px-5 py-2.5 rounded-xl text-xs font-bold bg-pink-600 hover:bg-pink-500 text-white shadow-lg shadow-pink-600/30 transition-all shrink-0">
+            💾 Lưu luật chơi
+          </button>
+        </div>
+
+        <!-- THÊM LUẬT Buttons -->
+        <div class="flex items-center gap-2.5 flex-wrap" id="rules-add-buttons-container">
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-400">THÊM LUẬT</span>
+          <button id="btn-add-rule-gift" class="px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 hover:border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer">
+            <span>+</span> <span>🎁</span> <span>Theo món quà</span>
+          </button>
+          <button id="btn-add-rule-comment" class="px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 hover:border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer">
+            <span>+</span> <span>💬</span> <span>Theo bình luận</span>
+          </button>
+          <button id="btn-add-rule-like" class="px-3.5 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 hover:border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer">
+            <span>+</span> <span>💗</span> <span>Theo thả tim</span>
+          </button>
+        </div>
+
+        <!-- Rules List Container -->
+        <div class="space-y-3 pt-2" id="rules-list-container">
+          <!-- Rendered dynamically -->
+        </div>
+
+      </div>
+    </section>

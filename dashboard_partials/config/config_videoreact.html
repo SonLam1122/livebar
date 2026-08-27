@@ -1,0 +1,86 @@
+<!-- ========================================================================= -->
+<!-- CONFIG TAB: VIDEO REACT (LIVE SHOW 3 MÈO / MÀN HÌNH VIDEO) -->
+<!-- ========================================================================= -->
+<div id="config-section-videoreact" class="config-game-section hidden space-y-6">
+  <!-- 1. MẪU ĐANG DÙNG -->
+  <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div>
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Mẫu đang dùng</span>
+        <h3 id="vr-template-name" class="text-lg font-black text-white flex items-center gap-2 mt-0.5">
+          <span>🐱</span> Live Show 3 Mèo
+        </h3>
+        <p id="vr-template-desc" class="text-xs text-slate-400 mt-1">
+          Nhân vật video chạy nền, có quà là đổi sang clip chuyển động khác.
+        </p>
+      </div>
+      <div class="shrink-0">
+        <button id="btn-vr-change-template" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 transition-all">
+          🔄 Đổi mẫu
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. QUÀ NÀO KÍCH HOẠT CHUYỂN ĐỘNG NÀO -->
+  <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+    <div class="border-b border-slate-800/80 pb-3">
+      <h4 class="text-sm font-bold text-white flex items-center gap-2">
+        <span>🎬</span> Quà nào kích hoạt chuyển động nào
+      </h4>
+      <p class="text-[11px] text-slate-400 mt-0.5">
+        Mỗi khối dưới đây là một clip trong mẫu. Thêm điều kiện để clip đó cắt vào thay clip nền khi người xem tương tác — và đặt lại tên hiển thị nếu muốn người xem đọc chữ của bạn.
+      </p>
+    </div>
+
+    <!-- Alert khi chưa có điều kiện -->
+    <div id="vr-no-rules-alert" class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 flex items-center gap-2.5">
+      <span class="text-base">⚠️</span>
+      <span>Chưa có điều kiện nào — màn hình sẽ chạy mãi clip nền, tặng quà cũng không đổi gì. Bấm một nút <strong>Thêm</strong> trong khối clip bên dưới để bắt đầu.</span>
+    </div>
+
+    <!-- Danh sách clip cards của mẫu (Live Show 3 Mèo) -->
+    <div id="vr-clips-list-container" class="space-y-3.5">
+      <!-- Sẽ được render tự động qua JS renderVideoReactClips() -->
+    </div>
+
+    <!-- Dòng thông báo số clip chưa gán điều kiện -->
+    <div id="vr-clips-summary" class="text-xs font-semibold text-slate-400 italic pt-1">
+      Còn 7 clip chưa có điều kiện nào — chúng sẽ không bao giờ lên sóng.
+    </div>
+  </div>
+
+  <!-- 3. NGƯỜI XEM ĐỌC THẤY GÌ -->
+  <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+    <div class="border-b border-slate-800/80 pb-3">
+      <h4 class="text-sm font-bold text-white flex items-center gap-2">
+        <span>👁️</span> Người xem đọc thấy gì
+      </h4>
+      <p class="text-[11px] text-slate-400 mt-0.5">
+        Đúng hai bảng mà overlay vẽ lên sóng, dựng từ chính bảng luật ở trên. Kiểu bày, tiêu đề và số dòng chỉnh ở tab Giao diện.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Bảng Quà -->
+      <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800/80 space-y-2">
+        <div class="text-xs font-bold text-pink-400 flex items-center gap-1.5">
+          <span>🎁</span> TẶNG QUÀ ĐỂ ĐIỀU KHIỂN
+        </div>
+        <p id="vr-preview-gift-guide" class="text-xs text-slate-400 italic">
+          Chưa có luật quà nào — bảng này sẽ không hiện trên sóng.
+        </p>
+      </div>
+
+      <!-- Bảng Chat / Tương Tác -->
+      <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800/80 space-y-2">
+        <div class="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
+          <span>💬</span> GÕ CHỮ ĐƯỢC GÌ
+        </div>
+        <p id="vr-preview-chat-guide" class="text-xs text-slate-400 italic">
+          Chưa có luật gõ chữ / thả tim / follow / chia sẻ — bảng này sẽ không hiện trên sóng.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

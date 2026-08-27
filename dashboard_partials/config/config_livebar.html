@@ -1,0 +1,313 @@
+<!-- 1. LIVE BAR CONFIG -->
+<div id="config-section-livebar" class="space-y-8">
+  <!-- HEADER -->
+  <div class="flex items-start justify-between border-b border-slate-800 pb-4">
+    <div>
+      <h3 class="text-base font-bold text-purple-400 flex items-center gap-2">
+        <span>🍸</span> Sàn Live Bar
+      </h3>
+      <p class="text-xs text-slate-400 mt-0.5">
+        Sức chứa của sàn, cách camera chạy và mấy mốc giờ của phần thưởng. AI ĐƯỢC LÀM GÌ — vào sàn, được zoom, đi một vòng — thì đặt ở tab Luật chơi; còn sàn TRÔNG thế nào thì ở tab Giao diện.
+      </p>
+    </div>
+    <button class="btn-save-config px-5 py-2.5 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/30 transition-all shrink-0">
+      💾 Lưu cấu hình
+    </button>
+  </div>
+
+  <!-- 1. THÔNG SỐ SÀN & MỐC GIỜ HIỆU ỨNG -->
+  <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+    <div class="border-b border-slate-800/80 pb-3">
+      <h4 class="text-sm font-bold text-white flex items-center gap-2">
+        <span>⚙️</span> Thông số sàn nhảy &amp; Mốc giờ phần thưởng
+      </h4>
+      <p class="text-[11px] text-slate-400 mt-0.5">
+        Cấu hình sức chứa tối đa, camera và các mốc thời gian khi kích hoạt hành động tương tác.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <!-- Số khách tối đa trên sàn -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-bold text-slate-200">Số khách tối đa trên sàn</label>
+        <input type="number" id="cfg-max-guests" value="60" min="10" max="200" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          Đầy thì người ít đóng góp nhất bị mời ra. Người đã tặng quà không bao giờ bị mời ra trước.
+        </p>
+      </div>
+
+      <!-- Giây zoom mỗi lần có quà -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-bold text-slate-200">Giây zoom mỗi lần có quà</label>
+        <input type="number" id="cfg-spotlight-sec" value="5" min="1" max="60" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          Thời gian spotlight phóng to vào nhân vật khi họ tặng quà hoặc nhận hiệu ứng ưu tiên.
+        </p>
+      </div>
+
+      <!-- Giây đi hết một vòng sàn -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-bold text-slate-200">Giây đi hết một vòng sàn</label>
+        <input type="number" id="cfg-stroll-sec" value="9" min="1" max="60" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          Chỉ có tác dụng khi tab Luật chơi có một dòng đặt hành động “Đi một vòng quanh sàn”.
+        </p>
+      </div>
+
+      <!-- Giây nhảy bật lên cao -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-bold text-slate-200">Giây nhảy bật lên cao</label>
+        <input type="number" id="cfg-jump-sec" value="4" min="1" max="60" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          Chỉ có tác dụng khi tab Luật chơi có một dòng đặt hành động “Nhảy bật lên cao tại chỗ”.
+        </p>
+      </div>
+
+      <!-- Nhảy cao mấy thân người -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-bold text-slate-200">Nhảy cao mấy thân người</label>
+        <input type="number" step="0.1" id="cfg-jump-height" value="1.2" min="0.5" max="5.0" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          1 = bật lên đúng một thân người. Đo theo thân người chứ không theo pixel nên khung dọc, khung ngang và khung xem trước đều cho ra cùng một cú nhảy.
+        </p>
+      </div>
+
+      <!-- Giây được mặc nhân vật VIP -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-bold text-slate-200">Giây được mặc nhân vật VIP</label>
+        <input type="number" id="cfg-vip-sec" value="0" min="0" max="3600" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          Chỉ có tác dụng khi tab Luật chơi có một dòng đặt hành động “Đổi thành nhân vật VIP ngẫu nhiên”.
+        </p>
+      </div>
+
+      <!-- Giây giữ nhân vật vừa đổi -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-bold text-slate-200">Giây giữ nhân vật vừa đổi</label>
+        <input type="number" id="cfg-skin-sec" value="0" min="0" max="3600" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          Chỉ có tác dụng khi tab Luật chơi có một dòng đặt hành động “Đổi nhân vật thường”. Ảnh bốc trong kho “Nhân vật thường” ngay bên dưới.
+        </p>
+      </div>
+
+      <!-- Giây được mang cánh -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-bold text-slate-200">Giây được mang cánh</label>
+        <input type="number" id="cfg-wing-sec" value="0" min="0" max="3600" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          Cánh giờ CHỈ đến từ bảng luật, không còn tự mọc theo danh hiệu. Chưa có luật “Gắn đôi cánh” ở tab Luật chơi thì trên sàn không ai có cánh.
+        </p>
+      </div>
+
+      <!-- Giây được đeo badge -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-bold text-slate-200">Giây được đeo badge</label>
+        <input type="number" id="cfg-badge-sec" value="0" min="0" max="3600" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          Badge CHỈ đến từ bảng luật, không còn tự mọc theo danh hiệu — trước đây ai vừa vào sàn cũng có sẵn một tấm. Chưa có luật “Trao badge” ở tab Luật chơi thì trên sàn không ai đeo gì.
+        </p>
+      </div>
+
+      <!-- Im lặng bao lâu thì rời sàn (phút) -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-bold text-slate-200">Im lặng bao lâu thì rời sàn (phút)</label>
+        <input type="number" id="cfg-idle-leave-min" value="10" min="0" max="120" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          Ai không chat / thả tim / tặng quà trong 10 phút sẽ tự rời sàn, nhường chỗ cho người đang tương tác.
+        </p>
+      </div>
+
+      <!-- Giây đèn chạy đổi màu sàn -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-bold text-slate-200">Giây đèn chạy đổi màu sàn</label>
+        <input type="number" id="cfg-party-sec" value="7" min="1" max="60" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          Chỉ có tác dụng khi tab Luật chơi có một dòng đặt hành động “Đổi màu sàn, đèn chạy”.
+        </p>
+      </div>
+
+      <!-- Mức zoom khi bay vào -->
+      <div class="space-y-1.5">
+        <label class="text-xs font-bold text-slate-200">Mức zoom khi bay vào</label>
+        <input type="number" step="0.05" id="cfg-camera-zoom" value="1.55" min="1.0" max="3.0" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          1 = không zoom. Camera bay vào trong 1,2 giây rồi giữ, hết giờ tự bay ra.
+        </p>
+      </div>
+
+      <!-- Giây camera đi hết một vòng sàn -->
+      <div class="space-y-1.5 sm:col-span-2 lg:col-span-3">
+        <div class="max-w-md space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Giây camera đi hết một vòng sàn</label>
+          <input type="number" id="cfg-camera-orbit" value="26" min="5" max="120" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Lúc rảnh camera lia thành vòng quanh sàn. Số càng lớn thì lia càng chậm và êm.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. DÀN ĐÈN, CAMERA & MÀN HÌNH LED -->
+  <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+    <div class="border-b border-slate-800/80 pb-3">
+      <h4 class="text-sm font-bold text-white flex items-center gap-2">
+        <span>💡</span> Dàn đèn sàn nhảy &amp; Màn hình LED DJ
+      </h4>
+      <p class="text-[11px] text-slate-400 mt-0.5">
+        Tuỳ chỉnh độ chi tiết đèn hiệu ứng, chuyển động camera khi rảnh và nội dung trình chiếu sau bàn DJ.
+      </p>
+    </div>
+
+    <!-- Dàn đèn sàn nhảy -->
+    <div class="space-y-1.5 max-w-xl">
+      <label class="text-xs font-bold text-slate-200">Dàn đèn sàn nhảy</label>
+      <select id="cfg-light-mode" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        <option value="full">Đủ bộ — thêm laser, đèn chớp theo nhịp, khói</option>
+        <option value="medium">Vừa — giảm bớt hiệu ứng (cho máy yếu)</option>
+      </select>
+      <p class="text-[10px] text-slate-400 leading-relaxed">
+        Máy chạy OBS yếu hoặc hay tụt khung hình thì hạ xuống mức “Vừa” — mỗi lớp đèn là một lớp máy phải vẽ lại mỗi khung hình.
+      </p>
+    </div>
+
+    <!-- 3 Toggles -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-slate-800/80">
+      <label class="p-3.5 rounded-xl bg-slate-950 border border-slate-800/80 hover:border-slate-700 flex items-center justify-between gap-3 cursor-pointer transition-all">
+        <span class="text-xs font-semibold text-slate-200">Camera tự lia vòng quanh sàn khi rảnh</span>
+        <input type="checkbox" id="cfg-camera-sway" class="w-4 h-4 rounded border-slate-700 bg-slate-900 text-purple-600 focus:ring-0" checked>
+      </label>
+      <label class="p-3.5 rounded-xl bg-slate-950 border border-slate-800/80 hover:border-slate-700 flex items-center justify-between gap-3 cursor-pointer transition-all">
+        <span class="text-xs font-semibold text-slate-200">Bay cận chào người vừa vào sàn</span>
+        <input type="checkbox" id="cfg-spotlight-on-join" class="w-4 h-4 rounded border-slate-700 bg-slate-900 text-purple-600 focus:ring-0" checked>
+      </label>
+      <label class="p-3.5 rounded-xl bg-slate-950 border border-slate-800/80 hover:border-slate-700 flex items-center justify-between gap-3 cursor-pointer transition-all">
+        <span class="text-xs font-semibold text-slate-200">Hiện màn hình LED sau bàn DJ</span>
+        <input type="checkbox" id="cfg-dj-screen-enable" class="w-4 h-4 rounded border-slate-700 bg-slate-900 text-purple-600 focus:ring-0" checked>
+      </label>
+    </div>
+
+    <!-- Nội dung màn hình LED -->
+    <div class="space-y-3 pt-2">
+      <div class="space-y-1.5">
+        <div class="flex items-center justify-between">
+          <label class="text-xs font-bold text-slate-200">Nội dung màn hình LED</label>
+          <button type="button" id="btn-open-dj-library" class="text-xs font-bold text-purple-400 hover:text-purple-300 flex items-center gap-1 cursor-pointer">
+            <span>🖼️</span> <span>Thư viện</span>
+          </button>
+        </div>
+        <div class="flex gap-2">
+          <input type="text" id="cfg-dj-screen-url" placeholder="Dán link YouTube, ảnh GIF hoặc video MP4 — để trống thì dùng ảnh mặc định" class="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-purple-500">
+        </div>
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          Nhận link YouTube, ảnh GIF hoặc clip MP4. Link phải mở được công khai, không cần đăng nhập.
+        </p>
+      </div>
+
+      <!-- Notice callout box -->
+      <div class="p-3.5 rounded-xl bg-purple-950/30 border border-purple-800/40 text-[11px] text-purple-200/90 leading-relaxed flex items-start gap-2.5">
+        <span class="text-base">🔇</span>
+        <div>
+          Mặc định màn hình này <strong>CÂM</strong>. Muốn nghe tiếng của nó thì sang <strong>tab Âm thanh → Tiếng của màn hình LED</strong> — nhớ tắt nhạc nền của sàn, hai nguồn nhạc chồng lên nhau là người xem nhận ra ngay.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. KHO ẢNH CỦA SÀN -->
+  <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-6">
+    <div class="border-b border-slate-800/80 pb-3">
+      <h4 class="text-sm font-bold text-white flex items-center gap-2">
+        <span>🎭</span> Kho ảnh của sàn
+      </h4>
+      <p class="text-[11px] text-slate-400 mt-0.5">
+        Nhân vật thường, nhân vật VIP, đôi cánh và badge mà sàn này được phép dùng. Ảnh có sẵn là của hệ thống; ảnh riêng chỉ tài khoản bạn thấy.
+      </p>
+    </div>
+
+    <!-- 3.1 Nhân vật thường (cả sàn) -->
+    <div class="space-y-3">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h5 class="text-xs font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
+            <span>🕺</span> Nhân vật thường (cả sàn)
+          </h5>
+          <span class="text-[11px] text-purple-400" id="livebar-dancers-status">Chưa tích ô nào = dùng cả 37 ảnh đang bật.</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="file" id="input-upload-skin" class="hidden" accept="image/*">
+          <button type="button" id="btn-upload-skin" class="px-3.5 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 flex items-center gap-1.5 transition-all cursor-pointer">
+            <span>⬆️</span> <span>Tải ảnh riêng</span>
+          </button>
+        </div>
+      </div>
+      <p class="text-[11px] text-slate-400 leading-relaxed">
+        Ai bước vào sàn cũng mang một trong mấy ảnh này (bốc theo tên, cùng một người luôn ra cùng một hình). Muốn đổi hình cho ai đó giữa buổi live thì thêm luật “Đổi nhân vật thường”.
+      </p>
+      <div class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-10 lg:grid-cols-12 gap-2 max-h-72 overflow-y-auto p-3 rounded-2xl bg-slate-950/80 border border-slate-800/80" id="livebar-dancers-grid"></div>
+    </div>
+
+    <!-- 3.2 Nhân vật VIP -->
+    <div class="space-y-3 pt-4 border-t border-slate-800/80">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h5 class="text-xs font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
+            <span>👑</span> Nhân vật VIP
+          </h5>
+          <span class="text-[11px] text-amber-400" id="livebar-vips-status">Chưa tích ô nào = dùng cả 8 ảnh đang bật.</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="file" id="input-upload-vip" class="hidden" accept="image/*">
+          <button type="button" id="btn-upload-vip" class="px-3.5 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 flex items-center gap-1.5 transition-all cursor-pointer">
+            <span>⬆️</span> <span>Tải ảnh riêng</span>
+          </button>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-2 p-3 rounded-2xl bg-slate-950/80 border border-slate-800/80" id="livebar-vips-grid"></div>
+    </div>
+
+    <!-- 3.3 Cánh (đủ bên trái + bên phải) -->
+    <div class="space-y-3 pt-4 border-t border-slate-800/80">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h5 class="text-xs font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
+            <span>🪽</span> Cánh (đủ bên trái + bên phải)
+          </h5>
+          <span class="text-[11px] text-sky-400" id="livebar-wings-status">Chưa tích ô nào = dùng cả 6 ảnh đang bật.</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="file" id="input-upload-wing-left" class="hidden" accept="image/*">
+          <input type="file" id="input-upload-wing-right" class="hidden" accept="image/*">
+          <button type="button" id="btn-pick-wing-left" class="px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold border border-slate-800 cursor-pointer">Chọn cánh trái</button>
+          <button type="button" id="btn-pick-wing-right" class="px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-300 hover:text-white text-[11px] font-bold border border-slate-800 cursor-pointer">Chọn cánh phải</button>
+          <button type="button" id="btn-add-wing-pair" class="px-3.5 py-1.5 rounded-xl bg-sky-600/80 hover:bg-sky-500 text-white text-[11px] font-bold border border-sky-500/50 flex items-center gap-1 cursor-pointer">
+            <span>+</span> <span>Thêm đôi cánh</span>
+          </button>
+        </div>
+      </div>
+      <p class="text-[11px] text-slate-400 leading-relaxed">
+        Mỗi đôi cần đủ hai ảnh nền trong suốt: bên trái và bên phải. Luật “Gắn đôi cánh” sẽ bốc trong đúng những đôi bạn chọn.
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 p-3 rounded-2xl bg-slate-950/80 border border-slate-800/80" id="livebar-wings-grid"></div>
+    </div>
+
+    <!-- 3.4 Badge (biển dưới chân) -->
+    <div class="space-y-3 pt-4 border-t border-slate-800/80">
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div>
+          <h5 class="text-xs font-bold uppercase tracking-wider text-slate-200 flex items-center gap-2">
+            <span>🎖️</span> Badge (biển dưới chân)
+          </h5>
+          <span class="text-[11px] text-emerald-400" id="livebar-badges-status">Chưa tích ô nào = dùng cả 6 ảnh đang bật.</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input type="file" id="input-upload-badge" class="hidden" accept="image/*">
+          <button type="button" id="btn-upload-badge" class="px-3.5 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 flex items-center gap-1.5 transition-all cursor-pointer">
+            <span>⬆️</span> <span>Tải ảnh riêng</span>
+          </button>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 p-3 rounded-2xl bg-slate-950/80 border border-slate-800/80" id="livebar-badges-grid"></div>
+    </div>
+  </div>
+</div>

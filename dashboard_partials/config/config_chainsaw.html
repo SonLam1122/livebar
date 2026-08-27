@@ -1,0 +1,206 @@
+<!-- 6. CHAINSAW CLASH CONFIG -->
+
+
+  <!-- 6. CHAINSAW CLASH CONFIG -->
+  <div id="config-section-chainsaw" class="hidden space-y-8">
+    
+    <!-- HEADER -->
+    <div class="flex items-start justify-between border-b border-slate-800 pb-4">
+      <div>
+        <h3 class="text-base font-bold text-orange-400 flex items-center gap-2">
+          <span>🪚</span> Cuộc Chiến Cưa Xích
+        </h3>
+        <p class="text-xs text-slate-400 mt-0.5">
+          Lưỡi cưa to nhanh thế nào, cắn đau bao nhiêu, ván dài bao lâu. AI ĐƯỢC GÌ — vào sân, cộng máu, khiên — thì đặt ở tab Luật chơi.
+        </p>
+      </div>
+      <button class="btn-save-config px-5 py-2.5 rounded-xl text-xs font-bold bg-orange-600 hover:bg-orange-500 text-white shadow-lg shadow-orange-600/30 transition-all shrink-0">
+        💾 Lưu cấu hình
+      </button>
+    </div>
+
+    <!-- 1. THÔNG SỐ CỐT LÕI (10 FIELDS GRID) -->
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+      <div class="border-b border-slate-800/80 pb-3">
+        <h4 class="text-sm font-bold text-white flex items-center gap-2">
+          <span>⚙️</span> Thông số trận chiến &amp; Lưỡi cưa
+        </h4>
+        <p class="text-[11px] text-slate-400 mt-0.5">
+          Quy định thời gian vòng chơi, máu, sát thương, tốc độ trôi và thời gian khiên bảo vệ.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        
+        <!-- Độ dài một ván (giây) -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Độ dài một ván (giây)</label>
+          <input type="number" id="cfg-saw-round-seconds" value="480" min="60" max="3600" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Hết giờ là chốt Quán quân rồi mở ván mới, xoá sạch máu và số mạng. Đang đặt 8 phút — ngắn quá thì người xem chưa kịp nuôi lưỡi cưa đã bị reset, dài quá thì kẻ dẫn đầu chốt xong thế trận từ giữa ván.
+          </p>
+        </div>
+
+        <!-- Số lưỡi cưa tối đa -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Số lưỡi cưa tối đa</label>
+          <input type="number" id="cfg-saw-max" value="36" min="4" max="100" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Đầy thì người ít đóng góp nhất rời sân, nhưng người vừa tương tác không bao giờ bị chọn.
+          </p>
+        </div>
+
+        <!-- Máu lúc vào sân -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Máu lúc vào sân</label>
+          <input type="number" id="cfg-saw-spawn-hp" value="250" min="10" max="5000" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Cũng là mốc quy chiếu của sát thương: một lưỡi cưa mới toanh gây đúng số ở ô “Sát thương gốc”.
+          </p>
+        </div>
+
+        <!-- Máu tối đa -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Máu tối đa</label>
+          <input type="number" id="cfg-saw-max-hp" value="4000" min="500" max="100000" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Chạm trần thì lưỡi cưa dừng lớn hẳn. Không có trần thì người tặng nhiều nhất phình mãi mà hình không đổi nữa — con số nhảy còn cái đĩa đứng im, người xem đọc ra là quà không có tác dụng.
+          </p>
+        </div>
+
+        <!-- Sát thương gốc mỗi đòn -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Sát thương gốc mỗi đòn</label>
+          <input type="number" id="cfg-saw-damage" value="10" min="1" max="500" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Lưỡi cưa càng nhiều máu càng đánh đau, nhưng theo CĂN BẬC HAI nên gấp 12 lần máu chỉ ra gấp 3,5 lần đòn. Hai lưỡi cưa mới vào sân cần khoảng 25 đòn (~10.0 giây) để hạ nhau.
+          </p>
+        </div>
+
+        <!-- Nhịp chờ giữa hai đòn (ms) -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Nhịp chờ giữa hai đòn (ms)</label>
+          <input type="number" id="cfg-saw-hit-interval" value="400" min="50" max="2000" step="50" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Khoá theo TỪNG CẶP nên người bị hai cái vây vẫn ăn đủ hai đòn. Ngắn quá thì trận đánh xong trước khi người xem kịp nhìn; dài quá thì hai lưỡi cưa dính nhau cả chục giây mà máu không nhúc nhích.
+          </p>
+        </div>
+
+        <!-- Khiên lúc vừa vào sân (giây) -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Khiên lúc vừa vào sân (giây)</label>
+          <input type="number" id="cfg-saw-shield-sec" value="3" min="0" max="30" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            BẮT BUỘC phải có: không khiên thì lưỡi cưa vừa rơi vào giữa đám hỗn chiến là bốc hơi trước khi chủ nó kịp đọc tên mình trên sóng.
+          </p>
+        </div>
+
+        <!-- Khiên do luật trao (giây) -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Khiên do luật trao (giây)</label>
+          <input type="number" id="cfg-saw-buff-shield-sec" value="8" min="1" max="60" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Chưa có luật “Cho khiên” nào ở tab Luật chơi nên con số này chưa dùng tới.
+          </p>
+        </div>
+
+        <!-- Tốc độ trôi -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Tốc độ trôi</label>
+          <input type="number" id="cfg-saw-drift-speed" value="1" min="0.1" max="5" step="0.1" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            1 = lưỡi cưa nhỏ nhất đi ngang sân khoảng 11 giây. Lưỡi cưa càng to càng trôi chậm — đó là đường sống duy nhất của người mới vào.
+          </p>
+        </div>
+
+        <!-- Phút im lặng thì rời sân -->
+        <div class="space-y-1.5 sm:col-span-2 lg:col-span-3">
+          <div class="max-w-xs space-y-1.5">
+            <label class="text-xs font-bold text-slate-200">Phút im lặng thì rời sân</label>
+            <input type="number" id="cfg-saw-idle-minutes" value="8" min="0" max="60" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+            <p class="text-[10px] text-slate-400 leading-relaxed">
+              0 = không bao giờ. Người xem ghé vào rồi lướt đi mất; không dọn thì chỗ trong sân bị người đã rời phòng chiếm giữ.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2. BỊ HẠ THÌ TỰ VÀO LẠI SÂN -->
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+        <div>
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>🔄</span> Bị hạ thì tự vào lại sân
+          </h4>
+        </div>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" id="cfg-saw-auto-respawn" class="w-4 h-4 rounded border-slate-700 bg-slate-950 text-orange-500 focus:ring-0" checked>
+          <span class="text-xs font-bold text-orange-400">Bật (khuyên dùng)</span>
+        </label>
+      </div>
+
+      <p class="text-xs text-slate-400 leading-relaxed">
+        Bật (khuyên dùng): người bị hạ được thả lại với máu ban đầu, không phải làm gì cả. Khác hẳn “cá lớn nuốt cá bé” và có lý do — ở đây lưỡi cưa TỰ TRÔI, người xem không lái được, nên bắt họ tương tác lại sau mỗi lần chết là phạt họ vì một chuyện họ không hề quyết định. Tắt thì mỗi ván là một cuộc thanh lọc. Số mạng đã ghi được thì không mất dù chết bao nhiêu lần.
+      </p>
+
+      <div class="space-y-1.5 max-w-xs pt-2">
+        <label class="text-xs font-bold text-slate-200">Chờ bao nhiêu giây mới vào lại</label>
+        <input type="number" id="cfg-saw-respawn-delay" value="6" min="1" max="60" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+        <p class="text-[10px] text-slate-400 leading-relaxed">
+          Ngắn quá thì cái chết chẳng còn nghĩa gì; dài quá thì người xem ngồi nhìn một cái sân không có mình trong đó.
+        </p>
+      </div>
+    </div>
+
+    <!-- 3. TỰ MỞ BIẾN CỐ HỖN LOẠN -->
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+        <div>
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>🌀</span> Tự mở biến cố hỗn loạn
+          </h4>
+        </div>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" id="cfg-saw-enable-chaos" class="w-4 h-4 rounded border-slate-700 bg-slate-950 text-orange-500 focus:ring-0" checked>
+          <span class="text-xs font-bold text-orange-400">Bật tự động</span>
+        </label>
+      </div>
+
+      <p class="text-xs text-slate-400 leading-relaxed">
+        Cứ vài phút một lượt, bốc ngẫu nhiên một trong ba: Cuồng nộ (sát thương nhân đôi), Rơi bảo vật (ai chạm quả cầu trước thì ăn trọn máu), Tử chiến (vòng bo khép lại, đứng ngoài là mất máu). Đây là thứ duy nhất cứu một ván đang nguội mà không cần ai phải trả tiền — khi không ai tặng quà thì mấy chục lưỡi cưa cân bằng nhau trôi lòng vòng. Muốn bán nó thành một món quà thì thêm luật “🌀 Biến cố” ở tab Luật chơi.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 pt-2">
+        <!-- Sớm nhất (phút) -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Sớm nhất (phút)</label>
+          <input type="number" id="cfg-saw-chaos-min-min" value="1.5" min="0.5" max="30" step="0.5" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+        </div>
+
+        <!-- Muộn nhất (phút) -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Muộn nhất (phút)</label>
+          <input type="number" id="cfg-saw-chaos-max-min" value="3" min="1" max="60" step="0.5" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+          <p class="text-[10px] text-slate-400">Mỗi lượt bốc lại một mốc ngẫu nhiên trong khoảng này.</p>
+        </div>
+
+        <!-- Một lượt kéo dài (giây) -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Một lượt kéo dài (giây)</label>
+          <input type="number" id="cfg-saw-chaos-duration" value="20" min="5" max="120" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+        </div>
+
+        <!-- Máu của quả cầu bảo vật -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Máu của quả cầu bảo vật</label>
+          <input type="number" id="cfg-saw-orb-hp" value="600" min="50" max="5000" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-orange-500">
+          <p class="text-[10px] text-slate-400">Chỉ dùng cho biến cố Rơi bảo vật. Đặt cao thì cả sân lao vào tranh; đặt thấp thì không ai buồn đổi hướng.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+      <!-- 6. CUỘC CHIẾN THÁP (TEAM BATTLE) CONFIG -->

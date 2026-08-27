@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overlay — TaoLiveTuongTac.com</title>
+    <style>
+      @font-face {
+        font-family: 'Roboto';
+        src: url('/fonts/roboto.woff2') format('woff2');
+        font-weight: 100 900;
+        font-style: normal;
+        font-display: swap;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/index-BIfK8IDk.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/Geometry-Caez7mN4.js">
+    <link rel="modulepreload" crossorigin href="/assets/Filter-DNleo9tH.js">
+    <link rel="modulepreload" crossorigin href="/assets/canvasUtils-z1B0em3C.js">
+    <link rel="modulepreload" crossorigin href="/assets/Cache-CmVFArb1.js">
+    <link rel="modulepreload" crossorigin href="/assets/getPo2TextureFromSource-DXac7T0j.js">
+    <link rel="modulepreload" crossorigin href="/assets/GCManagedHash-DCKC_8ts.js">
+    <link rel="modulepreload" crossorigin href="/assets/RenderTargetSystem-Cq2wjWp9.js">
+    <link rel="modulepreload" crossorigin href="/assets/getTextureBatchBindGroup-DsmJD5Gx.js">
+    <link rel="modulepreload" crossorigin href="/assets/GraphicsContext-DT2g8sTW.js">
+    <link rel="modulepreload" crossorigin href="/assets/CanvasPool-VR87pyLd.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-B1gc5IUP.css">
+  </head>
+  <body>
+    <!-- Ảnh nền tùy chọn: nằm ngoài lớp scale để luôn phủ kín khung OBS -->
+    <div id="bg"></div>
+    <!-- Màn hình video: thẻ <video> thật, nằm dưới canvas để HUD vẽ đè lên trên -->
+    <div id="video"></div>
+    <!-- Canvas Pixi: giữ nguyên kích thước thật, scale được áp vào stage cho nét chữ -->
+    <div id="game"></div>
+    <div id="overlay-root">
+      <div id="shake">
+        <div id="hud"></div>
+        <div id="fx"></div>
+        <div id="alerts"></div>
+      </div>
+      <div id="logo"></div>
+    </div>
+    <!--
+      MÀN CHỜ TẢI ẢNH — đen ĐẶC, phủ kín, và cố ý đặt NGOÀI `#overlay-root`.
+      Ngoài `#overlay-root` vì nó không phải widget: nó không kéo thả được,
+      không tắt được, và phải phủ cả `#bg`/`#video`/`#game` chứ không riêng lớp
+      HUD. Xem `LoadingGate` trong `main.ts` để rõ vì sao nó ĐEN chứ không trong
+      suốt như phần còn lại của overlay.
+    -->
+    <div id="loading" hidden>
+      <div class="ring"></div>
+      <div class="label">Đang tải…</div>
+    </div>
+    <div id="message" hidden></div>
+    <!--
+      Nút tắt tiếng cho người mở link overlay bằng trình duyệt. Ẩn cho tới khi
+      chuột động (OBS không gửi chuột → không bao giờ lên sóng) và tự ẩn khi
+      overlay đang bị nhúng trong khung xem trước — xem `ui/mute-button.ts`.
+    -->
+    <button id="mute" type="button" hidden></button>
+  </body>
+</html>

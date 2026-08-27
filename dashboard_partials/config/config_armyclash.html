@@ -1,0 +1,231 @@
+<!-- 5. ARMY CLASH CONFIG -->
+  <div id="config-section-armyclash" class="hidden space-y-8">
+    
+    <!-- HEADER -->
+    <div class="flex items-start justify-between border-b border-slate-800 pb-4">
+      <div>
+        <h3 class="text-base font-bold text-amber-400 flex items-center gap-2">
+          <span>⚔️</span> Cuộc Chiến Ngàn Quân
+        </h3>
+        <p class="text-xs text-slate-400 mt-0.5">
+          Đội quân đông tới đâu, quà đẩy mạnh bao nhiêu, ván dài bao lâu. AI ĐƯỢC GÌ — vào phe, cộng sức đẩy, triệu hồi tướng — thì đặt ở tab Luật chơi.
+        </p>
+      </div>
+      <button class="btn-save-config px-5 py-2.5 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/30 transition-all shrink-0">
+        💾 Lưu cấu hình
+      </button>
+    </div>
+
+    <!-- 1. QUY MÔ & NHỊP TRẬN (7 FIELDS) -->
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+      <div class="border-b border-slate-800/80 pb-3">
+        <h4 class="text-sm font-bold text-white flex items-center gap-2">
+          <span>⚙️</span> Quy mô đội quân &amp; Nhịp trận
+        </h4>
+        <p class="text-[11px] text-slate-400 mt-0.5">
+          Thời gian ván, quãng đường giằng co, tốc độ dịch chuyển và sức đẩy cơ bản.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        
+        <!-- Độ dài một ván (giây) -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Độ dài một ván (giây)</label>
+          <input type="number" id="cfg-army-round-seconds" value="600" min="30" max="3600" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Hết giờ thì phe đang dẫn thắng, rồi mở ván mới — quân ở nguyên, sức đẩy xoá sạch. Đang đặt 10 phút. Ở thế trận gấp đôi thì khoảng 5 phút là phá được cổng.
+          </p>
+        </div>
+
+        <!-- Quãng đường tới cổng (mét) -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Quãng đường tới cổng (mét)</label>
+          <input type="number" id="cfg-army-gate-distance" value="300" min="50" max="2000" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Nửa chiều dài đường giằng co. Vạch chạm cổng phe nào thì phe đó thua ngay, không đợi hết giờ.
+          </p>
+        </div>
+
+        <!-- Tốc độ vạch tối đa (m/giây) -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Tốc độ vạch tối đa (m/giây)</label>
+          <input type="number" id="cfg-army-max-speed" value="3" min="0.5" max="20" step="0.1" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Chỉ chạm mức này khi một phe áp đảo tuyệt đối. Đây là núm chỉnh NHỊP TRẬN: kéo lên thì ván ngắn và gay cấn, kéo xuống thì cuộc giằng co dài hơi.
+          </p>
+        </div>
+
+        <!-- Số quân tối đa mỗi phe -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Số quân tối đa mỗi phe</label>
+          <input type="number" id="cfg-army-max-soldiers-per-team" value="200" min="20" max="1000" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Đầy thì người ít đóng góp nhất rời đội hình, nhưng người vừa tương tác không bao giờ bị chọn.
+          </p>
+        </div>
+
+        <!-- Số quân mỗi lượt vào phe -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Số quân mỗi lượt vào phe</label>
+          <input type="number" id="cfg-army-soldiers-per-join" value="1" min="1" max="50" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Một người gõ 1/2 (hay tặng quà) thì xuống sân 1 con lính. Kéo lên để phòng ít người vẫn có đội hình dày — cả hai phe cùng nhân lên nên cân bằng không đổi.
+          </p>
+        </div>
+
+        <!-- Sức đẩy của một người -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Sức đẩy của một người</label>
+          <input type="number" id="cfg-army-power-per-person" value="10" min="0" max="500" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Mỗi người trong phe đóng góp ngần này, chỉ cần đứng đó. Đây là thứ làm cho SỐ ĐÔNG có giá trị thật — để 0 là cả đám đông thành hình vẽ và trận đấu rút về cuộc đua tiền giữa vài người.
+          </p>
+        </div>
+
+        <!-- Sức đẩy mặc định của một luật -->
+        <div class="space-y-1.5 sm:col-span-2 lg:col-span-3">
+          <label class="text-xs font-bold text-slate-200">Sức đẩy mặc định của một luật</label>
+          <input type="number" id="cfg-army-default-rule-power" value="100" min="1" max="10000" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Dùng khi dòng luật ở tab Luật chơi để trống ô sức đẩy.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 2. TRẬN ĐÁNH Ở TIỀN TUYẾN (6 FIELDS) -->
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+      <div class="border-b border-slate-800/80 pb-3">
+        <h4 class="text-sm font-bold text-white flex items-center gap-2">
+          <span>⚔️</span> Trận đánh ở tiền tuyến
+        </h4>
+        <p class="text-[11px] text-slate-400 mt-0.5 leading-relaxed">
+          Hàng đầu hai phe ghép cặp cắn nhau; ai hết máu thì ngã xuống và vài giây sau đứng dậy ở cuối đội hình. Chính khoảng thời gian nằm chết đó tạo chênh lệch hàng đầu, mà chênh lệch hàng đầu mới đẩy vạch — nên ba con số dưới đây quyết định nhịp của cả ván.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        
+        <!-- Sát thương mỗi đòn -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Sát thương mỗi đòn</label>
+          <input type="number" id="cfg-army-attack-damage" value="2" min="1" max="100" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Của một người chưa tặng gì. Hạ được một lính thường sau khoảng 3.5 giây.
+          </p>
+        </div>
+
+        <!-- Nhịp chờ giữa hai đòn (ms) -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Nhịp chờ giữa hai đòn (ms)</label>
+          <input type="number" id="cfg-army-attack-interval-ms" value="700" min="100" max="5000" step="50" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Ngắn quá thì hàng đầu chết như ngả rạ và không ai kịp tặng quà cứu; dài quá thì trận đánh đứng hình.
+          </p>
+        </div>
+
+        <!-- Chết bao lâu thì đứng dậy (giây) -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Chết bao lâu thì đứng dậy (giây)</label>
+          <input type="number" id="cfg-army-respawn-seconds" value="6" min="1" max="60" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Đây là con số điều khiển nhịp trận: dài thì hàng đầu thủng lâu và vạch trôi nhanh, ngắn thì hai bên ghìm nhau dai.
+          </p>
+        </div>
+
+        <!-- Máu căn cứ -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Máu căn cứ</label>
+          <input type="number" id="cfg-army-base-hp" value="600" min="50" max="10000" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Dồn tới cổng rồi vẫn phải phá ngần này mới thắng — đó là màn cao trào, và cũng là cơ hội cuối để phe thua lật ngược.
+          </p>
+        </div>
+
+        <!-- Sức đẩy của quà tụt mấy %/giây -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Sức đẩy của quà tụt mấy %/giây</label>
+          <input type="number" id="cfg-army-power-decay-pct" value="5" min="0" max="50" step="0.5" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Một cú tặng còn đúng một nửa sức đẩy sau 14 giây. Đây là thứ giữ cho ván không đóng băng: ngừng tặng là mất đất, nên phe đang thua luôn còn đường gỡ.
+          </p>
+        </div>
+
+        <!-- Phút im lặng thì rời đội hình -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Phút im lặng thì rời đội hình</label>
+          <input type="number" id="cfg-army-idle-timeout-min" value="15" min="0" max="120" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            0 = không bao giờ. Người xem ghé vào rồi lướt đi mất; không dọn thì chỗ trong đội hình bị người đã rời phòng chiếm giữ.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 3. TƯỚNG TRIỆU HỒI & 4. BÙA TĂNG SỨC ĐẨY (2 GRIDS) -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      
+      <!-- 3. TƯỚNG TRIỆU HỒI -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <div class="border-b border-slate-800/80 pb-3">
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>🐉</span> Tướng triệu hồi
+          </h4>
+          <p class="text-[11px] text-slate-400 mt-0.5 leading-relaxed">
+            Con vật to đứng giữa đội hình, cộng sức đẩy suốt thời gian nó còn trên sân. Chưa có dòng luật nào gọi tướng, nên hai con số này chưa có tác dụng — thêm một luật “Triệu hồi tướng” ở tab Luật chơi.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-slate-200">Đứng trên sân bao lâu (giây)</label>
+            <input type="number" id="cfg-army-boss-duration-sec" value="45" min="5" max="300" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-slate-200">Sức đẩy một con tướng</label>
+            <input type="number" id="cfg-army-boss-power" value="400" min="10" max="10000" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+            <p class="text-[10px] text-slate-400">Đang bằng 40 người thường.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. BÙA TĂNG SỨC ĐẨY -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <div class="border-b border-slate-800/80 pb-3">
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>✨</span> Bùa tăng sức đẩy
+          </h4>
+          <p class="text-[11px] text-slate-400 mt-0.5 leading-relaxed">
+            NHÂN sức đẩy của cả phe thay vì cộng, nên nó đáng tiền đúng vào lúc phe đang đông — món để bán cho phe đang dẫn muốn dứt điểm, còn cộng sức đẩy là món cho phe đang thua muốn gỡ. Cùng một món quà tặng nhiều lần thì cộng dồn (tối đa 10 lượt). Chưa có dòng luật nào trao bùa, nên hai con số này chưa có tác dụng — thêm một luật “Bùa tăng sức đẩy” ở tab Luật chơi.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-slate-200">Hệ số nhân một lượt</label>
+            <input type="number" id="cfg-army-buff-multiplier" value="1.25" min="1.05" max="5.0" step="0.05" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+            <p class="text-[10px] text-slate-400">10 lượt cộng dồn sẽ thành ×9.3.</p>
+          </div>
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-slate-200">Bùa sống bao lâu (giây)</label>
+            <input type="number" id="cfg-army-buff-duration-sec" value="30" min="5" max="300" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 5. BỐI CẢNH CHIẾN TRƯỜNG & QUÂN ĐOÀN HAI BÊN -->
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-6">
+      <div class="space-y-3">
+        <label class="text-xs font-bold uppercase tracking-wider text-slate-300">Chọn Bối Cảnh Chiến Trường</label>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="army-grounds-grid"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-800" id="army-teams-grid"></div>
+    </div>
+
+  </div>

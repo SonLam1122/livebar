@@ -1,0 +1,70 @@
+<!-- MODALS -->
+  <!-- ADD / EDIT RULE MODAL -->
+  <div id="rule-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 max-w-md w-full space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2" id="rule-modal-title">
+          <span>➕</span> Thêm Luật Chơi Mới
+        </h3>
+        <button id="btn-close-rule-modal" class="p-1 rounded-lg text-slate-400 hover:text-white">✕</button>
+      </div>
+
+      <div class="space-y-3">
+        <div class="space-y-1">
+          <label class="text-xs font-bold text-slate-300">Sự kiện kích hoạt (Trigger)</label>
+          <select id="modal-rule-trigger" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-white focus:outline-none focus:border-indigo-500">
+            <option value="chat_any">💬 Mọi bình luận</option>
+            <option value="like_any">❤️ Thả tim bất kỳ</option>
+            <option value="gift_any">🎁 Mọi quà tặng</option>
+            <option value="follow">➕ Nhấn theo dõi (Follow)</option>
+            <option value="share">🔄 Chia sẻ buổi Live (Share)</option>
+          </select>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-bold text-slate-300">Hành động tương ứng trong Game (Action)</label>
+          <select id="modal-rule-action" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-white focus:outline-none focus:border-indigo-500">
+            <option value="boost_team_1">🔵 Tăng điểm / Thả lính Đội 1</option>
+            <option value="boost_team_2">🔴 Tăng điểm / Thả lính Đội 2</option>
+            <option value="spotlight">⭐ Spotlight tỏa sáng &amp; Đội vương miện</option>
+            <option value="jump">💃 Vũ công nhảy tưng bừng</option>
+            <option value="spawn_fish">🐟 Thả 1 cá mới vào hồ</option>
+            <option value="feed_fish">🍤 Thả thức ăn cho cá</option>
+            <option value="spawn_saw">🪚 Thả lưỡi cưa sinh tồn</option>
+            <option value="grow_saw">❤️ Tăng máu cho lưỡi cưa</option>
+            <option value="summon_hero">🐉 Triệu hồi Tướng Thần Thoại</option>
+          </select>
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-bold text-slate-300">Điểm cộng thêm (Points)</label>
+          <input type="number" id="modal-rule-points" value="1" min="1" max="10000" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-white focus:outline-none focus:border-indigo-500">
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2">
+        <button id="btn-cancel-rule" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold">
+          Hủy
+        </button>
+        <button id="btn-save-rule-modal" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-md">
+          Lưu Luật
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: THƯ VIỆN NHẠC NỀN -->
+  <div id="modal-music-library" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-xl shadow-2xl p-5 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-sm font-bold text-white flex items-center gap-2">
+          <span>📚</span> Thư Viện Nhạc Nền Miễn Phí (Không Bản Quyền)
+        </h3>
+        <button id="btn-close-music-modal" class="text-slate-400 hover:text-white text-lg font-bold">✕</button>
+      </div>
+
+      <div class="space-y-2 max-h-[360px] overflow-y-auto pr-1" id="music-library-list">
+        <!-- List of curated tracks -->
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,129 @@
+<!-- 7. TEAM BATTLE CONFIG -->
+  <div id="config-section-teambattle" class="hidden space-y-6">
+        
+        <!-- HEADER -->
+        <div class="flex items-start justify-between border-b border-slate-800 pb-4">
+          <div>
+            <h3 class="text-base font-bold text-sky-400 flex items-center gap-2">
+              <span>🏰</span> Cuộc Chiến Tháp — Cấu Hình Trò Chơi
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">Tuỳ biến tên 2 phe, màu sắc, ảnh nền nửa khung hình, mốc gạch chiến thắng và kích cỡ tháp.</p>
+          </div>
+          <button class="btn-save-config px-5 py-2.5 rounded-xl text-xs font-bold bg-sky-600 hover:bg-sky-500 text-white shadow-lg shadow-sky-600/30 transition-all shrink-0">
+            💾 Lưu cấu hình
+          </button>
+        </div>
+
+        <!-- 1. HAI PHE -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+          <div class="border-b border-slate-800/80 pb-3">
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>👥</span> Hai phe
+            </h4>
+            <p class="text-[11px] text-slate-400 mt-0.5">
+              Tên, màu và ảnh nền của từng bên. Ảnh phủ kín nửa khung hình của phe đó.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="teambattle-teams-grid">
+            <!-- Dynamic 2 teams: Bên trái & Bên phải -->
+          </div>
+        </div>
+
+        <!-- 2. LUẬT THẮNG -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+          <div class="border-b border-slate-800/80 pb-3">
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>🏆</span> Luật thắng
+            </h4>
+            <p class="text-[11px] text-slate-400 mt-0.5">
+              Ván kết thúc khi có phe chạm mốc điểm — game này không có giới hạn thời gian.
+            </p>
+          </div>
+
+          <!-- Điểm & Gọi điểm -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-slate-200">Điểm để thắng một ván</label>
+              <input type="number" id="cfg-tb-goal-points" value="500" min="10" max="10000" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-sky-500">
+              <p class="text-[10px] text-slate-400 leading-relaxed">
+                Chạm mốc là bảng thành tích cộng một và THÁP CỦA PHE THẮNG dỡ về 0; tháp phe kia giữ nguyên, xây tiếp sang ván sau.
+              </p>
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-slate-200">Gọi điểm là gì</label>
+              <input type="text" id="cfg-tb-unit-label" value="GẠCH" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-sky-500">
+              <p class="text-[10px] text-slate-400 leading-relaxed">
+                Điền vào chỗ {unit} của nhãn luật thắng bên dưới.
+              </p>
+            </div>
+          </div>
+
+          <!-- Bảng thành tích tổng -->
+          <div class="space-y-2 pt-3 border-t border-slate-800/80">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-slate-200">Bảng thành tích tổng</span>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="cfg-tb-persist-wins" class="w-4 h-4 rounded border-slate-700 bg-slate-950 text-sky-500 focus:ring-0" checked>
+                <span class="text-xs font-bold text-sky-400">Cộng dồn mãi</span>
+              </label>
+            </div>
+            <p class="text-[10px] text-slate-400 leading-relaxed">
+              Số ván mỗi phe đã thắng. Cộng dồn mãi thì người xem có lý do quay lại hôm sau; nút “Chơi lại” xoá bảng này bất cứ lúc nào.
+            </p>
+          </div>
+
+          <!-- Template nhãn -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-slate-200">Dòng thành tích của phe</label>
+              <input type="text" id="cfg-tb-win-label" value="THẮNG {n}" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-sky-500">
+              <p class="text-[10px] text-slate-400 leading-relaxed">
+                {n} là số ván đã thắng. Đang hiện: “<span class="text-sky-300 font-bold">THẮNG 3</span>”.
+              </p>
+            </div>
+
+            <div class="space-y-1.5">
+              <label class="text-xs font-bold text-slate-200">Nhãn luật thắng</label>
+              <input type="text" id="cfg-tb-win-rule-label" value="{points} {unit} = THẮNG · VÁN {round}" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-sky-500">
+              <p class="text-[10px] text-slate-400 leading-relaxed">
+                {points} mốc thắng, {unit} đơn vị điểm, {round} ván thứ mấy. Đang hiện: “<span class="text-sky-300 font-bold">500 GẠCH = THẮNG · VÁN 7</span>”. Đây là chỗ duy nhất người xem đọc được luật thắng.
+              </p>
+            </div>
+          </div>
+
+          <!-- Warning notice -->
+          <div class="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 flex items-start gap-2.5">
+            <span class="text-base shrink-0">⚠️</span>
+            <p class="leading-relaxed">
+              Tab Luật chơi chưa có dòng nào cộng điểm theo <strong>QUÀ</strong> — hai cột bảng giá ở mép khung sẽ chỉ hiện mấy tương tác miễn phí, mà đó không phải thứ bạn muốn rao trên sóng. Vị trí và bật/tắt của hai cột nằm ở tab Giao diện.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3. VẼ THÁP GẠCH XẾP CAO DẦN -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+          <div class="border-b border-slate-800/80 pb-3">
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>🧱</span> Vẽ tháp gạch xếp cao dần
+            </h4>
+            <p class="text-[11px] text-slate-400 mt-0.5">
+              Mỗi phe có một cái tháp mọc từ đáy khung lên theo tiến độ điểm — liếc một cái là biết bên nào sắp thắng.
+            </p>
+          </div>
+
+          <div class="space-y-1.5 max-w-sm">
+            <label class="text-xs font-bold text-slate-200">Cỡ viên gạch</label>
+            <select id="cfg-tb-brick-size" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-sky-500">
+              <option value="2.4">Nhỏ</option>
+              <option value="3.4" selected>Vừa (Mặc định)</option>
+              <option value="4.8">Lớn</option>
+            </select>
+            <p class="text-[10px] text-slate-400">
+              Một điểm luôn là một viên. Ở khung dọc thì thấy được khoảng 28 viên cùng lúc.
+            </p>
+          </div>
+        </div>
+
+      </div>

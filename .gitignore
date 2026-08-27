@@ -1,0 +1,24 @@
+# Logs & Temporary Files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.tempmediaStorage/
+.playwright-mcp/
+
+# Runtime Data & Dependencies
+node_modules/
+dist/
+.next/
+out/
+
+# Environment & OS Files
+.env
+.env.local
+.env.*.local
+.DS_Store
+Thumbs.db
+
+# Temporary Scripts
+temp_screen_page.js
+*.tmp

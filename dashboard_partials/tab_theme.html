@@ -1,0 +1,585 @@
+<!-- TAB 4: GIAO DIỆN & WIDGET -->
+    <section id="tab-theme" class="tab-content hidden space-y-8">
+      
+      <!-- HEADER -->
+      <div class="flex items-start justify-between border-b border-slate-800 pb-4">
+        <div>
+          <h3 class="text-base font-bold text-pink-400 flex items-center gap-2">
+            <span>🎨</span> Tông Màu, Chữ &amp; Bố Cục Widget
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">
+            Chọn bảng phối màu toàn màn hình, sửa mọi chữ người xem đọc được và chỉnh vị trí các widget trên overlay.
+          </p>
+        </div>
+        <button class="btn-save-config px-5 py-2.5 rounded-xl text-xs font-bold bg-pink-600 hover:bg-pink-500 text-white shadow-lg shadow-pink-600/30 transition-all shrink-0">
+          💾 Lưu giao diện
+        </button>
+      </div>
+
+      <!-- 0. BỐI CẢNH SÀN (CHỈ HIỆN KHI LÀ SÀN LIVE BAR) -->
+      <div id="theme-livebar-scene-section" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+        <div class="border-b border-slate-800/80 pb-3">
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>🍸</span> Bối cảnh sàn
+          </h4>
+          <p class="text-[11px] text-slate-400 mt-0.5">
+            Mỗi bối cảnh là một căn phòng dựng riêng, khác nhau tới cả trần lẫn mặt sàn. Không đụng tới luật chơi — ai được gì thì nằm ở tab Luật chơi.
+          </p>
+        </div>
+
+        <!-- 3 Scene Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="livebar-scenes-grid">
+          <!-- Câu lạc bộ đêm -->
+          <div class="livebar-scene-card active p-4 rounded-2xl bg-slate-950/80 border-2 border-purple-500 hover:border-purple-400 cursor-pointer transition-all space-y-2.5 relative" data-scene="neon_club">
+            <div class="w-full h-24 rounded-xl bg-gradient-to-br from-purple-950 via-indigo-950 to-slate-950 border border-purple-800/40 flex flex-col items-center justify-center text-purple-300 font-bold gap-1 shadow-inner">
+              <span class="text-2xl">🍸</span>
+              <span class="text-xs">Câu lạc bộ đêm</span>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-white flex items-center justify-between">
+                <span>Câu lạc bộ đêm</span>
+                <span class="text-[10px] text-purple-400 font-mono">Mặc định</span>
+              </h5>
+              <p class="text-[10px] text-slate-400 mt-1 leading-relaxed">
+                Phòng kín có trần: lưới dầm thép, giàn đèn treo vòng, quả cầu gương, tường LED và quầy rượu hai bên sân khấu.
+              </p>
+            </div>
+          </div>
+
+          <!-- Bar bãi biển -->
+          <div class="livebar-scene-card p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-purple-400 cursor-pointer transition-all space-y-2.5 relative" data-scene="beach">
+            <div class="w-full h-24 rounded-xl bg-gradient-to-br from-cyan-950 via-teal-950 to-slate-950 border border-cyan-800/40 flex flex-col items-center justify-center text-cyan-300 font-bold gap-1 shadow-inner">
+              <span class="text-2xl">🏖️</span>
+              <span class="text-xs">Bar bãi biển</span>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-white">Bar bãi biển</h5>
+              <p class="text-[10px] text-slate-400 mt-1 leading-relaxed">
+                Ngoài trời: sân khấu dựng trên cát, mặt biển chạy ra tận chân trời, trời sao và trăng, hàng dừa cùng đuốc lửa.
+              </p>
+            </div>
+          </div>
+
+          <!-- Đêm Trung thu -->
+          <div class="livebar-scene-card p-4 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-purple-400 cursor-pointer transition-all space-y-2.5 relative" data-scene="mid_autumn">
+            <div class="w-full h-24 rounded-xl bg-gradient-to-br from-amber-950 via-red-950 to-slate-950 border border-amber-800/40 flex flex-col items-center justify-center text-amber-300 font-bold gap-1 shadow-inner">
+              <span class="text-2xl">🥮</span>
+              <span class="text-xs">Đêm Trung thu</span>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-white">Đêm Trung thu</h5>
+              <p class="text-[10px] text-slate-400 mt-1 leading-relaxed">
+                Sân đình đêm rằm: mái ngói cong đao, vòm đèn lồng đỏ giăng trên đầu, đèn ông sao, đèn kéo quân quay và gốc đa.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 0. NỀN CHIẾN TRƯỜNG (CHỈ HIỆN KHI LÀ CUỘC CHIẾN NGÀN QUÂN) -->
+      <div id="theme-army-ground-section" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5 hidden">
+        <div class="border-b border-slate-800/80 pb-3">
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>⚔️</span> Nền chiến trường
+          </h4>
+          <p class="text-[11px] text-slate-400 mt-0.5">
+            Bối cảnh phủ kín khung hình, hai đội quân đứng trên dải đất giữa ảnh. Không đụng tới luật chơi — cân bằng trận đấu nằm ở tab Cấu hình.
+          </p>
+        </div>
+
+        <!-- 16 Ground Cards Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5" id="theme-army-grounds-grid">
+          <!-- Rendered dynamically by renderArmyGroundConfig() -->
+        </div>
+
+        <!-- Note below grounds -->
+        <div class="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800 text-[11px] text-slate-400 leading-relaxed space-y-1.5">
+          <p><strong class="text-slate-200">Lưu ý:</strong> Nền phủ kín khung hình và đục hoàn toàn — nó che sạch cảnh OBS phía sau. Chọn <strong>Không lát</strong> nếu bạn muốn cảnh của mình xuyên qua: lúc đó chỉ còn hai đội quân, cổng và vạch giao tranh nổi trên cảnh của bạn, và nền lấy theo ô Màu nền bên dưới.</p>
+          <p class="text-amber-400/90 font-medium">⚠️ Nền không đi theo khi bạn kéo widget Chiến trường ở bảng bố cục — kéo xa quá thì quân đứng lệch khỏi dải đất trong ảnh.</p>
+        </div>
+      </div>
+
+      <!-- 0. MẶT SÀN ĐẤU TRƯỜNG (CHỈ HIỆN KHI LÀ GAME CƯA XÍCH) -->
+      <div id="theme-chainsaw-floor-section" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+        <div class="border-b border-slate-800/80 pb-3">
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>🏟️</span> Mặt sàn đấu trường
+          </h4>
+          <p class="text-[11px] text-slate-400 mt-0.5">
+            Thứ lát trong lòng ô đấu trường, nằm dưới mấy chục lưỡi cưa. Không đụng tới luật chơi — cân bằng trận đánh nằm ở tab Cấu hình.
+          </p>
+        </div>
+
+        <!-- 4 Floor Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="chainsaw-floors-grid">
+          <!-- Không lát -->
+          <div class="chainsaw-floor-card active p-3.5 rounded-2xl bg-slate-950/80 border-2 border-orange-500 hover:border-orange-400 cursor-pointer transition-all space-y-2 relative" data-floor="transparent">
+            <div class="w-full h-20 rounded-xl bg-slate-900 border border-dashed border-slate-700 flex items-center justify-center text-slate-500 text-xs font-bold">
+              <span>⬛ Không lát (Trong mờ)</span>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-white">Không lát</h5>
+              <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">Ô đấu trường trong mờ, cảnh OBS phía sau xuyên qua</p>
+            </div>
+          </div>
+
+          <!-- Xưởng cưa -->
+          <div class="chainsaw-floor-card p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-orange-400 cursor-pointer transition-all space-y-2 relative" data-floor="sawmill">
+            <div class="w-full h-20 rounded-xl bg-gradient-to-br from-amber-950 via-stone-900 to-slate-950 border border-amber-900/40 flex items-center justify-center text-amber-400 text-xs font-bold">
+              <span>🪚 Xưởng cưa</span>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-white">Xưởng cưa</h5>
+              <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">Thép tấm xỉn màu, mùn cưa và vệt dầu — tông mặc định của game</p>
+            </div>
+          </div>
+
+          <!-- Sàn bê tông -->
+          <div class="chainsaw-floor-card p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-orange-400 cursor-pointer transition-all space-y-2 relative" data-floor="concrete">
+            <div class="w-full h-20 rounded-xl bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 border border-slate-700/50 flex items-center justify-center text-slate-300 text-xs font-bold">
+              <span>🏢 Bê tông</span>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-white">Sàn bê tông</h5>
+              <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">Bê tông xám lạnh, ít chi tiết — hợp kênh esport và phong cách tối giản</p>
+            </div>
+          </div>
+
+          <!-- Sàn đấu võ đài -->
+          <div class="chainsaw-floor-card p-3.5 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-orange-400 cursor-pointer transition-all space-y-2 relative" data-floor="ring">
+            <div class="w-full h-20 rounded-xl bg-gradient-to-br from-yellow-950 via-amber-950 to-stone-950 border border-yellow-900/40 flex items-center justify-center text-amber-300 text-xs font-bold">
+              <span>🥊 Võ đài</span>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold text-white">Sàn đấu võ đài</h5>
+              <p class="text-[10px] text-slate-400 mt-0.5 leading-relaxed">Gỗ sẫm cũ và viền sơn mờ — hợp kênh làm show, có chất sân khấu</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Upload & Notes -->
+        <div class="pt-3 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <button type="button" class="px-4 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 flex items-center gap-2 transition-all cursor-pointer">
+              <span>⬆️</span> <span>Tải mặt sàn của bạn</span>
+            </button>
+            <span class="text-[11px] text-slate-400">Còn trống 100.0 MB · mỗi ảnh tối đa 8MB</span>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-slate-950/60 border border-slate-800/80 text-[11px] text-slate-400 leading-relaxed">
+          Mặt sàn đục hoàn toàn nên nó che cảnh OBS phía sau ô đấu trường. Chọn <strong>Không lát</strong> nếu bạn muốn gameplay, camera hay nền động của mình xuyên qua chỗ đó. Phần ngoài ô đấu trường thì không đổi — nó theo ô Màu nền bên dưới.
+        </div>
+      </div>
+
+      <!-- 1. TÔNG MÀU & CHỮ -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+        <div class="border-b border-slate-800/80 pb-3">
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>🎨</span> Tông màu &amp; chữ
+          </h4>
+          <p class="text-[11px] text-slate-400 mt-0.5">
+            Chọn một bảng để đổi toàn bộ tông overlay. Muốn khác đi thì tinh chỉnh màu nhấn / màu chữ bên dưới.
+          </p>
+        </div>
+
+        <!-- 5 Preset Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3" id="theme-presets-grid">
+          <!-- Neon -->
+          <div class="theme-preset-card active p-3 rounded-2xl bg-slate-950/80 border-2 border-cyan-500 hover:border-cyan-400 cursor-pointer transition-all text-center space-y-2 relative overflow-hidden" data-preset="neon" data-accent="#22d3ee" data-accent-alt="#a855f7" data-text="#ffffff" data-font="roboto">
+            <div class="w-full h-8 rounded-lg bg-gradient-to-r from-cyan-500 to-purple-600 shadow-md"></div>
+            <div class="font-bold text-xs text-white">Neon (mặc định)</div>
+            <div class="text-[10px] text-cyan-400 font-mono">#22d3ee • #a855f7</div>
+          </div>
+          <!-- Cổ điển -->
+          <div class="theme-preset-card p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-amber-400 cursor-pointer transition-all text-center space-y-2 relative overflow-hidden" data-preset="classic" data-accent="#f5c518" data-accent-alt="#ef4444" data-text="#ffffff" data-font="roboto">
+            <div class="w-full h-8 rounded-lg bg-gradient-to-r from-amber-400 to-rose-600 shadow-md"></div>
+            <div class="font-bold text-xs text-white">Cổ điển</div>
+            <div class="text-[10px] text-amber-400 font-mono">#f5c518 • #ef4444</div>
+          </div>
+          <!-- Pastel nhẹ nhàng -->
+          <div class="theme-preset-card p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-pink-400 cursor-pointer transition-all text-center space-y-2 relative overflow-hidden" data-preset="pastel" data-accent="#fbcfe8" data-accent-alt="#a5b4fc" data-text="#fdf4ff" data-font="inter">
+            <div class="w-full h-8 rounded-lg bg-gradient-to-r from-pink-300 to-indigo-300 shadow-md"></div>
+            <div class="font-bold text-xs text-white">Pastel nhẹ nhàng</div>
+            <div class="text-[10px] text-pink-300 font-mono">#fbcfe8 • #a5b4fc</div>
+          </div>
+          <!-- Tết đỏ vàng -->
+          <div class="theme-preset-card p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-red-500 cursor-pointer transition-all text-center space-y-2 relative overflow-hidden" data-preset="tet" data-accent="#ffd700" data-accent-alt="#ff4d4d" data-text="#fff8e7" data-font="roboto">
+            <div class="w-full h-8 rounded-lg bg-gradient-to-r from-red-600 to-amber-400 shadow-md"></div>
+            <div class="font-bold text-xs text-white">Tết đỏ vàng</div>
+            <div class="text-[10px] text-red-400 font-mono">#ffd700 • #ff4d4d</div>
+          </div>
+          <!-- Esport tối giản -->
+          <div class="theme-preset-card p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-emerald-400 cursor-pointer transition-all text-center space-y-2 relative overflow-hidden" data-preset="esport" data-accent="#00ff88" data-accent-alt="#ffffff" data-text="#ffffff" data-font="jetbrains_mono">
+            <div class="w-full h-8 rounded-lg bg-gradient-to-r from-emerald-400 to-teal-700 shadow-md"></div>
+            <div class="font-bold text-xs text-white">Esport tối giản</div>
+            <div class="text-[10px] text-emerald-400 font-mono">#00ff88 • #ffffff</div>
+          </div>
+        </div>
+
+        <!-- Color, Font, Opacity, Scale Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
+          <!-- Màu nhấn -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-slate-200">Màu nhấn</label>
+            <div class="flex items-center gap-2">
+              <input type="color" id="cfg-accent-color" value="#22d3ee" class="w-10 h-10 rounded-xl bg-slate-950 border border-slate-800 cursor-pointer p-1 shrink-0">
+              <input type="text" id="cfg-accent-color-text" value="#22d3ee" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-white">
+            </div>
+            <p class="text-[10px] text-slate-400">Viền, thanh tiến trình, điểm bay lên</p>
+          </div>
+
+          <!-- Màu chữ -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-slate-200">Màu chữ</label>
+            <div class="flex items-center gap-2">
+              <input type="color" id="cfg-text-color" value="#ffffff" class="w-10 h-10 rounded-xl bg-slate-950 border border-slate-800 cursor-pointer p-1 shrink-0">
+              <input type="text" id="cfg-text-color-text" value="#ffffff" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-white">
+            </div>
+          </div>
+
+          <!-- Kiểu chữ -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-slate-200">Kiểu chữ</label>
+            <select id="cfg-font-family" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-pink-500">
+              <option value="roboto">Roboto (Mặc định chuẩn TikTok)</option>
+              <option value="inter">Inter (Hiện đại, tròn trịa, sắc nét)</option>
+              <option value="montserrat">Montserrat (Đậm nét sang trọng)</option>
+              <option value="outfit">Outfit (Trẻ trung, bắt mắt)</option>
+              <option value="be_vietnam_pro">Be Vietnam Pro (Chuẩn tiếng Việt)</option>
+              <option value="jetbrains_mono">JetBrains Mono (Gaming, Esport Số)</option>
+            </select>
+          </div>
+
+          <!-- Độ mờ nền panel -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center">
+              <label class="text-xs font-bold text-slate-200">Độ mờ nền panel</label>
+              <span id="cfg-panel-opacity-val" class="text-xs font-mono font-bold text-pink-400">55%</span>
+            </div>
+            <input type="range" id="cfg-panel-opacity" min="0" max="1" step="0.05" value="0.55" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-pink-500 mt-2">
+            <p class="text-[10px] text-slate-400">0% = panel trong suốt hoàn toàn</p>
+          </div>
+        </div>
+
+        <!-- Scale, Background & Transparent -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-slate-800/80">
+          <!-- Phóng to overlay -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center">
+              <label class="text-xs font-bold text-slate-200">Phóng to overlay</label>
+              <span id="label-hud-scale-val" class="text-xs font-mono font-bold text-pink-400">1.00×</span>
+            </div>
+            <input type="range" id="cfg-hud-scale" min="0.7" max="1.5" step="0.05" value="1.0" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-pink-500 mt-2">
+            <p class="text-[10px] text-slate-400">Chỉnh khi canvas OBS không phải 1920×1080</p>
+          </div>
+
+          <!-- Link ảnh nền -->
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-slate-200">Link ảnh nền (tùy chọn)</label>
+            <input type="text" id="cfg-theme-bg-image" placeholder="https://…/background.jpg" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-white focus:outline-none focus:border-pink-500">
+            <p class="text-[10px] text-slate-400 leading-relaxed">
+              Chỉ nhận link http(s). Để trống nếu muốn nền trong suốt trong OBS. Link logo nằm ở widget Logo bên dưới. Sàn Live Bar phủ kín khung hình, nên ảnh này hiện ở khoảng trời sau lưng phòng — thay cho nền của bối cảnh đang chọn, chứ không che căn phòng.
+            </p>
+          </div>
+
+          <!-- Màu nền & Trong suốt -->
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center">
+              <label class="text-xs font-bold text-slate-200">Màu nền</label>
+              <label class="flex items-center gap-1.5 cursor-pointer">
+                <input type="checkbox" id="cfg-bg-transparent-checkbox" class="w-3.5 h-3.5 rounded border-slate-700 bg-slate-950 text-pink-500 focus:ring-0" checked>
+                <span class="text-[11px] font-bold text-slate-300">Trong suốt</span>
+              </label>
+            </div>
+            <div class="flex items-center gap-2">
+              <input type="color" id="cfg-bg-color-picker" value="#0b0e14" class="w-10 h-10 rounded-xl bg-slate-950 border border-slate-800 cursor-pointer p-1 shrink-0">
+              <input type="text" id="cfg-bg-color-text" value="#0b0e14" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-white">
+            </div>
+            <p class="text-[10px] text-slate-400 leading-relaxed">
+              Để Trong suốt thì OBS chỉ thấy phần game, cảnh phía sau lộ ra bình thường — đó là mặc định và hầu hết trường hợp nên giữ nguyên. Đặt một màu tối khi bạn mở link overlay bằng trình duyệt để xem thử: chỗ trong suốt ở đó hiện ra màu trắng của trang, mà chữ của overlay thì màu trắng nên gần như không đọc được. Ảnh nền (nếu có) nằm đè lên màu này.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. CHỮ TRÊN MÀN HÌNH -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+        <div class="border-b border-slate-800/80 pb-3">
+          <h4 class="text-sm font-bold text-white flex items-center gap-2">
+            <span>✍️</span> Chữ trên màn hình
+          </h4>
+          <p class="text-[11px] text-slate-400 mt-0.5">
+            Sửa mọi dòng chữ người xem đọc được trên khung hình — để trống là giữ chữ mặc định. Chữ trong bảng luật (cột “được gì”) thì sửa ngay tại dòng luật ở tab Luật chơi.
+          </p>
+          <div class="p-2.5 rounded-xl bg-indigo-950/30 border border-indigo-500/20 text-[11px] text-indigo-300 mt-2">
+            ℹ️ Mọi dòng chữ người XEM đọc được trên khung hình đều sửa được ở đây, nên kênh nói tiếng nước ngoài không phải hiện tiếng Việt. Để trống là dùng chữ mặc định.
+          </div>
+        </div>
+
+        <!-- Text Category Sub-tabs -->
+        <div class="flex items-center gap-1.5 border-b border-slate-800/80 pb-2 overflow-x-auto no-scrollbar" id="ui-text-cat-tabs-container">
+          <button class="ui-text-cat-btn px-3 py-1.5 rounded-xl bg-pink-600 text-white text-xs font-bold transition-all shrink-0 active" data-cat="leaderboard">
+            🏆 Bảng xếp hạng &amp; đồng hồ
+          </button>
+          <button class="ui-text-cat-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white text-xs font-medium transition-all shrink-0" data-cat="alerts">
+            📢 Thông báo trên sóng
+          </button>
+          <button class="ui-text-cat-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white text-xs font-medium transition-all shrink-0" data-cat="guide">
+            📜 Bảng hướng dẫn
+          </button>
+          <button class="ui-text-cat-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white text-xs font-medium transition-all shrink-0" data-cat="status">
+            ⚡ Trạng thái màn hình
+          </button>
+          <button class="ui-text-cat-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white text-xs font-medium transition-all shrink-0" data-cat="bar">
+            🍸 Sàn bar
+          </button>
+          <button class="ui-text-cat-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white text-xs font-medium transition-all shrink-0" data-cat="chainsaw">
+            🪚 Cưa xích
+          </button>
+          <button class="ui-text-cat-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white text-xs font-medium transition-all shrink-0" data-cat="football">
+            ⚽ Sân cỏ
+          </button>
+          <button class="ui-text-cat-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white text-xs font-medium transition-all shrink-0" data-cat="army">
+            ⚔️ Ngàn quân
+          </button>
+          <button class="ui-text-cat-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white text-xs font-medium transition-all shrink-0" data-cat="video">
+            🎬 Màn hình video
+          </button>
+          <button class="ui-text-cat-btn px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 hover:text-white text-xs font-medium transition-all shrink-0" data-cat="winner">
+            👑 Kết ván
+          </button>
+        </div>
+
+        <!-- Content Panels for Text Categories -->
+        <div id="ui-text-category-panels">
+          <!-- Ngàn quân texts -->
+          <div id="ui-text-cat-army" class="ui-text-panel hidden space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Tiêu đề trận đấu</label>
+                <input type="text" id="cfg-uitext-army-title" placeholder="CUỘC CHIẾN NGÀN QUÂN" value="CUỘC CHIẾN NGÀN QUÂN" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Tên Phe 1 (Trái)</label>
+                <input type="text" id="cfg-uitext-army-team1" placeholder="PHE XANH" value="PHE XANH" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Tên Phe 2 (Phải)</label>
+                <input type="text" id="cfg-uitext-army-team2" placeholder="PHE ĐỎ" value="PHE ĐỎ" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Nhãn sức đẩy</label>
+                <input type="text" id="cfg-uitext-army-power" placeholder="SỨC ĐẨY: {n}" value="SỨC ĐẨY: {n}" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+            </div>
+          </div>
+          <!-- Sàn bar texts -->
+          <div id="ui-text-cat-bar" class="ui-text-panel hidden space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Tiêu đề Sàn Bar</label>
+                <input type="text" id="cfg-uitext-bar-title" placeholder="SÀN NHẢY LIVE BAR" value="SÀN NHẢY LIVE BAR" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Chào khách vào sàn</label>
+                <input type="text" id="cfg-uitext-bar-join" placeholder="{name} vừa vào sàn nhảy!" value="{name} vừa vào sàn nhảy!" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Spotlight tặng quà</label>
+                <input type="text" id="cfg-uitext-bar-spotlight" placeholder="⭐ SPOTLIGHT: {name}" value="⭐ SPOTLIGHT: {name}" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Đổi màu sàn party</label>
+                <input type="text" id="cfg-uitext-bar-party" placeholder="✨ PARTY TIME! ĐỔI MÀU SÀN" value="✨ PARTY TIME! ĐỔI MÀU SÀN" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- 1. Cưa xích texts -->
+          <div id="ui-text-cat-chainsaw" class="ui-text-panel hidden space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Tiêu đề Đấu trường</label>
+                <input type="text" id="cfg-uitext-cs-title" placeholder="ĐẤU TRƯỜNG CƯA XÍCH" value="ĐẤU TRƯỜNG CƯA XÍCH" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Người vào sân</label>
+                <input type="text" id="cfg-uitext-cs-join" placeholder="{name} vừa vào sân!" value="{name} vừa vào sân!" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Biến cố hỗn loạn</label>
+                <input type="text" id="cfg-uitext-cs-chaos" placeholder="🌀 BIẾN CỐ HỖN LOẠN!" value="🌀 BIẾN CỐ HỖN LOẠN!" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Bị hạ gục</label>
+                <input type="text" id="cfg-uitext-cs-kill" placeholder="{victim} bị {killer} cưa đứt!" value="{victim} bị {killer} cưa đứt!" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Sân cỏ texts -->
+          <div id="ui-text-cat-football" class="ui-text-panel hidden space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Nhãn lực hai đội</label>
+                <input type="text" id="cfg-uitext-fb-power" placeholder="LỰC SÚT" value="LỰC SÚT" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+                <p class="text-[10px] text-slate-400">Chữ ở giữa 2 số lực đẩy</p>
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Dòng chữ khi ghi bàn</label>
+                <input type="text" id="cfg-uitext-fb-goal" placeholder="⚽ VÀO! VÀO! VÀO!" value="⚽ VÀO! VÀO! VÀO!" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+                <p class="text-[10px] text-slate-400">Hiện to giữa màn hình lúc chạm lưới</p>
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Dòng mốc ghi bàn</label>
+                <input type="text" id="cfg-uitext-fb-target" placeholder="MỐC GHI BÀN: {points}" value="MỐC GHI BÀN: {points}" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+                <p class="text-[10px] text-slate-400">Hiển thị mốc chênh lệch lực để ghi bàn</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Leaderboard & Clock -->
+          <div id="ui-text-cat-leaderboard" class="ui-text-panel space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Tiêu đề Bảng xếp hạng</label>
+                <input type="text" id="cfg-uitext-lb-title" placeholder="TOP TẶNG QUÀ" value="TOP TẶNG QUÀ" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Nhãn Top 1 Quán Quân</label>
+                <input type="text" id="cfg-uitext-lb-rank1" placeholder="👑 QUÁN QUÂN" value="👑 QUÁN QUÂN" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Nhãn Đồng hồ vòng chơi</label>
+                <input type="text" id="cfg-uitext-clock" placeholder="THỜI GIAN" value="THỜI GIAN" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. Alerts -->
+          <div id="ui-text-cat-alerts" class="ui-text-panel hidden space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Thông báo Follow</label>
+                <input type="text" id="cfg-uitext-alert-follow" placeholder="{name} vừa theo dõi kênh" value="{name} vừa theo dõi kênh" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Thông báo Chia sẻ Live</label>
+                <input type="text" id="cfg-uitext-alert-share" placeholder="{name} vừa chia sẻ livestream" value="{name} vừa chia sẻ livestream" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Thông báo Quà Lớn</label>
+                <input type="text" id="cfg-uitext-alert-gift" placeholder="👑 {name} TẶNG {gift} ×{count}" value="👑 {name} TẶNG {gift} ×{count}" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Guide -->
+          <div id="ui-text-cat-guide" class="ui-text-panel hidden space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Tiêu đề bảng Bình luận</label>
+                <input type="text" id="cfg-uitext-guide-chat" placeholder="💬 GÕ CHỮ ĐƯỢC GÌ" value="💬 GÕ CHỮ ĐƯỢC GÌ" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Tiêu đề bảng Quà tặng</label>
+                <input type="text" id="cfg-uitext-guide-gift" placeholder="🎁 QUÀ NÀO ĐƯỢC GÌ" value="🎁 QUÀ NÀO ĐƯỢC GÌ" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. Status -->
+          <div id="ui-text-cat-status" class="ui-text-panel hidden space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Đang kết nối lại</label>
+                <input type="text" id="cfg-uitext-status-reconnect" placeholder="Đang kết nối lại TikTok Live..." value="Đang kết nối lại TikTok Live..." class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Tạm dừng live</label>
+                <input type="text" id="cfg-uitext-status-pause" placeholder="Trò chơi đang tạm dừng" value="Trò chơi đang tạm dừng" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Đã kết thúc</label>
+                <input type="text" id="cfg-uitext-status-ended" placeholder="Cảm ơn mọi người đã tham gia!" value="Cảm ơn mọi người đã tham gia!" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. Màn hình video texts -->
+          <div id="ui-text-cat-video" class="ui-text-panel hidden space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Chưa chọn mẫu video</label>
+                <input type="text" id="cfg-uitext-video-unselected" placeholder="🎬 Màn hình chưa chọn mẫu video — chọn trong dashboard" value="🎬 Màn hình chưa chọn mẫu video — chọn trong dashboard" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Đang tải clip</label>
+                <input type="text" id="cfg-uitext-video-loading" placeholder="⏳ Đang tải video {done}/{total}…" value="⏳ Đang tải video {done}/{total}…" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Trình duyệt chặn tự phát</label>
+                <input type="text" id="cfg-uitext-video-blocked" placeholder="▶️ Trình duyệt đang chặn tự phát — bấm vào khung để bắt đầu" value="▶️ Trình duyệt đang chặn tự phát — bấm vào khung để bắt đầu" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Đang tắt tiếng</label>
+                <input type="text" id="cfg-uitext-video-muted" placeholder="🔇 Bấm vào khung để bật tiếng (OBS thì tự bật)" value="🔇 Bấm vào khung để bật tiếng (OBS thì tự bật)" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. Winner -->
+          <div id="ui-text-cat-winner" class="ui-text-panel hidden space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Dòng chữ người thắng ván</label>
+                <input type="text" id="cfg-uitext-win-title" placeholder="👑 {name} CHIẾN THẮNG!" value="👑 {name} CHIẾN THẮNG!" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+              <div class="space-y-1">
+                <label class="text-xs font-bold text-slate-300">Nhãn MVP trận đấu</label>
+                <input type="text" id="cfg-uitext-win-mvp" placeholder="🏆 CẦU THỦ XUẤT SẮC NHẤT" value="🏆 CẦU THỦ XUẤT SẮC NHẤT" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-pink-500">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. WIDGET TRÊN OVERLAY -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-3">
+          <div>
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>📐</span> Widget trên overlay
+            </h4>
+            <p class="text-[11px] text-slate-400 mt-0.5">
+              Bấm vào một widget để chỉnh mọi thứ về nó. Vị trí lưu theo phần trăm khung hình nên lên OBS ở cỡ nào cũng đúng chỗ.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button id="btn-reset-layout" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition-all">
+              🔄 Bố cục mặc định
+            </button>
+            <button id="btn-drag-drop-preview" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-md shadow-indigo-600/30 transition-all">
+              ✋ Kéo thả trên khung xem trước
+            </button>
+          </div>
+        </div>
+
+        <!-- Grid of 13 Widget Cards (Rendered dynamically) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5" id="widgets-list-container">
+          <!-- Rendered dynamically by renderWidgetsList() -->
+        </div>
+
+        <!-- Thêm dòng chữ button -->
+        <div class="pt-2">
+          <button id="btn-add-custom-text-widget" class="w-full p-3.5 rounded-2xl bg-slate-950/80 hover:bg-slate-900 border border-dashed border-slate-700 hover:border-pink-500/50 transition-all flex items-center justify-center gap-2 group cursor-pointer">
+            <span class="text-pink-400 group-hover:scale-110 transition-transform font-bold text-sm">➕</span>
+            <div class="text-left">
+              <div class="text-xs font-bold text-slate-200 group-hover:text-white transition-colors">Thêm dòng chữ</div>
+              <div class="text-[10px] text-slate-400">Chữ tự gõ dán lên khung hình: tên kênh, lời kêu gọi follow, thông tin donate…</div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </section>

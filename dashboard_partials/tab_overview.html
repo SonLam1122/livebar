@@ -1,0 +1,108 @@
+<!-- TAB 1: TỔNG QUAN & LIVE PREVIEW -->
+    <!-- TAB 1: TỔNG QUAN & LIVE PREVIEW -->
+    <section id="tab-overview" class="tab-content block space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Left: Quick Stats & Controls (7 cols) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Stat Cards -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+            <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Trạng thái</span>
+              <div class="text-sm font-extrabold text-emerald-400 flex items-center gap-1.5 pt-0.5" id="stat-label-status">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span> Trực tiếp
+              </div>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400" id="stat-label-users">Người tham gia</span>
+              <div class="text-xl font-black font-mono text-white" id="stat-count-users">0</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400" id="stat-label-diamonds">Kim Cương</span>
+              <div class="text-xl font-black font-mono text-amber-400" id="stat-count-diamonds">0 💎</div>
+            </div>
+            <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Luật kích hoạt</span>
+              <div class="text-xl font-black font-mono text-indigo-400" id="stat-count-rules">7</div>
+            </div>
+          </div>
+
+          <!-- Active Game Info Card -->
+          <div class="p-5 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+              <div class="flex items-center gap-2.5">
+                <span class="text-2xl" id="active-game-emoji">🍸</span>
+                <div>
+                  <h3 class="text-sm font-black text-white uppercase" id="active-game-title">Live Bar — Sàn Nhảy 3D</h3>
+                  <p class="text-xs text-slate-400" id="active-game-desc">Khách vào sàn nhảy, tặng quà được spotlight zoom và nhận vương miện.</p>
+                </div>
+              </div>
+              <button id="btn-reset-stats" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 flex items-center gap-1.5 transition-all">
+                🔄 <span>Đặt lại ván</span>
+              </button>
+            </div>
+
+            <!-- Leaderboard Snapshot -->
+            <div class="space-y-2">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-400">
+                <span>🏆 BẢNG XẾP HẠNG TRỰC TIẾP</span>
+                <span class="text-[11px] text-slate-500 font-mono">Tự động cập nhật</span>
+              </div>
+              <div id="overview-leaderboard-list" class="space-y-1.5 min-h-[100px] flex flex-col justify-center">
+                <div class="text-xs text-slate-500 text-center py-6">Chưa có người xem nào tham gia. Dùng Phòng thử Live để gửi sự kiện.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            <button class="btn-goto-tab p-3.5 rounded-2xl bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 text-left transition-all space-y-1" data-target-tab="config">
+              <div class="text-base">⚙️</div>
+              <div class="text-xs font-bold text-white">Cấu hình Game</div>
+              <div class="text-[10px] text-slate-400">Sân đấu, Tướng, Chỉ số</div>
+            </button>
+            <button class="btn-goto-tab p-3.5 rounded-2xl bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 text-left transition-all space-y-1" data-target-tab="rules">
+              <div class="text-base">📜</div>
+              <div class="text-xs font-bold text-white">Luật chơi &amp; Quà</div>
+              <div class="text-[10px] text-slate-400">Gán quà, chat &amp; thả tim</div>
+            </button>
+            <button class="btn-goto-tab p-3.5 rounded-2xl bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 text-left transition-all space-y-1" data-target-tab="theme">
+              <div class="text-base">🎨</div>
+              <div class="text-xs font-bold text-white">Giao diện &amp; Widget</div>
+              <div class="text-[10px] text-slate-400">Font, màu &amp; bố cục HUD</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Live Frame Preview Player (5 cols) -->
+        <div class="lg:col-span-5 space-y-3">
+          <div class="flex items-center justify-between text-xs font-bold text-slate-300">
+            <span class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              Khung hình xem trước OBS
+            </span>
+            <div class="flex items-center gap-2">
+              <button id="btn-reload-preview" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs" title="Tải lại iframe">
+                🔄
+              </button>
+              <button id="btn-fullscreen-preview" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs" title="Xem toàn màn hình">
+                ⛶
+              </button>
+            </div>
+          </div>
+
+          <!-- 9:16 Aspect ratio container -->
+          <div class="aspect-[9/16] w-full max-w-[340px] mx-auto rounded-2xl overflow-hidden bg-black border-2 border-slate-800 shadow-2xl shadow-black/80 relative group">
+            <iframe id="overlay-iframe" src="/?token=SSsss9xEp6B5GGMf0e1xHyFl56Tj2fqI" class="w-full h-full border-0" allow="autoplay"></iframe>
+            
+            <!-- Hover overlay helper -->
+            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+              <span class="px-3 py-1.5 rounded-xl bg-black/80 text-white text-xs font-bold backdrop-blur-md border border-white/10">
+                🔴 Đang phát tín hiệu OBS
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>

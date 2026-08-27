@@ -1,0 +1,91 @@
+<!-- TOP HEADER / BRAND & 6-GAME SELECTOR -->
+  <!-- TOP HEADER / BRAND & 6-GAME SELECTOR -->
+  <header class="sticky top-0 z-40 bg-slate-900/90 backdrop-blur-xl border-b border-slate-800/80 shadow-lg shadow-black/30">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3 shrink-0">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 p-0.5 shadow-md shadow-indigo-500/20">
+          <div class="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
+            <span class="text-xl">🎮</span>
+          </div>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-sm font-black tracking-wider uppercase bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">TAOLIVETUONGTAC</h1>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> OFFLINE
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 hidden sm:block">Bảng điều khiển toàn diện 6 Game TikTok Live</p>
+        </div>
+      </div>
+
+      <!-- 6-Game Switcher Pills -->
+      <div class="flex items-center gap-1.5 p-1 bg-slate-950/80 border border-slate-800/80 rounded-2xl overflow-x-auto no-scrollbar">
+        <button id="btn-switch-livebar" class="game-switch-btn active px-3 py-1.5 rounded-xl text-xs font-bold bg-purple-600 text-white flex items-center gap-1.5 shadow-md shadow-purple-600/20 transition-all shrink-0">
+          <span>🍸</span> <span class="hidden md:inline">Live Bar</span>
+        </button>
+        <button id="btn-switch-votetank" class="game-switch-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white flex items-center gap-1.5 transition-all shrink-0">
+          <span>🗳️</span> <span class="hidden md:inline">Bình Chọn</span>
+        </button>
+        <button id="btn-switch-fishtank" class="game-switch-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white flex items-center gap-1.5 transition-all shrink-0">
+          <span>🐟</span> <span class="hidden md:inline">Cá Lớn Bé</span>
+        </button>
+        <button id="btn-switch-football" class="game-switch-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white flex items-center gap-1.5 transition-all shrink-0">
+          <span>⚽</span> <span class="hidden md:inline">Sân Cỏ</span>
+        </button>
+        <button id="btn-switch-armyclash" class="game-switch-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white flex items-center gap-1.5 transition-all shrink-0">
+          <span>🏳️</span> <span class="hidden md:inline">Ngàn Quân</span>
+        </button>
+        <button id="btn-switch-teambattle" class="game-switch-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white flex items-center gap-1.5 transition-all shrink-0">
+          <span>⚔️</span> <span class="hidden md:inline">Chiến Tháp</span>
+        </button>
+        <button id="btn-switch-chainsaw" class="game-switch-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white flex items-center gap-1.5 transition-all shrink-0">
+          <span>🪚</span> <span class="hidden md:inline">Cưa Xích</span>
+        </button>
+        <button id="btn-switch-receiptprinter" class="game-switch-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white flex items-center gap-1.5 transition-all shrink-0">
+          <span>🧾</span> <span class="hidden md:inline">Máy In</span>
+        </button>
+        <button id="btn-switch-videoreact" class="game-switch-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white flex items-center gap-1.5 transition-all shrink-0">
+          <span>🐱</span> <span class="hidden md:inline">3 Mèo</span>
+        </button>
+        <button id="btn-switch-threedogs" class="game-switch-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white flex items-center gap-1.5 transition-all shrink-0">
+          <span>🐕</span> <span class="hidden md:inline">3 Tuất</span>
+        </button>
+      </div>
+
+      <!-- Header Action Buttons -->
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="btn-global-clean-data" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 flex items-center gap-1.5 transition-all" title="Dọn sạch toàn bộ dữ liệu trận đấu về 0">
+          <span>🧹</span> <span class="hidden sm:inline">Dọn sạch dữ liệu</span>
+        </button>
+        <button id="btn-open-overlay" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-md shadow-indigo-600/30 flex items-center gap-1.5 transition-all">
+          <span>🚀</span> <span class="hidden sm:inline">Mở Overlay</span>
+        </button>
+        <button id="btn-simulator" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-all">
+          <span>🎮</span> <span class="hidden sm:inline">Phòng thử</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- SUB-HEADER / OBS QUICK LINK BAR -->
+  <div class="bg-slate-900/50 border-b border-slate-800/60 px-4 sm:px-6 py-2.5">
+    <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div class="flex items-center gap-2 min-w-0">
+        <span class="text-slate-400 shrink-0 font-bold flex items-center gap-1">🔗 Link OBS:</span>
+        <div class="flex items-center gap-1.5 px-3 py-1 rounded-xl bg-slate-950 border border-slate-800/80 font-mono text-[11px] text-indigo-300 truncate max-w-[320px] sm:max-w-[500px]">
+          <span id="obs-link-display">http://localhost:3000/?token=SSsss9xEp6B5GGMf0e1xHyFl56Tj2fqI</span>
+        </div>
+        <button id="btn-copy-obs-link" class="px-2.5 py-1 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold text-[11px] border border-slate-700 transition-all shrink-0 flex items-center gap-1">
+          📋 Sao chép
+        </button>
+      </div>
+
+      <div class="flex items-center gap-4 text-slate-400 font-mono text-[11px]">
+        <span class="flex items-center gap-1">📐 Kích thước OBS: <strong class="text-white font-bold">1080 × 1920 (9:16)</strong></span>
+        <span class="flex items-center gap-1">⚡ FPS: <strong class="text-emerald-400 font-bold">60 FPS</strong></span>
+      </div>
+    </div>
+  </div>

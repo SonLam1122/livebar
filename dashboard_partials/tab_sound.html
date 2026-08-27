@@ -1,0 +1,263 @@
+<!-- TAB 5: ÂM THANH & TTS & NHẠC NỀN -->
+    <!-- TAB 5: ÂM THANH & TTS & NHẠC NỀN -->
+    <section id="tab-sound" class="tab-content hidden space-y-8">
+      
+      <!-- HEADER -->
+      <div class="flex items-start justify-between border-b border-slate-800 pb-4">
+        <div>
+          <h3 class="text-base font-bold text-amber-400 flex items-center gap-2">
+            <span>🔊</span> Âm Thanh &amp; Giọng Đọc TTS &amp; Nhạc Nền
+          </h3>
+          <p class="text-xs text-slate-400 mt-0.5">
+            Overlay tự tạo tiếng, không cần tải file. Nhớ bật “Control audio via OBS” cho Browser Source nếu muốn nghe được trên sóng.
+          </p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <button id="btn-test-all-sounds" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 text-amber-300 border border-slate-700 flex items-center gap-1.5 transition-all">
+            <span>🎧</span> Nghe thử
+          </button>
+          <button class="btn-save-config px-5 py-2.5 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/30 transition-all">
+            💾 Lưu âm thanh
+          </button>
+        </div>
+      </div>
+
+      <!-- 1. TIẾNG OVERLAY (MASTER) -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-bold text-white">Tiếng overlay</span>
+            <span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-medium">Tự tạo âm thanh qua Web Audio</span>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" id="cfg-sound-enabled" class="sr-only peer" checked>
+            <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+            <span class="ml-2 text-xs font-bold text-slate-300">Bật âm thanh</span>
+          </label>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-1">
+          <div class="space-y-2">
+            <label class="text-xs font-bold text-slate-200">Bộ tiếng</label>
+            <select id="cfg-sound-pack" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+              <option value="arcade">Arcade — vui, rõ tiếng</option>
+              <option value="soft">Nhẹ nhàng</option>
+              <option value="mute">Tắt tiếng</option>
+            </select>
+          </div>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="text-xs font-bold text-slate-200">Âm lượng</label>
+              <span id="label-sound-volume" class="text-xs font-black text-amber-400">60%</span>
+            </div>
+            <input type="range" id="cfg-sound-volume" min="0" max="1" step="0.05" value="0.6" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. TỪNG TIẾNG TRONG GAME -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+          <div>
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>🔔</span> Từng tiếng trong game
+            </h4>
+            <p class="text-[11px] text-slate-400 mt-0.5">
+              Bấm loa để tắt riêng một tiếng. Muốn thay bằng tiếng của bạn thì tải lên một file ngắn (dưới 1 giây) — overlay tự cân âm lượng cho khớp với phần còn lại.
+            </p>
+          </div>
+          <div class="px-2.5 py-1 rounded-lg bg-slate-950 border border-slate-800 text-[11px] text-slate-400 shrink-0">
+            Đã dùng <span class="font-bold text-amber-400">0.0 MB</span> / 100 MB
+          </div>
+        </div>
+
+        <div id="sound-items-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3.5 pt-1">
+          <!-- Dynamic sound cards rendered by JS -->
+        </div>
+      </div>
+
+      <!-- 3. ĐỌC TÊN BẰNG GIỌNG NÓI (TTS) -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-3">
+          <div>
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>🗣️</span> Đọc tên bằng giọng nói (TTS)
+            </h4>
+            <p class="text-[11px] text-slate-400 mt-0.5">
+              Overlay đọc lời cảm ơn khi quà đạt mốc kim cương bên dưới. Chọn giọng ngay bên dưới và bấm nghe thử — danh sách gộp mọi nhà cung cấp quản trị viên đang bật.
+            </p>
+          </div>
+          <div class="flex items-center gap-3 shrink-0">
+            <button id="btn-tts-preview" class="px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs font-bold border border-slate-700 flex items-center gap-1.5 transition-all">
+              <span>🗣️</span> Đọc thử
+            </button>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="cfg-tts-enabled" class="sr-only peer">
+              <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+              <span class="ml-2 text-xs font-bold text-slate-300">Bật đọc tên</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-slate-200">Ngôn ngữ giọng đọc</label>
+            <select id="cfg-tts-lang" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+              <option value="vi-VN">Tiếng Việt (vi-VN)</option>
+              <option value="en-US">Tiếng Anh (en-US)</option>
+              <option value="th-TH">Tiếng Thái (th-TH)</option>
+              <option value="id-ID">Tiếng Indo (id-ID)</option>
+              <option value="ja-JP">Tiếng Nhật (ja-JP)</option>
+              <option value="ko-KR">Tiếng Hàn (ko-KR)</option>
+            </select>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="text-xs font-bold text-slate-200">Chỉ đọc quà từ (💎)</label>
+            <input type="number" id="cfg-tts-min-diamonds" min="1" max="10000" value="10" class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-bold text-white focus:outline-none focus:border-amber-500">
+            <p class="text-[10px] text-slate-400">Tránh đọc liên tục quà 1💎.</p>
+          </div>
+
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center">
+              <label class="text-xs font-bold text-slate-200">Tốc độ đọc</label>
+              <span id="label-tts-rate" class="text-xs font-bold text-amber-400">1.0×</span>
+            </div>
+            <input type="range" id="cfg-tts-rate" min="0.5" max="2.0" step="0.1" value="1.0" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500 mt-2">
+          </div>
+
+          <div class="space-y-1.5">
+            <div class="flex justify-between items-center">
+              <label class="text-xs font-bold text-slate-200">Âm lượng giọng đọc</label>
+              <span id="label-tts-volume" class="text-xs font-bold text-amber-400">100%</span>
+            </div>
+            <input type="range" id="cfg-tts-volume" min="0" max="1" step="0.05" value="1.0" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500 mt-2">
+          </div>
+        </div>
+
+        <!-- VOICE SELECTION -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Giọng đọc</label>
+          <div class="flex items-center gap-2">
+            <select id="cfg-tts-voice-id" class="flex-1 px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+              <option value="">— Giọng mặc định của hệ thống —</option>
+            </select>
+            <button id="btn-tts-preview-voice" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs font-bold border border-slate-700 whitespace-nowrap transition-all">
+              🔊 Nghe giọng này
+            </button>
+          </div>
+          <p class="text-[11px] text-slate-400">
+            <span id="tts-voice-count">39</span> giọng đang dùng được. Để mặc định thì màn hình đọc bằng giọng quản trị viên chọn sẵn.
+          </p>
+        </div>
+
+        <!-- TEMPLATES -->
+        <div class="space-y-3 pt-2">
+          <div class="space-y-1">
+            <label class="text-xs font-bold text-slate-200">Câu đọc khi có quà</label>
+            <input type="text" id="cfg-tts-gift-template" value="Cảm ơn {name} đã tặng {gift}" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+            <p class="text-[10px] text-slate-400">Biến dùng được: <code class="text-amber-400">{name}</code> tên người tặng · <code class="text-amber-400">{gift}</code> tên quà · <code class="text-amber-400">{count}</code> số lượng · <code class="text-amber-400">{diamonds}</code> tổng kim cương.</p>
+          </div>
+
+          <div class="pt-2 border-t border-slate-800/80 space-y-2">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" id="cfg-tts-read-follow" class="w-4 h-4 rounded border-slate-700 bg-slate-950 text-amber-500 focus:ring-0">
+              <span class="text-xs font-bold text-slate-300">Đọc cả khi có người follow</span>
+            </label>
+            <input type="text" id="cfg-tts-follow-template" value="{name} vừa theo dõi kênh" class="w-full px-3.5 py-2 rounded-xl bg-slate-950 border border-slate-800 text-xs font-semibold text-white focus:outline-none focus:border-amber-500">
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. NHẠC NỀN CỦA SÀN (BGM) -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <div class="border-b border-slate-800/80 pb-3">
+          <h4 id="label-bgm-title" class="text-sm font-bold text-white flex items-center gap-2">
+            <span>🎵</span> Nhạc nền của màn hình
+          </h4>
+          <p id="label-bgm-desc" class="text-[11px] text-slate-400 mt-0.5">
+            Clip nền luôn câm — tiếng nền là một bài nhạc phát lặp riêng. Clip chuyển động vẫn phát tiếng gốc của nó.
+          </p>
+        </div>
+
+        <!-- Video React BGM Source Mode Selector (Hidden for others) -->
+        <div id="vr-bgm-source-section" class="hidden space-y-2 p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/80">
+          <label class="text-xs font-bold text-slate-200">Lấy nhạc từ đâu</label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <button type="button" class="btn-vr-bgm-source px-3 py-2 rounded-xl border border-pink-500 bg-pink-500/10 text-pink-300 text-xs font-bold text-left transition-all" data-source="template">
+              🎵 Nhạc của mẫu (admin chọn)
+            </button>
+            <button type="button" class="btn-vr-bgm-source px-3 py-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 text-xs font-medium text-left hover:border-slate-700 transition-all" data-source="custom">
+              📂 Nhạc của tôi
+            </button>
+            <button type="button" class="btn-vr-bgm-source px-3 py-2 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 text-xs font-medium text-left hover:border-slate-700 transition-all" data-source="off">
+              🔇 Tắt nhạc nền
+            </button>
+          </div>
+          <p id="vr-bgm-source-desc" class="text-[11px] text-slate-400 leading-relaxed pt-1">
+            Đang dùng bài nhạc admin đặt sẵn trong mẫu Live Show 3 Mèo, cùng mức âm lượng admin đã cân với tiếng của clip chuyển động. Muốn bài khác thì chọn Nhạc của tôi — mẫu là của chung nên đổi nhạc trong mẫu sẽ đổi cho mọi người.
+          </p>
+        </div>
+
+        <div id="bgm-custom-url-section" class="space-y-1.5">
+          <label class="text-xs font-bold text-slate-200">Link nhạc nền (mp3, aac, ogg — hoặc link YouTube)</label>
+          <div class="flex items-center gap-2">
+            <input type="text" id="cfg-bgm-url" placeholder="Link YouTube hoặc https://…/nhac-nen.mp3 — để trống thì sàn không phát nhạc" class="flex-1 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-white focus:outline-none focus:border-amber-500">
+            <button id="btn-open-music-library" class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-300 text-xs font-bold border border-slate-700 whitespace-nowrap transition-all">
+              📚 Thư viện
+            </button>
+            <button id="btn-upload-music" class="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold border border-slate-700 whitespace-nowrap transition-all">
+              ⬆️ Tải nhạc lên
+            </button>
+            <input type="file" id="input-upload-music-file" accept="audio/*" class="hidden">
+          </div>
+          <p class="text-[10px] text-slate-400 leading-relaxed">
+            Dán được link YouTube (overlay chỉ phát tiếng), hoặc link trỏ THẲNG tới file nhạc và mở được công khai — không cần đăng nhập. Link stream radio dạng mp3 cũng chạy; link trang Spotify hay SoundCloud thì không. File tải lên tối đa 100MB.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="text-xs font-bold text-slate-200">Âm lượng nhạc nền</label>
+              <span id="label-bgm-volume" class="text-xs font-bold text-amber-400">50%</span>
+            </div>
+            <input type="range" id="cfg-bgm-volume" min="0" max="1" step="0.05" value="0.5" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+          </div>
+          <div class="space-y-2">
+            <div class="flex justify-between items-center">
+              <label class="text-xs font-bold text-slate-200">Âm lượng khi có giọng đọc / MC nói (Ducking)</label>
+              <span id="label-bgm-duck" class="text-xs font-bold text-amber-400">12%</span>
+            </div>
+            <input type="range" id="cfg-bgm-duck" min="0" max="0.5" step="0.02" value="0.12" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+          <div>
+            Dung lượng đã dùng: <span class="font-bold text-slate-200">0.0 MB / 100 MB</span> (gói Dùng thử) 
+            <a href="#" class="text-amber-400 hover:underline ml-1">[Kho file]</a>
+          </div>
+          <div id="bgm-player-status" class="text-amber-400 font-medium"></div>
+        </div>
+      </div>
+
+      <!-- 5. TIẾNG CỦA MÀN HÌNH LED (CHỈ HIỆN KHI LÀ SÀN LIVE BAR) -->
+      <div id="sound-livebar-led-section" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <div>
+            <h4 class="text-sm font-bold text-white flex items-center gap-2">
+              <span>🖥️</span> Tiếng của màn hình LED
+            </h4>
+            <p class="text-[11px] text-slate-400 mt-0.5">
+              Cho cái màn hình sau bàn DJ phát ra tiếng của chính nó. Nội dung màn hình chọn ở tab Cấu hình.
+            </p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer shrink-0">
+            <input type="checkbox" id="cfg-livebar-led-sound" class="sr-only peer">
+            <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+            <span class="ml-2 text-xs font-bold text-slate-300">Bật tiếng màn hình LED</span>
+          </label>
+        </div>
+      </div>
+    </section>
