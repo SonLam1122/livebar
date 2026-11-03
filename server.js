@@ -43,6 +43,10 @@ httpServer.on('error', (err) => {
 // Setup Socket.IO
 const { overlayIo } = setupSocketIO(httpServer);
 
+// Cho cầu nối TikTok LIVE biết kênh overlay để phát sự kiện thật
+const { bridge } = require('./server/tiktokBridge');
+bridge.setOverlayIo(overlayIo);
+
 // Start Continuous Game Loop & Physics Ticker
 startGameLoop(overlayIo);
 

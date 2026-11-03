@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kết nối TikTok LIVE → Overlay</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: radial-gradient(1200px 600px at 50% -10%, #1e293b, #0f172a 60%);
+    color: #e2e8f0; min-height: 100vh; padding: 24px;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
+  .card { background: rgba(30,41,59,.7); border: 1px solid #334155; border-radius: 16px; padding: 18px; margin-bottom: 16px; }
+  label { display: block; font-size: 12px; font-weight: 700; color: #cbd5e1; margin: 10px 0 6px; }
+  input, select {
+    width: 100%; padding: 11px 13px; border-radius: 11px; background: #0b1220;
+    border: 1px solid #334155; color: #fff; font-size: 14px; font-weight: 600;
+  }
+  input:focus, select:focus { outline: none; border-color: #6366f1; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; }
+  .row > div { flex: 1; min-width: 180px; }
+  .btns { display: flex; gap: 10px; margin-top: 16px; }
+  button {
+    flex: 1; padding: 12px; border: none; border-radius: 11px; font-weight: 800;
+    font-size: 14px; cursor: pointer; transition: .15s; color: #fff;
+  }
+  #btn-connect { background: linear-gradient(135deg,#ec4899,#8b5cf6); }
+  #btn-disconnect { background: #475569; }
+  button:hover { filter: brightness(1.1); }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  .status { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; background: #64748b; flex-shrink: 0; }
+  .dot.connected { background: #22c55e; box-shadow: 0 0 10px #22c55e; animation: pulse 1.5s infinite; }
+  .dot.connecting, .dot.retrying { background: #f59e0b; animation: pulse 1s infinite; }
+  .dot.error, .dot.ended { background: #ef4444; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+  .err { color: #fca5a5; font-size: 13px; margin-top: 8px; min-height: 16px; }
+  .stats { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 12px; }
+  .stat { background: #0b1220; border: 1px solid #334155; border-radius: 10px; padding: 8px 12px; font-size: 13px; }
+  .stat b { color: #fff; font-size: 16px; }
+  .log { background: #060a12; border: 1px solid #1e293b; border-radius: 10px; padding: 12px;
+    height: 200px; overflow-y: auto; font-family: ui-monospace, Menlo, monospace; font-size: 12px; line-height: 1.6; color: #93c5fd; }
+  .hint { font-size: 12px; color: #94a3b8; line-height: 1.6; }
+  code { background: #0b1220; padding: 1px 6px; border-radius: 6px; color: #fcd34d; }
+  a { color: #a5b4fc; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎥 Kết nối TikTok LIVE → Overlay livebar</h1>
+  <div class="sub">Nhập <code>@tênkênh</code> đang LIVE. Quà, bình luận, tim, theo dõi, chia sẻ THẬT sẽ tự chảy vào overlay và chạy game bạn đã chọn.</div>
+
+  <div class="card">
+    <div class="row">
+      <div>
+        <label>Tên kênh TikTok (đang LIVE)</label>
+        <input id="username" placeholder="@tenkenh hoặc link tiktok.com/@tenkenh" autocomplete="off" />
+      </div>
+      <div>
+        <label>Màn hình / Game nhận sự kiện</label>
+        <select id="screen"></select>
+      </div>
+    </div>
+    <div class="btns">
+      <button id="btn-connect">🔌 Kết nối</button>
+      <button id="btn-disconnect">⛔ Ngắt</button>
+    </div>
+    <div class="err" id="err"></div>
+  </div>
+
+  <div class="card">
+    <div class="status"><span class="dot" id="dot"></span><span id="status-text">Chưa kết nối</span></div>
+    <div class="stats">
+      <div class="stat">👀 Người xem <b id="s-viewers">0</b></div>
+      <div class="stat">🎁 Quà <b id="s-gifts">0</b></div>
+      <div class="stat">💬 Bình luận <b id="s-chats">0</b></div>
+      <div class="stat">❤️ Tim <b id="s-likes">0</b></div>
+      <div class="stat">➕ Theo dõi <b id="s-follows">0</b></div>
+      <div class="stat">🔁 Chia sẻ <b id="s-shares">0</b></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <label style="margin-top:0">Nhật ký</label>
+    <div class="log" id="log"></div>
+  </div>
+
+  <div class="card">
+    <label style="margin-top:0">🪷 Game khác: Chánh Điện An Lạc (đi chùa online)</label>
+    <div class="hint" style="margin-bottom:10px">Overlay chùa chạy riêng ở cổng <code>3001</code>, có kết nối TikTok + giọng đọc riêng. Mở bằng các nút dưới (phải chạy <code>start-mac.command</code> để bật cổng 3001).</div>
+    <div class="btns">
+      <button onclick="window.open('http://localhost:3001/control.html','_blank')" style="background:linear-gradient(135deg,#f59e0b,#b45309)">🧘 Bảng điều khiển chùa</button>
+      <button onclick="window.open('http://localhost:3001/overlay.html','_blank')" style="background:#475569">🖥️ Overlay chùa (OBS)</button>
+    </div>
+  </div>
+
+  <div class="card hint">
+    <b>Cách dùng:</b><br/>
+    1. Bật LIVE trên TikTok từ điện thoại/Studio.<br/>
+    2. Mở overlay trong OBS: <code id="obs-link">/?token=...</code><br/>
+    3. Nhập <code>@tênkênh</code> ở trên, chọn màn hình, bấm <b>Kết nối</b>.<br/>
+    Mẹo: chọn game ở <a href="/dashboard" target="_blank">Dashboard</a> trước. Nếu báo "offline" nghĩa là kênh chưa thực sự đang LIVE.
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let screens = [];
+
+async function loadScreens() {
+  try {
+    const r = await fetch('/api/screens');
+    screens = await r.json();
+    const sel = $('screen');
+    sel.innerHTML = '';
+    screens.forEach((s) => {
+      const o = document.createElement('option');
+      o.value = s.id;
+      o.textContent = `${s.name || s.id} — ${s.gameType || 'live_bar'}`;
+      sel.appendChild(o);
+    });
+    const def = screens.find((s) => s.token);
+    if (def && def.token) $('obs-link').textContent = `/?token=${def.token}`;
+  } catch (e) {}
+}
+
+async function connect() {
+  const username = $('username').value.trim();
+  if (!username) { $('err').textContent = 'Nhập tên kênh trước.'; return; }
+  $('err').textContent = '';
+  $('btn-connect').disabled = true;
+  try {
+    const r = await fetch('/api/tiktok/connect', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, screenId: $('screen').value }),
+    });
+    const d = await r.json();
+    if (d.status) render(d.status);
+  } catch (e) { $('err').textContent = 'Lỗi gọi server: ' + e.message; }
+  $('btn-connect').disabled = false;
+}
+
+async function disconnect() {
+  await fetch('/api/tiktok/disconnect', { method: 'POST' });
+}
+
+const STATUS_TEXT = {
+  idle: 'Chưa kết nối', connecting: 'Đang kết nối…', connected: 'ĐANG LIVE ✅',
+  retrying: 'Mất kết nối, đang thử lại…', error: 'Lỗi', ended: 'Live đã kết thúc',
+};
+
+function render(st) {
+  const dot = $('dot');
+  dot.className = 'dot ' + (st.status || '');
+  $('status-text').textContent = (STATUS_TEXT[st.status] || st.status || '') + (st.uniqueId ? ` — @${st.uniqueId}` : '');
+  $('err').textContent = st.error || '';
+  $('s-viewers').textContent = st.viewers || 0;
+  const s = st.stats || {};
+  $('s-gifts').textContent = s.gifts || 0;
+  $('s-chats').textContent = s.chats || 0;
+  $('s-likes').textContent = s.likes || 0;
+  $('s-follows').textContent = s.follows || 0;
+  $('s-shares').textContent = s.shares || 0;
+  if (st.logs) {
+    const log = $('log');
+    const atBottom = log.scrollHeight - log.scrollTop - log.clientHeight < 40;
+    log.innerHTML = st.logs.map((l) => `<div>${l.replace(/</g, '&lt;')}</div>`).join('');
+    if (atBottom) log.scrollTop = log.scrollHeight;
+  }
+}
+
+async function poll() {
+  try {
+    const r = await fetch('/api/tiktok/status');
+    render(await r.json());
+  } catch (e) {}
+}
+
+$('btn-connect').onclick = connect;
+$('btn-disconnect').onclick = disconnect;
+$('username').addEventListener('keydown', (e) => { if (e.key === 'Enter') connect(); });
+loadScreens();
+poll();
+setInterval(poll, 1500);
+</script>
+</body>
+</html>

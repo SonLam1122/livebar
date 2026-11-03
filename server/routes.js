@@ -1,6 +1,18 @@
 const { getScreens, getScreenById, updateScreenConfig } = require('./screens');
 const { getMatchState, resetMatchState, resetAllMatchStates } = require('./matchState');
 const { handleSimulation } = require('./simulator');
+const { bridge } = require('./tiktokBridge');
+
+function readJsonBody(req) {
+  return new Promise((resolve) => {
+    let body = '';
+    req.on('data', (c) => (body += c));
+    req.on('end', () => {
+      try { resolve(body ? JSON.parse(body) : {}); }
+      catch (_) { resolve({}); }
+    });
+  });
+}
 
 function handleApiRoutes(req, res, pathname, overlayIo) {
   // CORS Preflight
@@ -120,6 +132,30 @@ function handleApiRoutes(req, res, pathname, overlayIo) {
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: err.message }));
       }
+    });
+    return true;
+  }
+
+  // 6. TikTok LIVE bridge — kết nối phiên live thật, bơm sự kiện vào overlay
+  if (req.method === 'GET' && pathname === '/api/tiktok/status') {
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    res.end(JSON.stringify(bridge.getStatus()));
+    return true;
+  }
+
+  if (req.method === 'POST' && pathname === '/api/tiktok/connect') {
+    readJsonBody(req).then(async (payload) => {
+      const status = await bridge.connect(payload.username || payload.uniqueId, payload.screenId);
+      res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+      res.end(JSON.stringify({ success: true, status }));
+    });
+    return true;
+  }
+
+  if (req.method === 'POST' && pathname === '/api/tiktok/disconnect') {
+    bridge.disconnect(false).then((status) => {
+      res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+      res.end(JSON.stringify({ success: true, status }));
     });
     return true;
   }

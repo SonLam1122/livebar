@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Overlay 9:16 · Chánh Điện An Lạc</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,500;0,700;1,400&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/overlay.css">
+</head>
+<body>
+<div id="fit"><div id="stage">
+  <canvas id="c" width="1080" height="1920"></canvas>
+  <div id="lanterns"></div>
+  <div id="plaque" class="ui"><div id="title">Chánh Điện An Lạc</div><div id="subtitle">Nam Mô A Di Đà Phật</div></div>
+  <div id="pills" class="ui">
+    <div class="pill"><span class="dot"></span><span id="count">0/24</span><small>đang<br>thiền</small></div>
+    <div class="pill">⏱ <span id="timer">00:00:00</span></div>
+    <div class="pill">♥ <span id="likes">0</span></div>
+  </div>
+  <div id="lunar" class="ui"></div>
+  <div id="goal" class="ui"><div id="goalFill"></div><div id="goalText">Công đức đạo tràng</div></div>
+  <div id="guide" class="card ui">
+    <div class="page show">
+      <div>💬 <b>Bình luận</b> để vào chánh điện</div>
+      <div>Gõ <b>xin xăm</b> rút thẻ an lạc</div>
+      <div><b>gõ mõ · thỉnh chuông · thắp hương</b></div>
+      <div>Gõ <b>cầu …</b> gửi lời nguyện</div>
+      <div>🎁 Quà được <b>xướng tên hồi hướng</b></div>
+    </div>
+    <div class="page">
+      <div>🚶 <b>sang trái · sang phải · lên · xuống</b> đổi chỗ</div>
+      <div>Gõ <b>kinh hành</b> đi một vòng</div>
+      <div>Gõ <b>lên lạy Phật</b> lên trước bàn thờ</div>
+      <div>Gõ <b>nam · nữ · sư · ni · bà</b> đổi hình</div>
+      <div>✨ Top 3 công đức ngồi <b>bồ đoàn vàng</b></div>
+    </div>
+  </div>
+  <div id="merit" class="card ui"><h3 id="meritTitle">✦ Công Đức ✦</h3><ol id="meritList"><li class="empty">Chưa có</li></ol></div>
+  <div id="chant" class="banner ui"><h4 id="chantHead">✦ TỤNG KINH ✦</h4><p id="chantText"></p></div>
+  <div id="gift" class="banner ui"><div class="who" id="giftWho"></div><div class="what" id="giftWhat"></div><div class="pray" id="giftPray"></div></div>
+  <div id="milestone" class="banner ui"><h4>✦ VIÊN MÃN ✦</h4><p id="milestoneText"></p></div>
+  <div id="fortune" class="ui" aria-live="polite">
+    <div class="head">Thẻ an lạc</div>
+    <div class="who" id="fWho"></div>
+    <div class="no" id="fNo"></div>
+    <div class="title" id="fTitle"></div>
+    <div class="poem" id="fPoem"></div>
+    <div class="meaning" id="fMeaning"></div>
+    <div class="advice"><div>💼 <b>Công việc:</b> <span id="fWork"></span></div><div>🏡 <b>Gia đạo:</b> <span id="fFamily"></span></div><div>🌿 <b>Sức khỏe:</b> <span id="fHealth"></span></div></div>
+    <div class="foot" id="fFoot">Lời chúc mang tính giải trí, an vui</div>
+  </div>
+  <div id="toasts" class="ui"></div>
+  <button id="unmute">🔔 Bấm để bật âm thanh</button>
+  <div id="conn">đang kết nối…</div>
+</div></div>
+<script type="module" src="/overlay.js"></script>
+</body>
+</html>
