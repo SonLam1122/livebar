@@ -12,5 +12,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   setupInputListeners();
   setupThemeListeners();
   setupSoundManagerListeners();
+  setupTikTokLive();
   setupDashboardSocket();
 });

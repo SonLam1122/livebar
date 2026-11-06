@@ -163,3 +163,74 @@ function setupInputListeners() {
     }
   });
 }
+
+function setupTikTokLive() {
+  const inputUsername = document.getElementById('tiktok-username-input');
+  const btnConnect = document.getElementById('btn-tiktok-connect');
+  const btnDisconnect = document.getElementById('btn-tiktok-disconnect');
+  const statusEl = document.getElementById('tiktok-connection-status');
+  const statsEl = document.getElementById('tiktok-live-stats');
+
+  if (!btnConnect) return;
+
+  const updateStatus = async () => {
+    try {
+      const res = await fetch('/api/tiktok/status');
+      const data = await res.json();
+      if (statusEl) {
+        if (data.isConnected) {
+          statusEl.textContent = 'Da ket noi';
+          statusEl.className = 'text-xs font-semibold text-emerald-400';
+          if (btnConnect) btnConnect.classList.add('hidden');
+          if (btnDisconnect) btnDisconnect.classList.remove('hidden');
+        } else if (data.status === 'CONNECTING') {
+          statusEl.textContent = 'Dang ket noi';
+          statusEl.className = 'text-xs font-semibold text-amber-400';
+        } else {
+          statusEl.textContent = data.error ? `Loi: ${data.error}` : 'Chua ket noi';
+          statusEl.className = 'text-xs font-semibold text-slate-400';
+          if (btnConnect) btnConnect.classList.remove('hidden');
+          if (btnDisconnect) btnDisconnect.classList.add('hidden');
+        }
+      }
+      if (statsEl && data.stats) {
+        statsEl.textContent = `Mat xem: ${data.stats.viewerCount} - Qua: ${data.stats.totalGifts} - Chat: ${data.stats.totalComments}`;
+      }
+    } catch (e) {}
+  };
+
+  btnConnect.addEventListener('click', async () => {
+    const username = inputUsername?.value?.trim();
+    if (!username) return;
+    const screenId = screenData?.id || 'cmta2zkpq00aokx08uyc7iys2';
+    statusEl.textContent = 'Dang ket noi';
+    statusEl.className = 'text-xs font-semibold text-amber-400';
+    try {
+      const res = await fetch('/api/tiktok/connect', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, screenId })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        statusEl.textContent = data.error || 'Loi ket noi';
+        statusEl.className = 'text-xs font-semibold text-rose-400';
+      } else {
+        setTimeout(updateStatus, 1500);
+      }
+    } catch (err) {
+      statusEl.textContent = err.message || 'Loi mang';
+      statusEl.className = 'text-xs font-semibold text-rose-400';
+    }
+  });
+
+  btnDisconnect.addEventListener('click', async () => {
+    try {
+      await fetch('/api/tiktok/disconnect', { method: 'POST' });
+      await updateStatus();
+    } catch (e) {}
+  });
+
+  setInterval(updateStatus, 5000);
+  updateStatus();
+}

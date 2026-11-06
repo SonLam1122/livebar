@@ -1,6 +1,7 @@
 const { getScreens, getScreenById, updateScreenConfig } = require('./screens');
 const { getMatchState, resetMatchState, resetAllMatchStates } = require('./matchState');
 const { handleSimulation } = require('./simulator');
+const { connectToTikTok, disconnectFromTikTok, getTikTokStatus } = require('./tiktokConnector');
 
 function handleApiRoutes(req, res, pathname, overlayIo) {
   // CORS Preflight
@@ -15,19 +16,19 @@ function handleApiRoutes(req, res, pathname, overlayIo) {
   }
 
   // 1. GET /api/screens - Return list of screens
-  if (req.method === 'GET' && pathname === '/api/screens') {
+  if ((req.method === 'GET' || req.method === 'HEAD') && pathname === '/api/screens') {
     res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    res.end(JSON.stringify(getScreens()));
+    res.end(req.method === 'HEAD' ? '' : JSON.stringify(getScreens()));
     return true;
   }
 
   // 2. GET /api/screens/:id - Return single screen details
-  if (req.method === 'GET' && pathname.startsWith('/api/screens/')) {
+  if ((req.method === 'GET' || req.method === 'HEAD') && pathname.startsWith('/api/screens/')) {
     const parts = pathname.split('/');
     const targetId = parts[parts.length - 1];
     const screen = getScreenById(targetId);
     res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    res.end(JSON.stringify(screen || { error: 'Screen not found' }));
+    res.end(req.method === 'HEAD' ? '' : JSON.stringify(screen || { error: 'Screen not found' }));
     return true;
   }
 
@@ -121,6 +122,39 @@ function handleApiRoutes(req, res, pathname, overlayIo) {
         res.end(JSON.stringify({ error: err.message }));
       }
     });
+    return true;
+  }
+
+  // 6. GET /api/tiktok/status - Lay trang thai ket noi TikTok Live
+  if ((req.method === 'GET' || req.method === 'HEAD') && pathname === '/api/tiktok/status') {
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    res.end(req.method === 'HEAD' ? '' : JSON.stringify(getTikTokStatus()));
+    return true;
+  }
+
+  // 7. POST /api/tiktok/connect - Ket noi vao phong TikTok Live
+  if (req.method === 'POST' && pathname === '/api/tiktok/connect') {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', async () => {
+      try {
+        const payload = JSON.parse(body);
+        const result = await connectToTikTok(payload.username, payload.screenId, overlayIo);
+        res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.end(JSON.stringify(result));
+      } catch (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.end(JSON.stringify({ error: err.message }));
+      }
+    });
+    return true;
+  }
+
+  // 8. POST /api/tiktok/disconnect - Ngat ket noi khoi TikTok Live
+  if (req.method === 'POST' && pathname === '/api/tiktok/disconnect') {
+    const result = disconnectFromTikTok();
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    res.end(JSON.stringify(result));
     return true;
   }
 

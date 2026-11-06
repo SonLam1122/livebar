@@ -1,0 +1,19 @@
+# Dependency directories
+node_modules/
+
+# Version control
+.git/
+.gitignore
+
+# Temporary and log files
+*.log
+*.tmp
+temp_screen_page.js
+
+# Documentation and project notes
+doc/
+README.md
+
+# Windows batch files
+*.bat
+

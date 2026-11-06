@@ -1,0 +1,27 @@
+services:
+  livebar:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: livebar-app
+    restart: unless-stopped
+    ports:
+      # Anh xa cong may chu vao cong container
+      - "3000:3000"
+    environment:
+      # Cong lang nghe cua Node.js server
+      - PORT=3000
+      - NODE_ENV=production
+    volumes:
+      # Dong bo du lieu cau hinh man hinh giua host va container
+      - ./screens_data.json:/app/screens_data.json
+      - ./screen_data.json:/app/screen_data.json
+
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: livebar-tunnel
+    restart: unless-stopped
+    # Tu dong khoi tao Quick Tunnel tro toi dich vu livebar tren cong 3000
+    command: tunnel --no-autoupdate --url http://livebar:3000
+    depends_on:
+      - livebar
