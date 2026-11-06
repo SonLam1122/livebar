@@ -6,16 +6,25 @@ Tai lieu huong dan chi tiet cach van hanh Public URL thong qua Cloudflare Tunnel
 
 ## 1. Thong Tin Public URL Dang Hoat Dong
 
-- Dia chi Dashboard:
+- Dia chi Dashboard quan tri:
   `https://football-boring-blocked-arabia.trycloudflare.com/dashboard`
+  (Hoac ten mien deployment vi du: `https://livebar.onrender.com/dashboard`)
 - Dia chi Overlay dung cho OBS Studio hoac TikTok Live Studio:
   `https://football-boring-blocked-arabia.trycloudflare.com/?token=SSsss9xEp6B5GGMf0e1xHyFl56Tj2fqI`
+  (Luu y: Man hinh Overlay bat buoc phai co tham so `?token=...` de tai du lieu man hinh)
 - Endpoint kiem tra trang thai ket noi:
   `https://football-boring-blocked-arabia.trycloudflare.com/api/tiktok/status`
 
 ---
 
-## 2. Quy Trinh Treo Live Voi OBS Studio
+## 2. Co Che Xu Ly Khi Truy Cap Trang Chu
+
+- Khi nguoi dung truy cap dia chi goc khong kem token (vi du `https://livebar.onrender.com/`), he thong se tu dong chuyen huong ve `/dashboard` de truy cap bang dieu khien.
+- Neu client mo overlay truc tiep ma thieu token, ma nguon se tu dong bo sung token mac dinh `SSsss9xEp6B5GGMf0e1xHyFl56Tj2fqI` de tranh tinh trang trang man hinh.
+
+---
+
+## 3. Quy Trinh Treo Live Voi OBS Studio
 
 1. Mo phan mem OBS Studio hoac TikTok Live Studio.
 2. Nhan dau cong tai khung Sources va chon Browser.

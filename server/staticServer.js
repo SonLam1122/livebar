@@ -16,6 +16,16 @@ function serveStatic(req, res, pathname) {
     return;
   }
 
+  // Chuyen huong ve dashboard neu nguoi dung truy cap goc khong co token overlay
+  if (pathname === '/' || pathname === '') {
+    const parsedUrl = new URL(req.url, 'http://localhost');
+    if (!parsedUrl.searchParams.has('token')) {
+      res.writeHead(302, { 'Location': '/dashboard' });
+      res.end();
+      return;
+    }
+  }
+
   let filePath = path.join(ROOT_DIR, pathname === '/' ? 'index.html' : pathname);
 
   // Generate SVG avatar on-the-fly for users
@@ -53,7 +63,7 @@ function serveStatic(req, res, pathname) {
     const contentType = MIME_TYPES[ext] || 'application/octet-stream';
     const stat = fs.statSync(filePath);
     const fileSize = stat.size;
-    const range = req.headers.range;
+    const range = req.headers?.range;
 
     if (range) {
       const parts = range.replace(/bytes=/, "").split("-");

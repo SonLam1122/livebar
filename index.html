@@ -13,6 +13,16 @@
         font-display: swap;
       }
     </style>
+    <script>
+      // Tu dong bo sung token mac dinh neu link thieu query token de tranh trang man hinh
+      (function() {
+        var params = new URLSearchParams(window.location.search);
+        if (!params.get('token')) {
+          params.set('token', 'SSsss9xEp6B5GGMf0e1xHyFl56Tj2fqI');
+          window.location.replace(window.location.pathname + '?' + params.toString());
+        }
+      })();
+    </script>
     <script type="module" crossorigin src="/assets/index-BIfK8IDk.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/Geometry-Caez7mN4.js">
     <link rel="modulepreload" crossorigin href="/assets/Filter-DNleo9tH.js">
