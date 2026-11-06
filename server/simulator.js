@@ -702,6 +702,58 @@ function handleSimulation(mState, payload, targetScreen, overlayIo) {
       mState.bar.guests = mState.guests;
     }
 
+    // Toast thong bao tuong tac tren man hinh Live Bar
+    if (payload.type === 'join') {
+      fxList.push({
+        kind: 'toast',
+        nickname: user.nickname,
+        avatarUrl: user.avatarUrl,
+        icon: '👋',
+        text: 'đã vào xem live'
+      });
+    } else if (payload.comment) {
+      fxList.push({
+        kind: 'toast',
+        nickname: user.nickname,
+        avatarUrl: user.avatarUrl,
+        icon: '💬',
+        text: payload.comment
+      });
+    } else if (payload.gift) {
+      fxList.push({
+        kind: 'toast',
+        nickname: user.nickname,
+        avatarUrl: user.avatarUrl,
+        icon: '🎁',
+        text: `tặng ${payload.gift} (${diamonds}💎)`
+      });
+    } else if (payload.type === 'like' || payload.likes) {
+      const lk = payload.likes || payload.count || 1;
+      fxList.push({
+        kind: 'toast',
+        nickname: user.nickname,
+        avatarUrl: user.avatarUrl,
+        icon: '❤️',
+        text: `đã thả ${lk} tim`
+      });
+    } else if (payload.type === 'share') {
+      fxList.push({
+        kind: 'toast',
+        nickname: user.nickname,
+        avatarUrl: user.avatarUrl,
+        icon: '↗',
+        text: 'đã chia sẻ live'
+      });
+    } else if (payload.type === 'follow') {
+      fxList.push({
+        kind: 'toast',
+        nickname: user.nickname,
+        avatarUrl: user.avatarUrl,
+        icon: '⭐',
+        text: 'đã theo dõi streamer'
+      });
+    }
+
     // Tự động cập nhật danh hiệu (Badges) cho Live Bar
     updateLiveBarBadges(mState, fxList);
 

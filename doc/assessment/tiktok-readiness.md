@@ -16,16 +16,27 @@ Tai lieu danh gia he thong mang, ket noi tunnel va kha nang tich hop TikTok Live
 ## 2. Trang Thai Tich Hop API TikTok
 
 - Da tich hop thanh cong thu vien `tiktok-live-connector` (phien ban 2.5.0) qua module `server/tiktokConnector.js`.
-- Ho tro tu dong chuyen tiep cac su kien:
-  - Gift: Tinh diem, cong kim cuong, kich hoat che do Spotlight khi dat moc.
-  - Chat: Hien thi noi dung binh luan cua nguoi xem.
-  - Like: Tang luot tim va diem tran dau.
-  - Share va Member: Cap nhat thong tin nguoi xem vao danh sach khach.
+- Tuong thich lop khoi tao `TikTokLiveConnection` tren phien ban 2.5.0 (khac phuc loi `WebcastPushConnection is not a constructor`).
+- Ho tro tu dong chuyen tiep cac su kien va hien thi toast:
+  - Member Join: Tao vu cong tren san nhay va hien toast thong bao nguoi xem vao phong.
+  - Chat Comment: Phat hieu ung nhay, cap nhat danh hieu Thuyen truong va hien noi dung binh luan.
+  - Gift: Tinh diem, cong kim cuong, kich hoat che do Spotlight khi dat moc va hien toast qua tang.
+  - Like: Tang luot tim, diem tran dau va hien toast tha tim.
+  - Share va Follow: Cap nhat thong tin nguoi xem va ghi nhan tuong tac.
 - Cung cap API dieu khien tai `POST /api/tiktok/connect`, `POST /api/tiktok/disconnect`, va `GET /api/tiktok/status`.
 
 ---
 
-## 3. Danh Gia Kha Nang Treo Live
+## 3. Thiet Lap Do Phan Giai OBS Chuan
+
+- De tranh hien tuong man hinh live bi mo:
+  - Trong OBS Browser Source, bat buoc dien Width: 1080 va Height: 1920.
+  - Khong de mac dinh 800x600 roi dung chuot phong to vi se lam bien dang va vo hinh anh.
+  - Canh bao thiet lap da duoc bo sung ro rang trong huong dan tren Dashboard.
+
+---
+
+## 4. Danh Gia Kha Nang Treo Live
 
 - Ket luan: He thong da san sang 100% de treo live.
 - Nguoi dung chi can dan link Overlay vao OBS va nhap username tren Dashboard de bat dau live tuong tac that.
