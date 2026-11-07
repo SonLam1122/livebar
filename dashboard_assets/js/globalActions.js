@@ -57,7 +57,8 @@ function setupGameSwitchers() {
     { id: 'btn-switch-chainsaw', sid: 'cmtabchainsaw001' },
     { id: 'btn-switch-receiptprinter', sid: 'cmtb39d1d00chkx08sjrxty0e' },
     { id: 'btn-switch-videoreact', sid: 'cmtbk6dyh00ekkx08xtg4pc3m' },
-    { id: 'btn-switch-threedogs', sid: 'cmtbk6asa00ehkx089sr0l2qw' }
+    { id: 'btn-switch-threedogs', sid: 'cmtbk6asa00ehkx089sr0l2qw' },
+    { id: 'btn-switch-dichua', sid: 'cmtdichua0001' }
   ];
 
   switchers.forEach(s => {
@@ -69,13 +70,18 @@ function setupGameSwitchers() {
 
 function setupGlobalActions() {
   document.getElementById('btn-open-overlay')?.addEventListener('click', () => {
-    const targetToken = screenData?.token || screenData?.id;
-    window.open(`/?token=${targetToken}`, '_blank', 'width=1080,height=1920');
+    if (screenData?.gameType === 'di_chua') {
+      window.open('/chua/overlay.html', '_blank', 'width=1080,height=1920');
+    } else {
+      const targetToken = screenData?.token || screenData?.id;
+      window.open(`/?token=${targetToken}`, '_blank', 'width=1080,height=1920');
+    }
   });
 
   document.getElementById('btn-copy-obs-link')?.addEventListener('click', () => {
+    const isChua = screenData?.gameType === 'di_chua';
     const targetToken = screenData?.token || screenData?.id;
-    const url = `${window.location.origin}/?token=${targetToken}`;
+    const url = isChua ? `${window.location.origin}/chua/overlay.html` : `${window.location.origin}/?token=${targetToken}`;
     navigator.clipboard.writeText(url).then(() => {
       showSimActionFeedback('📋 Đã sao chép link OBS!');
       const btn = document.getElementById('btn-copy-obs-link');

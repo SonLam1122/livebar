@@ -60,6 +60,7 @@ function switchScreen(screenId, updateUrl = false) {
   const isChainsaw = gType === 'chainsaw_clash';
   const isReceiptPrinter = gType === 'receipt_printer';
   const isVidReact = gType === 'video_react';
+  const isDiChua = gType === 'di_chua';
 
   if (updateUrl && window.history.pushState) {
     window.history.pushState(null, '', `/dashboard/screens/${screenData.id}`);
@@ -76,7 +77,8 @@ function switchScreen(screenId, updateUrl = false) {
     { id: 'btn-switch-chainsaw', active: isChainsaw, color: 'bg-orange-600' },
     { id: 'btn-switch-receiptprinter', active: isReceiptPrinter, color: 'bg-amber-600' },
     { id: 'btn-switch-videoreact', active: isVidReact && screenData?.id === 'cmtbk6dyh00ekkx08xtg4pc3m', color: 'bg-rose-600' },
-    { id: 'btn-switch-threedogs', active: isVidReact && screenData?.id === 'cmtbk6asa00ehkx089sr0l2qw', color: 'bg-amber-600' }
+    { id: 'btn-switch-threedogs', active: isVidReact && screenData?.id === 'cmtbk6asa00ehkx089sr0l2qw', color: 'bg-amber-600' },
+    { id: 'btn-switch-dichua', active: isDiChua, color: 'bg-amber-600' }
   ];
 
   buttons.forEach(b => {
@@ -134,16 +136,20 @@ function switchScreen(screenId, updateUrl = false) {
     if (activeTitle) activeTitle.textContent = isTuat ? '3 Tuất Vàng Live (Màn Hình Video)' : 'Live Show 3 Mèo (Màn Hình Video)';
     if (activeEmoji) activeEmoji.textContent = isTuat ? '🐕' : '🐱';
     if (activeDesc) activeDesc.textContent = 'Nhân vật video chạy nền, có quà là đổi sang clip chuyển động khác.';
+  } else if (isDiChua) {
+    if (activeTitle) activeTitle.textContent = 'Chánh Điện An Lạc — Đi Chùa Online';
+    if (activeEmoji) activeEmoji.textContent = '🛕';
+    if (activeDesc) activeDesc.textContent = 'Chánh điện online: gõ mõ, thỉnh chuông, thắp hương, xin xăm, cầu an và hồi hướng công đức.';
   }
 
   if (obsLinkDisplay) {
-    obsLinkDisplay.textContent = `${window.location.origin}/?token=${targetToken}`;
+    obsLinkDisplay.textContent = isDiChua ? `${window.location.origin}/chua/overlay.html` : `${window.location.origin}/?token=${targetToken}`;
   }
 
   // Update Preview iframe
   const iframe = document.getElementById('overlay-iframe');
   if (iframe) {
-    iframe.src = `/?token=${targetToken}`;
+    iframe.src = isDiChua ? '/chua/overlay.html?audio=0' : `/?token=${targetToken}`;
   }
 
   // Toggle Config Sections
@@ -156,7 +162,8 @@ function switchScreen(screenId, updateUrl = false) {
     { id: 'config-section-teambattle', show: isTeamBattle },
     { id: 'config-section-chainsaw', show: isChainsaw },
     { id: 'game-config-receiptprinter', show: isReceiptPrinter },
-    { id: 'config-section-videoreact', show: isVidReact }
+    { id: 'config-section-videoreact', show: isVidReact },
+    { id: 'config-section-dichua', show: isDiChua }
   ];
   configSections.forEach(s => {
     const el = document.getElementById(s.id);

@@ -92,6 +92,9 @@
         <button id="btn-switch-threedogs" class="game-switch-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white flex items-center gap-1.5 transition-all shrink-0">
           <span>🐕</span> <span class="hidden md:inline">3 Tuất</span>
         </button>
+        <button id="btn-switch-dichua" class="game-switch-btn px-3 py-1.5 rounded-xl text-xs font-medium text-slate-400 hover:text-white flex items-center gap-1.5 transition-all shrink-0">
+          <span>🛕</span> <span class="hidden md:inline">Đi Chùa</span>
+        </button>
       </div>
 
       <!-- Header Action Buttons -->
@@ -1518,6 +1521,55 @@
   </div>
 </div>
 
+      <!-- CONFIG: ĐI CHÙA ONLINE (CHÁNH ĐIỆN AN LẠC) -->
+<div id="config-section-dichua" class="space-y-6 hidden">
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
+    <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+      <div>
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <span>🛕</span> Chánh Điện An Lạc
+        </h3>
+        <p class="text-xs text-slate-400 mt-1">Cấu hình phòng thiền, bồ đoàn và xướng tên hồi hướng</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="/chua/control.html" target="_blank" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white transition-all">
+          Bảng Điều Khiển
+        </a>
+        <a href="/chua/overlay.html" target="_blank" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition-all">
+          Mở Overlay
+        </a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Tiêu đề bảng hoành phi</label>
+          <input type="text" id="cfg-dichua-title" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" value="Chánh Điện An Lạc">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-300 mb-1">Câu đối phụ</label>
+          <input type="text" id="cfg-dichua-subtitle" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" value="Nam Mô A Di Đà Phật">
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="p-4 bg-slate-950/60 border border-slate-800/80 rounded-xl text-xs text-slate-300 space-y-2">
+          <div class="font-bold text-amber-400">Các lệnh tương tác trên Live</div>
+          <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-400">
+            <div>• xin xăm, gieo quẻ</div>
+            <div>• gõ mõ, thỉnh chuông</div>
+            <div>• thắp hương, lạy Phật</div>
+            <div>• kinh hành, đổi chỗ</div>
+            <div>• cầu..., xin cho...</div>
+            <div>• nam, nữ, sư, ni, bà</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
     </section>
 
     <!-- TAB 3: LUẬT CHƠI & SỰ KIỆN -->
@@ -2473,6 +2525,7 @@
     </div>
   </div>
 </section>
+
 
   </main>
 

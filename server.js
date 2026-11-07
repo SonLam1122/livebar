@@ -43,6 +43,10 @@ httpServer.on('error', (err) => {
 // Setup Socket.IO
 const { overlayIo } = setupSocketIO(httpServer);
 
+// Khoi tao WebSocket va engine Chua Online (Chanh Dien An Lac)
+const { initChuaBridge } = require('./server/chuaBridge');
+initChuaBridge(httpServer);
+
 // Start Continuous Game Loop & Physics Ticker
 startGameLoop(overlayIo);
 

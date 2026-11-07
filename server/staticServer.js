@@ -28,6 +28,23 @@ function serveStatic(req, res, pathname) {
 
   let filePath = path.join(ROOT_DIR, pathname === '/' ? 'index.html' : pathname);
 
+  // Xu ly duong dan Chanh Dien An Lac (Chua Online)
+  const chuaPublicDir = path.join(ROOT_DIR, 'chua-online-live-main', 'public');
+  if (pathname === '/chua' || pathname === '/chua/' || pathname === '/chua/overlay.html' || pathname === '/overlay.html') {
+    filePath = path.join(chuaPublicDir, 'overlay.html');
+  } else if (pathname === '/chua/control.html' || pathname === '/control.html') {
+    filePath = path.join(chuaPublicDir, 'control.html');
+  } else if (pathname.startsWith('/chua/')) {
+    filePath = path.join(chuaPublicDir, pathname.replace('/chua/', ''));
+  } else if (pathname.startsWith('/tts/')) {
+    filePath = path.join(ROOT_DIR, 'chua-online-live-main', 'data', 'runtime', 'tts', pathname.replace('/tts/', ''));
+  } else if (!fs.existsSync(filePath)) {
+    const fallbackChua = path.join(chuaPublicDir, pathname.replace(/^\//, ''));
+    if (fs.existsSync(fallbackChua) && fs.statSync(fallbackChua).isFile()) {
+      filePath = fallbackChua;
+    }
+  }
+
   // Generate SVG avatar on-the-fly for users
   if (pathname.startsWith('/api/avatars/')) {
     const username = pathname.replace('/api/avatars/', '').replace('.svg', '');

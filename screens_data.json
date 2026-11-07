@@ -2962,5 +2962,20 @@
       },
       "version": 1
     }
+  },
+  {
+    "id": "cmtdichua0001",
+    "name": "Đi Chùa Online",
+    "gameType": "di_chua",
+    "token": "cmtdichua0001_token",
+    "config": {
+      "gameType": "di_chua",
+      "title": "Chánh Điện An Lạc",
+      "subtitle": "Nam Mô A Di Đà Phật",
+      "maxSeats": 24,
+      "autoChant": true,
+      "chantEveryMin": 5,
+      "version": 1
+    }
   }
 ]
