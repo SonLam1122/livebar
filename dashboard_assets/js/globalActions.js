@@ -166,10 +166,64 @@ function setupInputListeners() {
 
 function setupTikTokLive() {
   const inputUsername = document.getElementById('tiktok-username-input');
+  const inputApiKey = document.getElementById('tiktok-apikey-input');
   const btnConnect = document.getElementById('btn-tiktok-connect');
   const btnDisconnect = document.getElementById('btn-tiktok-disconnect');
   const statusEl = document.getElementById('tiktok-connection-status');
   const statsEl = document.getElementById('tiktok-live-stats');
+  const btnCopyBridge = document.getElementById('btn-copy-bridge');
+  const bridgeStatus = document.getElementById('bridge-copy-status');
+
+  // Xu ly sao chep ma Cau noi Trinh duyet (100% truc tiep khong can ben thu 3)
+  if (btnCopyBridge) {
+    btnCopyBridge.addEventListener('click', () => {
+      const origin = window.location.origin;
+      const screenId = screenData?.id || 'cmta2zkpq00aokx08uyc7iys2';
+      const bridgeScript = `(function(){
+  const API_URL = '${origin}/api/tiktok/webhook';
+  const SCREEN_ID = '${screenId}';
+  console.log('[LiveBar] Cau noi bat dau chay...');
+  function pushEvt(type, data){
+    fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ screenId: SCREEN_ID, type, ...data })
+    }).catch(e => console.error('[LiveBar] Loi:', e));
+  }
+  const chatBox = document.querySelector('[data-e2e="chat-room"]') || 
+                  document.querySelector('[class*="ChatRoom"]') || 
+                  document.querySelector('[class*="chat-room"]') || 
+                  document.body;
+  const obs = new MutationObserver((mutations) => {
+    for (const m of mutations) {
+      for (const n of m.addedNodes) {
+        if (n.nodeType !== 1) continue;
+        const cEl = n.querySelector('[data-e2e="comment-text"]') || n.querySelector('[class*="comment"]') || n.querySelector('[class*="Comment"]');
+        const uEl = n.querySelector('[data-e2e="comment-username"]') || n.querySelector('[class*="username"]') || n.querySelector('[class*="Username"]');
+        const img = n.querySelector('img');
+        if (cEl && uEl) {
+          const uName = uEl.innerText.trim();
+          const cText = cEl.innerText.trim();
+          const avatar = img ? img.src : '';
+          pushEvt('comment', { comment: cText, user: { username: uName, nickname: uName, avatarUrl: avatar } });
+        }
+      }
+    }
+  });
+  obs.observe(chatBox, { childList: true, subtree: true });
+  alert('LiveBar: Da bat cau noi truc tiep! Cac tuong tac tren live se tu dong hien thi vao game.');
+})();`;
+
+      navigator.clipboard.writeText(bridgeScript).then(() => {
+        if (bridgeStatus) {
+          bridgeStatus.classList.remove('hidden');
+          setTimeout(() => bridgeStatus.classList.add('hidden'), 3500);
+        }
+      }).catch(() => {
+        prompt('Sao chep ma ben duoi va dan vao Console F12:', bridgeScript);
+      });
+    });
+  }
 
   if (!btnConnect) return;
 
@@ -202,6 +256,7 @@ function setupTikTokLive() {
   btnConnect.addEventListener('click', async () => {
     const username = inputUsername?.value?.trim();
     if (!username) return;
+    const apiKey = inputApiKey?.value?.trim() || '';
     const screenId = screenData?.id || 'cmta2zkpq00aokx08uyc7iys2';
     statusEl.textContent = 'Dang ket noi';
     statusEl.className = 'text-xs font-semibold text-amber-400';
@@ -209,7 +264,7 @@ function setupTikTokLive() {
       const res = await fetch('/api/tiktok/connect', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, screenId })
+        body: JSON.stringify({ username, screenId, apiKey })
       });
       const data = await res.json();
       if (!res.ok) {

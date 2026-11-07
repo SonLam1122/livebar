@@ -1,7 +1,7 @@
 const { getScreens, getScreenById, updateScreenConfig } = require('./screens');
 const { getMatchState, resetMatchState, resetAllMatchStates } = require('./matchState');
 const { handleSimulation } = require('./simulator');
-const { connectToTikTok, disconnectFromTikTok, getTikTokStatus } = require('./tiktokConnector');
+const { connectToTikTok, disconnectFromTikTok, getTikTokStatus, injectTikTokEvent } = require('./tiktokConnector');
 
 function handleApiRoutes(req, res, pathname, overlayIo) {
   // CORS Preflight
@@ -139,7 +139,7 @@ function handleApiRoutes(req, res, pathname, overlayIo) {
     req.on('end', async () => {
       try {
         const payload = JSON.parse(body);
-        const result = await connectToTikTok(payload.username, payload.screenId, overlayIo);
+        const result = await connectToTikTok(payload.username, payload.screenId, overlayIo, payload.apiKey);
         res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
         res.end(JSON.stringify(result));
       } catch (err) {
@@ -155,6 +155,24 @@ function handleApiRoutes(req, res, pathname, overlayIo) {
     const result = disconnectFromTikTok();
     res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
     res.end(JSON.stringify(result));
+    return true;
+  }
+
+  // 9. POST /api/tiktok/webhook - Nhan su kien tu Browser Bridge hoac Webhook ngoai
+  if (req.method === 'POST' && pathname === '/api/tiktok/webhook') {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', () => {
+      try {
+        const payload = JSON.parse(body);
+        const result = injectTikTokEvent(payload, overlayIo);
+        res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.end(JSON.stringify(result));
+      } catch (err) {
+        res.writeHead(400, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+        res.end(JSON.stringify({ error: err.message }));
+      }
+    });
     return true;
   }
 

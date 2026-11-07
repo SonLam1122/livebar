@@ -6,41 +6,44 @@ Tai lieu danh gia he thong mang, ket noi tunnel va kha nang tich hop TikTok Live
 
 ## 1. Hien Trang Mang Va URL
 
-- He thong da duoc public thanh cong ra Internet thong qua Cloudflare Quick Tunnel voi giao thuc HTTPS va WebSocket day du.
-- URL Public dang hoat dong:
-  - Dashboard: `https://football-boring-blocked-arabia.trycloudflare.com/dashboard`
-  - Overlay OBS: `https://football-boring-blocked-arabia.trycloudflare.com/?token=SSsss9xEp6B5GGMf0e1xHyFl56Tj2fqI`
+- He thong ho tro deploy truc tiep qua Docker hoac Render.
+- Endpoint public:
+  - Dashboard: `/dashboard`
+  - Overlay OBS: `/?token=SSsss9xEp6B5GGMf0e1xHyFl56Tj2fqI`
+  - TikTok Webhook: `/api/tiktok/webhook`
 
 ---
 
-## 2. Trang Thai Tich Hop API TikTok (Ket Noi Truc Tiep 100%)
+## 2. Co Che Bat Su Kien TikTok Live
 
-- He thong ket noi truc tiep 100% toi may chu chinh thuc cua TikTok (`tiktok.com` va `webcast.tiktok.com`), loai bo hoan toan cac ben thu ba nhu Euler Stream.
-- Co che hoat dong:
-  - Lay Room ID truc tiep qua endpoint TikTok Live API `api-live/user/room/` va fallback qua trang HTML cua TikTok.
-  - Lang nghe su kien truc tiep qua co che Webcast HTTP Polling tu dong cap nhat cursor theo thoi gian thuc.
-  - Giai ma truc tiep du lieu Protobuf noi bo cua TikTok ma khong gui bat ky du lieu nao ra ben thu ba.
-- Ho tro day du cac su kien va hien thi len man hinh live:
-  - Member Join: Tao vu cong tren san nhay va hien toast thong bao nguoi xem vao phong.
-  - Chat Comment: Phat hieu ung nhay, cap nhat danh hieu Thuyen truong va hien noi dung binh luan.
-  - Gift: Tinh diem, cong kim cuong, kich hoat che do Spotlight khi dat moc va hien toast qua tang.
-  - Like: Tang luot tim, diem tran dau va hien toast tha tim.
-  - Share va Follow: Cap nhat thong tin nguoi xem va ghi nhan tuong tac.
-- Cung cap API dieu khien tai `POST /api/tiktok/connect`, `POST /api/tiktok/disconnect`, va `GET /api/tiktok/status`.
+He thong cung cap hai phuong thuc ket noi va bat su kien:
 
----
+### Phuong Thuc 1: Cau Noi Trinh Duyet (Khuyen dung, 100% truc tiep)
+- Ban chat: Khi streamer mo tab live TikTok tren trinh duyet Chrome hoac Edge, trinh duyet da vuot qua toan bo co che kiem tra bot cua TikTok.
+- Co che: Su dung doan ma JavaScript (sao chep tu Dashboard) chay trong tab live TikTok. Doan ma nay theo doi khung chat bang MutationObserver va gui ngay su kien ve `/api/tiktok/webhook`.
+- Uu diem:
+  - Khong phu thuoc bat ky ben thu ba nao nhu Euler Stream.
+  - Do tre 0ms, bat 100% nguoi xem vao phong, comment, tang qua, tha tim.
+  - Khong bao gio bi gioi han luot ket noi (rate limit).
 
-## 3. Thiet Lap Do Phan Giai OBS Chuan
-
-- De tranh hien tuong man hinh live bi mo:
-  - Trong OBS Browser Source, bat buoc dien Width: 1080 va Height: 1920.
-  - Khong de mac dinh 800x600 roi dung chuot phong to vi se lam bien dang va vo hinh anh.
-  - Canh bao thiet lap da duoc bo sung ro rang trong huong dan tren Dashboard.
+### Phuong Thuc 2: Ket Noi May Chu Nen
+- Ket noi WebSocket ngam tu may chu toi may chu TikTok qua TikTokLiveConnection.
+- Ho tro truyen Euler API Key neu co key mien phi tu eulerstream.com.
+- Tu dong vo hieu hoa route Euler doi voi Room ID de lay Room ID truc tiep tu may chu TikTok.
 
 ---
 
-## 4. Danh Gia Kha Nang Treo Live
+## 3. Dong Bo Tuong Tac Len San Nhay Live Bar
 
-- Ket luan: He thong da san sang 100% de treo live.
-- Nguoi dung chi can dan link Overlay vao OBS va nhap username tren Dashboard de bat dau live tuong tac that.
+Moi su kien TikTok deu duoc dong bo ngay lap tuc vao vung nho tran dau cua man hinh:
+- Nguoi xem vao phong: Tao nhan vat vu cong tren san, gan slot va hien toast thong bao.
+- Binh luan: Kich hoat vu cong tuong ung nhay len cao (jump effect), hien toast noi dung chat.
+- Tang qua: Cong diem, cong kim cuong, cap nhat Podium top 1 2 3 va kich hoat Spotlight camera khi dat tu 50 kim cuong.
+- Tha tim: Cong luot tim va hien toast tha tim.
 
+---
+
+## 4. Thiet Lap Do Phan Giai OBS Chuan
+
+- Trong OBS Browser Source, bat buoc dien Width: 1080 va Height: 1920.
+- Khong de 800x600 roi keo to vi se lam mo man hinh.

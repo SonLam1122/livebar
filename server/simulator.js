@@ -700,6 +700,19 @@ function handleSimulation(mState, payload, targetScreen, overlayIo) {
 
     if (mState.bar) {
       mState.bar.guests = mState.guests;
+
+      // Kich hoat vu cong nhay khi co binh luan hoac hanh dong nhay
+      if (payload.comment || payload.action === 'jump') {
+        if (!mState.bar.jumps) mState.bar.jumps = [];
+        mState.bar.jumps.push({
+          username: user.username,
+          startedAt: Date.now(),
+          endsAt: Date.now() + 1500
+        });
+        if (mState.bar.jumps.length > 30) {
+          mState.bar.jumps = mState.bar.jumps.filter(j => j.endsAt > Date.now());
+        }
+      }
     }
 
     // Toast thong bao tuong tac tren man hinh Live Bar
