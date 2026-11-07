@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bảng điều khiển · Chánh Điện An Lạc</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#120a06;--card:#1d110a;--line:#4a2c16;--fg:#f4e7cf;--muted:#b89d78;--gold:#e2b04f;--red:#a3341f;--green:#3fae63;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 "Be Vietnam Pro",system-ui,sans-serif}
+header{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:12px 18px;background:#0d0704ee;border-bottom:1px solid var(--line)}
+header h1{margin:0;font-size:19px;color:var(--gold)}
+#status{padding:4px 12px;border-radius:999px;background:#2a1a10;border:1px solid var(--line);font-size:13px}
+#status.connected{background:#15361f;border-color:var(--green)}#status.error,#status.retrying{background:#3a1410;border-color:var(--red)}
+#stats{margin-left:auto;color:var(--muted);font-size:13px;font-variant-numeric:tabular-nums}
+main{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:14px;padding:14px 18px 40px;max-width:1500px;margin:0 auto}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+section h2{margin:0 0 10px;font-size:15px;color:var(--gold);letter-spacing:.02em}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0}
+input,select,textarea{background:#0f0805;color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:7px 9px;font:inherit;min-width:0}
+input[type=number]{width:84px}
+textarea{width:100%;min-height:64px;resize:vertical}
+input:not([type=checkbox]):not([type=number]){flex:1}
+button{background:#2b1a0f;color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:7px 12px;font:inherit;cursor:pointer}
+button:hover{border-color:var(--gold)}button:disabled{opacity:.4;cursor:not-allowed;border-color:var(--line)}
+button.primary{background:#6b3b12;border-color:var(--gold)}button.red{background:#4a160d;border-color:var(--red)}button.on{background:#15361f;border-color:var(--green)}
+label{display:flex;gap:6px;align-items:center;color:var(--muted);font-size:13px}
+label.check{color:var(--fg)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
+.grid label{flex-direction:column;align-items:stretch;gap:3px}
+.grid label.check{flex-direction:row;align-items:center}
+.hint{color:var(--muted);font-size:12.5px;margin:6px 0}
+code{background:#0f0805;border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-size:12.5px;user-select:all}
+#log{height:260px;overflow:auto;background:#0b0603;border:1px solid var(--line);border-radius:8px;padding:8px;font:12.5px/1.5 ui-monospace,Consolas,monospace;white-space:pre-wrap}
+#prayers{display:grid;gap:8px;max-height:300px;overflow:auto}
+.prayer{border:1px solid var(--line);border-radius:10px;padding:8px 10px;background:#140b06}
+.prayer b{color:var(--gold)}.prayer p{margin:4px 0 8px}
+.wide{grid-column:1/-1}
+</style>
+</head>
+<body>
+<header>
+  <h1>☸ Chánh Điện An Lạc</h1>
+  <span id="status">chưa kết nối TikTok</span>
+  <span id="stats"></span>
+</header>
+<main>
+  <section>
+    <h2>1 · Kết nối TikTok LIVE</h2>
+    <div class="row"><input id="uid" placeholder="@tenkenhcuaban" autocomplete="off"><button class="primary" id="btnConnect">Kết nối</button><button id="btnDisconnect">Ngắt</button></div>
+    <p class="hint">Bật LIVE trên TikTok trước rồi mới bấm Kết nối. Chỉ đọc sự kiện công khai của phòng live, không cần mật khẩu hay cookie. Mất kết nối sẽ tự thử lại.</p>
+    <h2 style="margin-top:14px">2 · Màn hình overlay 9:16</h2>
+    <div class="row"><button class="primary" id="btnOverlay">Mở overlay (có âm thanh)</button><button id="btnPreview">Xem trước (tắt tiếng)</button></div>
+    <p class="hint">OBS / TikTok LIVE Studio: thêm <b>Browser source</b> trỏ tới <code id="ovUrl"></code>, kích thước 1080×1920. Chỉ để <b>một</b> cửa sổ có âm thanh, mọi cửa sổ xem thử khác dùng <code>?audio=0</code> để không bị đọc hai lần.</p>
+  </section>
+
+  <section>
+    <h2>3 · Thử tương tác (không cần live)</h2>
+    <div class="row"><input id="simName" value="Minh An" aria-label="Tên người xem"></div>
+    <div class="row"><input id="simText" value="Nam mô A Di Đà Phật, cầu gia đình bình an" aria-label="Bình luận"><button id="btnChat">Bình luận</button></div>
+    <div class="row">
+      <button data-say="xin xăm">Xin xăm</button><button data-say="gõ mõ">Gõ mõ</button><button data-say="thỉnh chuông">Thỉnh chuông</button>
+      <button data-say="thắp hương">Thắp hương</button><button data-say="cầu cho cha mẹ luôn mạnh khỏe bình an">Gửi lời nguyện</button><button data-say="sư">Đổi hình: sư</button>
+    </div>
+    <div class="row">
+      <button data-say="sang trái">← Sang trái</button><button data-say="sang phải">Sang phải →</button><button data-say="lên">↑ Lên</button><button data-say="xuống">↓ Xuống</button>
+      <button data-say="kinh hành">Kinh hành</button><button data-say="lên lạy Phật">Lên lạy Phật</button>
+    </div>
+    <div class="row"><button data-sim="like">♥ ×10</button><button data-sim="follow">Theo dõi</button><button data-sim="share">Chia sẻ</button></div>
+    <div class="row">
+      <button data-gift="Hoa hồng" data-dia="1">🌹 Hoa hồng · 1</button><button data-gift="Đèn hoa sen" data-dia="30">🪷 Hoa sen · 30</button><button data-gift="Chuông vàng" data-dia="199">🔔 Chuông · 199</button>
+    </div>
+    <div class="row"><label>Số người xem <input id="simViewers" type="number" value="120" min="0"></label><button id="btnViewers">Đặt</button></div>
+    <h2 style="margin-top:14px">Đổ người &amp; bot mô phỏng</h2>
+    <div class="row"><button data-fill="15">15</button><button data-fill="36">36</button><button data-fill="64">64</button><button data-fill="100">100</button><button class="red" id="btnClear">Làm trống bồ đoàn</button></div>
+    <div class="row"><label>Số bot<input id="botN" type="number" min="1" max="100" value="12"></label>
+      <label>Nhịp<select id="botPace"><option value="slow">Chậm</option><option value="mid" selected>Vừa</option><option value="fast">Nhanh</option></select></label>
+      <button id="btnBots">Bật bot</button></div>
+    <p class="hint">Mọi thứ từ mục này là dữ liệu thử: tên có nhãn "·thử", hiện trên màn hình nhưng không ghi vào bảng công đức trọn đời. Khi đã kết nối live thật, bot tự tắt, người thử được dọn đi và hai nút này bị khóa.</p>
+  </section>
+
+  <section>
+    <h2>4 · Duyệt lời nguyện <span id="pCount" class="hint"></span></h2>
+    <div id="prayers"><p class="hint">Chưa có lời nguyện nào chờ duyệt.</p></div>
+    <p class="hint">Bình luận bắt đầu bằng “cầu…”, “nguyện…”, “xin cho…” sẽ vào đây. Duyệt mới được thả đèn và đọc lên live. Muốn tự duyệt thì bật trong Cài đặt.</p>
+    <h2 style="margin-top:14px">5 · Lời thầy trụ trì</h2>
+    <textarea id="sayText" placeholder="Nhập lời nhắn để đọc lên live…"></textarea>
+    <div class="row"><button class="primary" id="btnSay">Phát lên live</button><button id="btnChant">Tụng kinh ngay</button><button id="btnBell">🔔 Thỉnh chuông</button><button id="btnMo">Gõ mõ</button></div>
+  </section>
+
+  <section>
+    <h2>6 · Cài đặt</h2>
+    <div class="grid" id="settings">
+      <label>Tên chánh điện<input data-k="title"></label>
+      <label>Dòng phụ<input data-k="subtitle"></label>
+      <label>Giọng đọc<select data-k="voice"><optgroup label="VieNeu Turbo (máy có card NVIDIA)"><option value="vieneu:Thiền Tâm Đức">Thiền Tâm Đức (nam, trầm)</option><option value="vieneu:Hải Đăng">Hải Đăng (nam)</option><option value="vieneu:Thiện Minh">Thiện Minh (nam)</option><option value="vieneu:Minh Đức">Minh Đức (nam, Bắc)</option><option value="vieneu:Quang Sơn">Quang Sơn (nam, Trung)</option><option value="vieneu:Ngọc Huyền">Ngọc Huyền (nữ)</option><option value="vieneu:Mai Anh">Mai Anh (nữ)</option><option value="vieneu:Thùy Dung">Thùy Dung (nữ, Nam)</option><option value="vieneu:Ngọc Trân">Ngọc Trân (nữ, Trung)</option><option value="vieneu:Trúc Ly">Trúc Ly (nữ)</option></optgroup><optgroup label="VieNeu Nano (máy không card rời; Mai Anh, Trúc Ly cũng dùng được)"><option value="vieneu:Minh Quân">Minh Quân</option><option value="vieneu:Hữu Quân">Hữu Quân</option><option value="vieneu:Mạnh Dũng">Mạnh Dũng</option><option value="vieneu:Đức Trí">Đức Trí</option><option value="vieneu:Anh Khôi">Anh Khôi</option><option value="vieneu:Adam">Adam</option><option value="vieneu:Ái Hân">Ái Hân</option><option value="vieneu:Mỹ Duyên">Mỹ Duyên</option><option value="vieneu:Xuân Tiên">Xuân Tiên</option></optgroup><optgroup label="Edge (qua Internet)"><option value="vi-VN-NamMinhNeural">Nam Minh (nam)</option><option value="vi-VN-HoaiMyNeural">Hoài My (nữ)</option></optgroup></select></label>
+      <label>Âm lượng tổng (%)<input data-k="volume" type="number" min="0" max="100"></label>
+      <label>Độ trầm giọng (Hz, chỉ giọng Edge)<input data-k="pitch" type="number"></label>
+      <label>Tốc độ đọc (%, chỉ giọng Edge)<input data-k="rate" type="number"></label>
+      <label class="check"><input type="checkbox" data-k="music"> Nhạc nền</label>
+      <label class="check"><input type="checkbox" data-k="mo"> Mõ nền</label>
+      <label>Nhịp mõ (BPM)<input data-k="moBpm" type="number" min="20" max="120"></label>
+      <label>Tụng kinh mỗi (phút)<input data-k="chantEveryMin" type="number" min="1" max="60"></label>
+      <label class="check"><input type="checkbox" data-k="autoChant"> Tụng kinh tự động</label>
+      <label>Số bồ đoàn<select data-k="seatMode"><option value="auto">Tự mở rộng 24 → 100</option><option>24</option><option>36</option><option>64</option><option>100</option></select></label>
+      <label class="check"><input type="checkbox" data-k="joinOnEnter"> Vào phòng là được ngồi</label>
+      <label class="check"><input type="checkbox" data-k="readGifts"> Đọc tên người tặng quà</label>
+      <label class="check"><input type="checkbox" data-k="readGiftWish"> Đọc kèm lời nguyện gần nhất</label>
+      <label class="check"><input type="checkbox" data-k="thankFollow"> Cảm ơn người theo dõi</label>
+      <label>Rút thẻ an lạc<select data-k="fortuneMode"><option value="all">Bình luận “xin xăm” hoặc tặng quà</option><option value="gift">Chỉ khi tặng quà</option><option value="off">Tắt</option></select></label>
+      <label>Quà tối thiểu để rút thẻ (xu)<input data-k="fortuneMinCoins" type="number" min="1"></label>
+      <label>Mỗi người rút miễn phí cách nhau (phút)<input data-k="fortuneCooldownMin" type="number" min="0"></label>
+      <label>Mời chia sẻ mỗi (phút, 0 = tắt)<input data-k="sharePromptMin" type="number" min="0"></label>
+      <label class="check"><input type="checkbox" data-k="prayerAuto"> Tự duyệt lời nguyện</label>
+      <label class="check"><input type="checkbox" data-k="readPrayers"> Đọc lời nguyện đã duyệt</label>
+      <label class="check"><input type="checkbox" data-k="showAllTime"> Xen kẽ bảng công đức trọn đời</label>
+      <label class="check"><input type="checkbox" data-k="lunar"> Hiện ngày âm lịch</label>
+      <label class="check"><input type="checkbox" data-k="allowMove"> Cho người xem đổi chỗ, kinh hành, lên lạy Phật</label>
+      <label>Bồ đoàn vàng: tặng tối thiểu (xu)<input data-k="vipMinCoins" type="number" min="1"></label>
+      <label>Tặng từ (xu) thì tự lên lạy Phật, 0 = tắt<input data-k="altarOnGiftCoins" type="number" min="0"></label>
+      <label class="wide">Từ cấm thêm (cách nhau bởi dấu phẩy)<input data-k="extraBadWords" placeholder="ví dụ: tên-kênh-đối-thủ, từ-tục-địa-phương"></label>
+    </div>
+    <div class="row"><button class="primary" id="btnSave">Lưu cài đặt</button><span class="hint" id="saved"></span></div>
+  </section>
+
+  <section>
+    <h2>7 · Buổi live</h2>
+    <div class="row"><button id="btnNewSession">Bắt đầu buổi mới</button><span class="hint">đặt lại bảng công đức của buổi và các mốc</span></div>
+    <div class="row"><input id="resetConfirm" placeholder="gõ XÓA để xác nhận"><button class="red" id="btnResetAll">Xóa công đức trọn đời</button></div>
+    <h2 style="margin-top:14px">Nhật ký</h2>
+    <div id="log" aria-live="polite"></div>
+  </section>
+</main>
+<script src="/control.js"></script>
+</body>
+</html>

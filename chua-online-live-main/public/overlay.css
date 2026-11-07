@@ -1,0 +1,101 @@
+/* Overlay for TikTok LIVE Studio / OBS. Everything sits on a 1080×1920 stage scaled to the window.
+   Stage, plaque, cards and canvas scene adapted from kentjuno/chanh-dien-online (MIT, © 2026 Kent Juno). */
+:root{
+  --bg:#0c0705; --fg:#f6e9cf; --muted:#c9ad84; --gold:#e2b04f; --gold2:#ffd98a; --red:#7e1d12;
+  --panel:rgba(28,13,7,.8); --line:rgba(226,176,79,.55);
+  --display:"Noto Serif",Georgia,serif; --body:"Be Vietnam Pro",system-ui,sans-serif;
+  color-scheme:dark;
+}
+html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:var(--body);color:var(--fg)}
+#fit{position:fixed;inset:0;overflow:hidden}
+#stage{position:absolute;left:50%;top:50%;width:1080px;height:1920px;transform-origin:center center;overflow:hidden;background:var(--bg)}
+#c{position:absolute;inset:0;width:1080px;height:1920px}
+.ui{position:absolute;z-index:3}
+
+/* title plaque */
+#plaque{left:90px;right:90px;top:64px;height:150px;border:3px solid var(--gold);border-radius:28px;
+  background:linear-gradient(180deg,rgba(70,26,10,.92),rgba(30,12,6,.92));box-shadow:0 0 0 6px rgba(0,0,0,.35),0 0 50px rgba(226,176,79,.25) inset;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+#plaque::before,#plaque::after{content:"❁";position:absolute;top:50%;transform:translateY(-50%);font-size:44px;color:var(--gold)}
+#plaque::before{left:34px}#plaque::after{right:34px}
+#title{font-family:var(--display);font-weight:700;font-size:56px;letter-spacing:.06em;color:var(--gold2);text-transform:uppercase;text-shadow:0 2px 0 #3a1406,0 0 20px rgba(255,200,100,.35);white-space:nowrap}
+#subtitle{font-family:var(--display);font-size:30px;letter-spacing:.12em;color:var(--fg)}
+
+/* pills + lunar date */
+#pills{top:232px;left:0;right:0;display:flex;justify-content:center;gap:22px}
+.pill{background:var(--panel);border:2px solid var(--line);border-radius:999px;padding:10px 26px;font-size:32px;font-weight:600;display:flex;align-items:center;gap:12px;font-variant-numeric:tabular-nums}
+.pill small{font-size:19px;font-weight:500;color:var(--muted);line-height:1.05}
+.dot{width:18px;height:18px;border-radius:50%;background:#46d36b;box-shadow:0 0 12px #46d36b}
+#lunar{top:306px;left:0;right:0;text-align:center;font-family:var(--display);font-size:27px;color:var(--gold2);letter-spacing:.04em;text-shadow:0 2px 6px #000}
+#lunar:empty{display:none}
+
+/* community progress */
+#goal{left:150px;right:150px;top:352px;height:44px;border-radius:22px;background:rgba(20,9,4,.82);border:2px solid var(--line);overflow:hidden}
+#goalFill{position:absolute;inset:0;width:0;background:linear-gradient(90deg,#9a4b12,#e2b04f,#ffe2a1);transition:width .8s ease}
+#goalText{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:600;color:#fff7e2;text-shadow:0 1px 3px #000;font-variant-numeric:tabular-nums}
+
+/* side cards */
+.card{background:var(--panel);border:2px solid var(--line);border-radius:22px;padding:14px 18px;font-size:22px;line-height:1.34}
+#guide{left:22px;top:560px;width:292px}
+#guide .page{display:none}#guide .page.show{display:block;animation:pagein .5s ease}
+#guide .page div+div{border-top:1px solid rgba(226,176,79,.3);margin-top:8px;padding-top:8px}
+@keyframes pagein{from{opacity:0}to{opacity:1}}
+#guide b{color:var(--gold2)}
+#merit{right:22px;top:560px;width:292px;text-align:center}
+#merit h3{margin:0 0 8px;font-family:var(--display);font-size:28px;color:var(--gold2);letter-spacing:.05em}
+#merit ol{margin:0;padding:0;list-style:none;text-align:left;display:grid;gap:5px}
+#merit li{display:flex;justify-content:space-between;gap:10px}
+#merit li span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#merit li span:last-child{color:var(--gold2);font-variant-numeric:tabular-nums}
+#merit .empty{color:var(--muted);text-align:center;display:block}
+
+/* banners: chant / abbot / gift / milestone */
+.banner{left:100px;right:100px;top:418px;padding:22px 30px;text-align:center;border-radius:24px;border:2px solid var(--gold);
+  background:rgba(40,18,8,.9);opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;pointer-events:none}
+.banner.show{opacity:1;transform:none}
+.banner h4{margin:0 0 8px;font-family:var(--display);color:var(--gold2);font-size:29px;letter-spacing:.1em}
+.banner p{margin:0;font-family:var(--display);font-style:italic;font-size:30px;line-height:1.45}
+#gift{left:64px;right:64px;z-index:6;padding:28px 40px;border:3px solid var(--gold2);
+  background:radial-gradient(ellipse at 50% 0%,rgba(150,40,20,.96),rgba(50,14,6,.96));box-shadow:0 0 60px rgba(255,190,90,.45);transform:scale(.85);
+  transition:opacity .45s,transform .45s cubic-bezier(.2,1.4,.4,1)}
+#gift.show{transform:none}
+#gift .who{font-family:var(--display);font-weight:700;font-size:50px;color:var(--gold2)}
+#gift .what{font-size:34px;margin-top:6px}
+#gift .pray{font-family:var(--display);font-style:italic;font-size:31px;color:var(--fg);margin-top:12px}
+.card-open .banner{top:1360px}          /* a fortune card fills the middle: other banners move to the floor */
+#milestone{z-index:7;border:3px solid #ffe2a1;background:radial-gradient(ellipse at 50% 0%,rgba(190,120,20,.96),rgba(70,30,6,.96));box-shadow:0 0 90px rgba(255,210,120,.6)}
+#milestone p{font-style:normal;font-weight:700;font-size:38px;color:#fff3d0}
+
+/* fortune card */
+#fortune{left:120px;right:120px;top:440px;z-index:8;padding:30px 40px 34px;border-radius:30px;text-align:center;
+  border:4px double var(--gold2);background:linear-gradient(180deg,rgba(110,24,12,.97),rgba(48,12,6,.97));
+  box-shadow:0 0 0 8px rgba(0,0,0,.35),0 0 120px rgba(255,200,110,.45);
+  opacity:0;transform:translateY(40px) scale(.92);transition:opacity .6s,transform .6s cubic-bezier(.2,1.2,.4,1)}
+#fortune.show{opacity:1;transform:none}
+#fortune .head{font-size:26px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+#fortune .who{font-family:var(--display);font-size:40px;font-weight:700;color:var(--gold2);margin:4px 0 10px}
+#fortune .no{display:inline-block;font-family:var(--display);font-size:30px;padding:6px 22px;border-radius:999px;border:2px solid var(--gold);color:#fff3d0;margin-bottom:10px}
+#fortune .title{font-family:var(--display);font-size:46px;font-weight:700;color:#fff3d0;margin-bottom:14px}
+#fortune .poem{font-family:var(--display);font-style:italic;font-size:32px;line-height:1.5;color:var(--fg);margin-bottom:16px}
+#fortune .meaning{font-size:27px;line-height:1.45;color:#fde9c2;border-top:1px solid rgba(226,176,79,.35);padding-top:14px}
+#fortune .advice{display:grid;gap:8px;margin-top:14px;text-align:left;font-size:24px;line-height:1.35}
+#fortune .advice b{color:var(--gold2)}
+#fortune .foot{margin-top:14px;font-size:20px;color:var(--muted)}
+
+/* prayer lanterns float up the hall */
+#lanterns{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:hidden}
+.lantern{position:absolute;width:300px;padding:16px 18px 18px;border-radius:26px 26px 40px 40px;text-align:center;
+  background:radial-gradient(ellipse at 50% 30%,rgba(255,196,110,.96),rgba(214,92,30,.92) 70%);color:#3a1404;
+  box-shadow:0 0 50px rgba(255,170,80,.7);animation:rise 16s linear forwards}
+.lantern b{display:block;font-size:22px;margin-bottom:4px}
+.lantern span{font-family:var(--display);font-style:italic;font-size:24px;line-height:1.3}
+@keyframes rise{0%{transform:translateY(0) rotate(-2deg);opacity:0}8%{opacity:1}50%{transform:translateY(-560px) rotate(2deg)}85%{opacity:1}100%{transform:translateY(-1100px) rotate(-2deg);opacity:0}}
+
+/* small toasts (follow, share, hints) */
+#toasts{left:0;right:0;top:1146px;z-index:5;display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none}
+.toast{background:rgba(24,10,5,.88);border:2px solid var(--line);border-radius:999px;padding:10px 26px;font-size:26px;animation:toast 5s ease forwards;white-space:nowrap;max-width:900px;overflow:hidden;text-overflow:ellipsis}
+@keyframes toast{0%{opacity:0;transform:translateY(14px)}10%,85%{opacity:1;transform:none}100%{opacity:0}}
+
+#unmute{position:absolute;z-index:9;left:50%;top:1540px;transform:translateX(-50%);font:600 36px var(--body);padding:22px 44px;border-radius:24px;border:3px solid var(--gold2);background:var(--red);color:#fff4dc;cursor:pointer}
+#conn{position:absolute;z-index:4;right:16px;bottom:12px;font-size:20px;color:var(--muted);opacity:.6}
+@media (prefers-reduced-motion:reduce){.banner,#gift,#fortune{transition:none}.lantern{animation-duration:1ms}}
