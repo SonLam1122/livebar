@@ -237,11 +237,24 @@ async function initChuaBridge(httpServer) {
       }
     }
 
-    // Gan WebSocketServer vao httpServer tai path /ws
+    // Khoi tao WebSocketServer voi che do noServer de tranh tranh chap su kien upgrade voi Socket.IO
     wss = new WebSocketServer({
-      server: httpServer,
-      path: '/ws',
+      noServer: true,
       maxPayload: 64 * 1024
+    });
+
+    // Xu ly su kien upgrade rieng cho duong dan /ws ma khong lam anh huong Socket.IO tren /socket.io/
+    httpServer.on('upgrade', (req, socket, head) => {
+      try {
+        const parsedUrl = new URL(req.url, 'http://localhost');
+        if (parsedUrl.pathname === '/ws' || parsedUrl.pathname.startsWith('/ws')) {
+          wss.handleUpgrade(req, socket, head, (ws) => {
+            wss.emit('connection', ws, req);
+          });
+        }
+      } catch (e) {
+        // Bo qua neu co loi parse URL de cac trinh lang nghe khac xu ly
+      }
     });
 
     wss.on('connection', (ws, req) => {

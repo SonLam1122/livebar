@@ -39,3 +39,7 @@ Trang bi day du cac muc tuy chinh:
 - **The que An Lac**: Che do rut the (mien phi/chi nguoi tang qua), moc xu uu tien, thoi gian cho.
 - **Giong doc**: Chon giong TTS, bat/tat xuong ten qua, doc kem loi nguyen, bo loc tu cam.
 - **Dong bo thoi gian thuc**: Moi thay doi khi bam "Luu cau hinh" duoc dong bo ngay lap tuc toi engine Chanh Dien qua WebSocket `/ws`.
+
+## 5. Tuong Thich Ha Tang WebSocket & Socket.IO
+- `server/chuaBridge.js` su dung `new WebSocketServer({ noServer: true })` va gan trinh xu ly su kien `upgrade` chi rieng cho duong dan `/ws`.
+- Co che nay tach biet hoan toan kenh WebSocket `/ws` cua Chua Online khoi kenh `/socket.io/` cua 10 game goc (Live Bar, Ca Lon Be, San Co, v.v.), dam bao overlay tat ca cac game khong bi ngat ket noi hoac bi man hinh den trong khung xem truoc OBS.
