@@ -1,29 +1,30 @@
 // =========================================================================
 // TIKTOK LIVE CONNECTOR SERVICE
-// Ho tro ca hai phuong thuc dong bo su kien:
-// 1. Browser Bridge / Webhook truc tiep (100% khong qua ben thu 3)
-// 2. Ket noi WebSocket ngam qua TikTokLiveConnection (tuy chon Euler API Key)
+// Tu dong trich xuat username tu link live (vt.tiktok.com hoac tiktok.com/@...)
+// Ket noi truc tiep may chu Webcast TikTok ma khong can bat ky ben thu ba nao
 // =========================================================================
 
 const path = require('path');
 const fs = require('fs');
+const https = require('https');
+const http = require('http');
 const {
   TikTokLiveConnection,
-  RoomIdRouteConfig,
-  SignConfig
+  RoomIdRouteConfig
 } = require('tiktok-live-connector');
 
 const { getScreenById } = require('./screens');
 const { getMatchState } = require('./matchState');
 const { handleSimulation } = require('./simulator');
 
-// Bat buoc khong goi EulerStream de lay Room ID (tranh loi 403 lack of permission)
+// Khong su dung EulerStream de lay Room ID
 if (RoomIdRouteConfig) {
   RoomIdRouteConfig.skipFetchRoomIdFromEulerRoute = true;
 }
 
 let connectionInstance = null;
 let currentUsername = '';
+let currentInputUrl = '';
 let currentScreenId = 'cmta2zkpq00aokx08uyc7iys2';
 let currentRoomId = '';
 let connectionStatus = 'DISCONNECTED'; // DISCONNECTED, CONNECTING, CONNECTED, ERROR
@@ -35,7 +36,7 @@ let liveStats = {
   totalComments: 0
 };
 
-// Map qua tang de tra cuu ten va kim cuong neu thieu tu goi tin
+// Map qua tang de tra cuu ten va kim cuong
 const giftsMap = new Map();
 try {
   const giftsPath = path.join(__dirname, '..', 'gifts_data.json');
@@ -49,12 +50,84 @@ try {
   console.error('Khong the tai gifts_data.json:', e.message);
 }
 
+// Chuyen doi link live thanh username TikTok chuan
+function resolveTikTokUrl(inputUrl) {
+  return new Promise((resolve, reject) => {
+    const current = (inputUrl || '').trim();
+    if (!current) {
+      return reject(new Error('Vui long dan duong link hoac username TikTok'));
+    }
+
+    // Neu nguoi dung nhap truc tiep username
+    if (!current.startsWith('http://') && !current.startsWith('https://')) {
+      const clean = current.replace(/^@/, '').split('/')[0].split('?')[0];
+      return resolve(clean);
+    }
+
+    let redirectCount = 0;
+    function follow(urlStr) {
+      if (redirectCount > 5) {
+        return reject(new Error('Duong link chuyen huong qua nhieu lan'));
+      }
+      redirectCount++;
+
+      let urlObj;
+      try {
+        urlObj = new URL(urlStr);
+      } catch (err) {
+        return reject(new Error('Duong link khong hop le'));
+      }
+
+      const client = urlObj.protocol === 'https:' ? https : http;
+      const req = client.get(urlStr, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+        }
+      }, res => {
+        // Xu ly chuyen huong 301, 302
+        if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+          let nextUrl = res.headers.location;
+          if (!nextUrl.startsWith('http')) {
+            nextUrl = new URL(nextUrl, urlStr).toString();
+          }
+          return follow(nextUrl);
+        }
+
+        // Kiem tra username co san tren URL sau khi chuyen huong
+        const userMatch = urlStr.match(/@([a-zA-Z0-9_.-]+)/);
+        if (userMatch && userMatch[1]) {
+          return resolve(userMatch[1]);
+        }
+
+        // Doc mot phan body neu can
+        let body = '';
+        res.on('data', chunk => {
+          body += chunk;
+          if (body.length > 50000) req.destroy();
+        });
+        res.on('close', () => {
+          const bodyMatch = body.match(/@([a-zA-Z0-9_.-]+)/);
+          if (bodyMatch && bodyMatch[1]) {
+            return resolve(bodyMatch[1]);
+          }
+          reject(new Error('Khong the tim thay username tu duong link'));
+        });
+      });
+
+      req.on('error', reject);
+    }
+
+    follow(current);
+  });
+}
+
 // Chuan hoa thong tin nguoi dung tu su kien TikTok
 function extractTikTokUser(data) {
   const u = data?.user || data || {};
-  const username = data?.uniqueId || u.uniqueId || u.displayId || (u.id ? `user_${u.id}` : (u.username || 'nguoi_xem'));
-  const nickname = data?.nickname || u.nickname || u.name || username;
-  const avatarUrl = data?.profilePictureUrl || u.profilePictureUrl || u.avatarThumb?.urlList?.[0] || u.avatarMedium?.urlList?.[0] || u.avatarUrl || u.avatar || `/api/avatars/${username}.svg`;
+  const username = u.displayId || data?.uniqueId || u.uniqueId || (u.id ? `user_${u.id}` : (u.username || 'nguoi_xem'));
+  const nickname = u.nickname || data?.nickname || u.name || username;
+  const avatarUrl = u.avatarThumb?.urlList?.[0] || u.avatarMedium?.urlList?.[0] || data?.profilePictureUrl || u.avatarUrl || u.avatar || `/api/avatars/${username}.svg`;
 
   return {
     username: String(username),
@@ -85,7 +158,7 @@ function dispatchToGame(payload, screenId, overlayIo) {
   }
 }
 
-// Tiep nhan va xu ly su kien TikTok truc tiep (tu Webhook, Browser Bridge hoac WebSocket)
+// Tiep nhan va xu ly su kien TikTok
 function injectTikTokEvent(rawPayload, overlayIo) {
   const screenId = rawPayload.screenId || currentScreenId || 'cmta2zkpq00aokx08uyc7iys2';
   const type = rawPayload.type || (rawPayload.gift ? 'gift' : rawPayload.comment ? 'comment' : rawPayload.likes ? 'like' : 'join');
@@ -133,6 +206,7 @@ function getTikTokStatus() {
   return {
     status: connectionStatus,
     username: currentUsername,
+    inputUrl: currentInputUrl,
     roomId: currentRoomId,
     screenId: currentScreenId,
     error: lastErrorMessage,
@@ -141,32 +215,29 @@ function getTikTokStatus() {
   };
 }
 
-// Khoi tao ket noi WebSocket vao TikTok Live
-async function connectToTikTok(rawUsername, screenId, overlayIo, apiKey) {
-  if (!rawUsername) {
-    throw new Error('Vui long cung cap username TikTok');
+// Khoi tao ket noi tu dong tu duong link live TikTok
+async function connectToTikTok(rawInput, screenId, overlayIo) {
+  if (!rawInput) {
+    throw new Error('Vui long dan link live TikTok');
   }
 
-  const username = rawUsername.replace(/^@/, '').trim();
+  // Trich xuat username tu duong link nguoi dung dan vao
+  const username = await resolveTikTokUrl(rawInput);
 
-  // Ngat ket noi cu neu dang chay
+  // Ngat ket noi cu neu dang ton tai
   disconnectFromTikTok();
 
+  currentInputUrl = rawInput.trim();
   currentUsername = username;
   currentScreenId = screenId || 'cmta2zkpq00aokx08uyc7iys2';
   connectionStatus = 'CONNECTING';
   lastErrorMessage = '';
   liveStats = { viewerCount: 0, likeCount: 0, totalGifts: 0, totalComments: 0 };
 
-  const effectiveApiKey = apiKey || process.env.EULER_API_KEY || '';
-  if (effectiveApiKey && SignConfig) {
-    SignConfig.apiKey = effectiveApiKey;
-  }
-
   try {
     const connection = new TikTokLiveConnection(username, {
       processInitialData: false,
-      enableExtendedGiftInfo: true,
+      enableExtendedGiftInfo: false,
       requestPollingIntervalMs: 1000,
       clientParams: {
         app_language: 'vi-VN',
@@ -178,7 +249,7 @@ async function connectToTikTok(rawUsername, screenId, overlayIo, apiKey) {
       connectionStatus = 'CONNECTED';
       lastErrorMessage = '';
       currentRoomId = String(state?.roomId || connection.roomId || '');
-      console.log(`[TikTok Live] Da ket noi toi @${username} (Room ID: ${currentRoomId})`);
+      console.log(`[TikTok Live] Da ket noi toi phong live @${username} (Room ID: ${currentRoomId})`);
     });
 
     connection.on('disconnected', () => {
@@ -192,9 +263,9 @@ async function connectToTikTok(rawUsername, screenId, overlayIo, apiKey) {
       console.error(`[TikTok Live] Loi: ${lastErrorMessage}`);
     });
 
-    // 1. Su kien Binh luan (Chat)
+    // 1. Su kien Binh luan
     connection.on('chat', (data) => {
-      const comment = data.comment || data.content || '';
+      const comment = data.content || data.comment || '';
       if (!comment) return;
 
       injectTikTokEvent({
@@ -206,13 +277,13 @@ async function connectToTikTok(rawUsername, screenId, overlayIo, apiKey) {
       }, overlayIo);
     });
 
-    // 2. Su kien Tang qua (Gift)
+    // 2. Su kien Tang qua
     connection.on('gift', (data) => {
       const giftId = Number(data.giftId);
       const known = giftsMap.get(giftId);
       const giftName = data.giftName || data.extendedGiftInfo?.name || known?.name || 'Hoa Hong';
       const singleDiamonds = Number(data.diamondCount || data.extendedGiftInfo?.diamondCount || known?.diamonds || 1);
-      const repeat = Number(data.repeatCount || 1);
+      const repeat = Number(data.repeatCount || data.comboCount || 1);
       const totalDiamonds = singleDiamonds * repeat;
 
       injectTikTokEvent({
@@ -225,7 +296,7 @@ async function connectToTikTok(rawUsername, screenId, overlayIo, apiKey) {
       }, overlayIo);
     });
 
-    // 3. Su kien Tha tim (Like)
+    // 3. Su kien Tha tim
     connection.on('like', (data) => {
       const count = Number(data.count || data.likeCount || 1);
       injectTikTokEvent({
@@ -236,7 +307,7 @@ async function connectToTikTok(rawUsername, screenId, overlayIo, apiKey) {
       }, overlayIo);
     });
 
-    // 4. Su kien Nguoi xem vao phong (Member)
+    // 4. Su kien Nguoi xem vao phong
     connection.on('member', (data) => {
       injectTikTokEvent({
         screenId: currentScreenId,
@@ -245,7 +316,7 @@ async function connectToTikTok(rawUsername, screenId, overlayIo, apiKey) {
       }, overlayIo);
     });
 
-    // 5. Su kien Chia se (Share)
+    // 5. Su kien Chia se
     connection.on('share', (data) => {
       injectTikTokEvent({
         screenId: currentScreenId,
@@ -254,7 +325,7 @@ async function connectToTikTok(rawUsername, screenId, overlayIo, apiKey) {
       }, overlayIo);
     });
 
-    // 6. Su kien Theo doi (Follow)
+    // 6. Su kien Theo doi
     connection.on('follow', (data) => {
       injectTikTokEvent({
         screenId: currentScreenId,
@@ -263,7 +334,7 @@ async function connectToTikTok(rawUsername, screenId, overlayIo, apiKey) {
       }, overlayIo);
     });
 
-    // 7. Cap nhat so luong nguoi xem
+    // 7. Cap nhat so luong mat xem
     connection.on('roomUser', (data) => {
       if (data?.viewerCount !== undefined) {
         liveStats.viewerCount = Number(data.viewerCount);
@@ -275,20 +346,15 @@ async function connectToTikTok(rawUsername, screenId, overlayIo, apiKey) {
 
     return {
       success: true,
-      message: `Dang ket noi toi @${username}...`,
+      username,
+      message: `Da ket noi thanh cong toi phong live @${username}`,
       roomId: connection.roomId
     };
   } catch (err) {
     connectionStatus = 'ERROR';
     lastErrorMessage = err?.info || err?.message || 'Khong the ket noi toi phong live';
     console.error(`[TikTok Live] Loi: ${lastErrorMessage}`);
-
-    let userFacingError = lastErrorMessage;
-    if (lastErrorMessage.includes('lack of permission') || lastErrorMessage.includes('Euler Stream')) {
-      userFacingError = 'May chu can Euler API Key (mien phi tren eulerstream.com) de ket noi WebSocket. Hoac su dung Cau noi Trinh duyet (Browser Bridge) de dong bo 100% khong can ben thu 3.';
-    }
-
-    throw new Error(userFacingError);
+    throw new Error(lastErrorMessage);
   }
 }
 
@@ -306,6 +372,7 @@ function disconnectFromTikTok() {
 }
 
 module.exports = {
+  resolveTikTokUrl,
   connectToTikTok,
   disconnectFromTikTok,
   getTikTokStatus,

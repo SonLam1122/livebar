@@ -139,7 +139,8 @@ function handleApiRoutes(req, res, pathname, overlayIo) {
     req.on('end', async () => {
       try {
         const payload = JSON.parse(body);
-        const result = await connectToTikTok(payload.username, payload.screenId, overlayIo, payload.apiKey);
+        const liveInput = payload.url || payload.username || '';
+        const result = await connectToTikTok(liveInput, payload.screenId, overlayIo);
         res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
         res.end(JSON.stringify(result));
       } catch (err) {

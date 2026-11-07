@@ -14,22 +14,17 @@ Tai lieu danh gia he thong mang, ket noi tunnel va kha nang tich hop TikTok Live
 
 ---
 
-## 2. Co Che Bat Su Kien TikTok Live
+## 2. Co Che Tu Dong Xu Ly Link Live TikTok
 
-He thong cung cap hai phuong thuc ket noi va bat su kien:
-
-### Phuong Thuc 1: Cau Noi Trinh Duyet (Khuyen dung, 100% truc tiep)
-- Ban chat: Khi streamer mo tab live TikTok tren trinh duyet Chrome hoac Edge, trinh duyet da vuot qua toan bo co che kiem tra bot cua TikTok.
-- Co che: Su dung doan ma JavaScript (sao chep tu Dashboard) chay trong tab live TikTok. Doan ma nay theo doi khung chat bang MutationObserver va gui ngay su kien ve `/api/tiktok/webhook`.
-- Uu diem:
-  - Khong phu thuoc bat ky ben thu ba nao nhu Euler Stream.
-  - Do tre 0ms, bat 100% nguoi xem vao phong, comment, tang qua, tha tim.
-  - Khong bao gio bi gioi han luot ket noi (rate limit).
-
-### Phuong Thuc 2: Ket Noi May Chu Nen
-- Ket noi WebSocket ngam tu may chu toi may chu TikTok qua TikTokLiveConnection.
-- Ho tro truyen Euler API Key neu co key mien phi tu eulerstream.com.
-- Tu dong vo hieu hoa route Euler doi voi Room ID de lay Room ID truc tiep tu may chu TikTok.
+- Ho tro dan truc tiep bat ky duong link live TikTok nao:
+  - Link chia se rut gon: `https://vt.tiktok.com/ZS9fFDvrmfSHg-QDgxt/`
+  - Link phong live web: `https://www.tiktok.com/@username/live`
+  - Username truc tiep: `@username` hoac `username`
+- Co che hoat dong:
+  - Tu dong theo doi cac ma chuyen huong HTTP 301 va 302 de lay URL cuoi cung.
+  - Tu dong trich xuat username nguoi live.
+  - Ket noi truc tiep vao may chu Webcast TikTok de nhan luong su kien thoi gian thuc.
+  - Khong can key tra phi, khong can thao tac phuc tap tu nguoi dung.
 
 ---
 

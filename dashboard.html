@@ -2421,61 +2421,27 @@
 <section id="tab-connection" class="tab-content hidden space-y-6">
   <div class="border-b border-slate-800 pb-4">
     <h3 class="text-base font-bold text-blue-400">Ket Noi TikTok Live</h3>
-    <p class="text-xs text-slate-400 mt-1">Dong bo tuong tac truc tiep tu phong live TikTok vao tro choi</p>
+    <p class="text-xs text-slate-400 mt-1">Dan link phong live TikTok de dong bo tuong tac vao tro choi</p>
   </div>
 
-  <!-- PHUONG THUC 1: CAU NOI TRINH DUYET (100% TRUC TIEP, KHONG QUA BEN THU 3) -->
-  <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
+  <div class="p-6 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-5">
     <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
       <div>
-        <h4 class="text-sm font-bold text-emerald-400">Cau Noi Trinh Duyet</h4>
-        <p class="text-xs text-slate-400 mt-1">Dong bo truc tiep tu tab live cua ban. Khong can ben thu ba.</p>
-      </div>
-      <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">Khuyen dung</span>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-      <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-        <div class="font-bold text-white">Buoc 1: Mo phong Live TikTok</div>
-        <p class="text-slate-400 leading-relaxed">
-          Mo tab xem phong live cua ban tren trinh duyet Chrome hoac Edge.
-        </p>
-      </div>
-      <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
-        <div class="font-bold text-white">Buoc 2: Chay ma Cau noi</div>
-        <p class="text-slate-400 leading-relaxed">
-          Nhan nut ben duoi de sao chep ma. Sau do tren tab live nhan F12 chon Console dan vao va Enter.
-        </p>
-      </div>
-    </div>
-
-    <div class="flex flex-col sm:flex-row gap-3 pt-2">
-      <button id="btn-copy-bridge" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white transition-all">Sao Chep Ma Cau Noi</button>
-      <span id="bridge-copy-status" class="hidden text-xs text-emerald-400 font-semibold self-center">Da sao chep ma cau noi</span>
-    </div>
-  </div>
-
-  <!-- PHUONG THUC 2: KET NOI MAY CHU NEN -->
-  <div class="p-5 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-4">
-    <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
-      <div>
-        <h4 class="text-sm font-bold text-white">Ket Noi May Chu Nen</h4>
-        <p class="text-xs text-slate-400 mt-1">Ket noi qua WebSocket may chu</p>
+        <h4 class="text-sm font-bold text-white">Ket Noi Phong Live</h4>
+        <p class="text-xs text-slate-400 mt-1">Ho tro moi loai link chia se TikTok hoac username</p>
       </div>
       <div id="tiktok-connection-status" class="text-xs font-semibold text-slate-400">Chua ket noi</div>
     </div>
 
     <div class="flex flex-col sm:flex-row gap-3">
-      <input type="text" id="tiktok-username-input" placeholder="Nhap username TikTok streamer" class="flex-1 px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-rose-500">
-      <input type="text" id="tiktok-apikey-input" placeholder="Euler API Key neu co" class="w-full sm:w-48 px-4 py-2.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-rose-500">
-      <button id="btn-tiktok-connect" class="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-bold text-white transition-all">Ket Noi</button>
-      <button id="btn-tiktok-disconnect" class="hidden px-5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-rose-400 transition-all">Ngat Ket Noi</button>
+      <input type="text" id="tiktok-url-input" placeholder="Dan link live TikTok vi du https://vt.tiktok.com/ZS9fFDvrmfSHg-QDgxt/" class="flex-1 px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-rose-500 transition-colors">
+      <button id="btn-tiktok-connect" class="px-6 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-bold text-white transition-all whitespace-nowrap">Ket Noi</button>
+      <button id="btn-tiktok-disconnect" class="hidden px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-rose-400 transition-all whitespace-nowrap">Ngat Ket Noi</button>
     </div>
 
-    <div id="tiktok-live-stats" class="text-xs text-slate-500 font-medium">Mat xem: 0 - Qua: 0 - Chat: 0</div>
+    <div id="tiktok-live-stats" class="text-xs text-slate-400 font-medium">Mat xem: 0 - Qua: 0 - Chat: 0</div>
   </div>
 
-  <!-- HUONG DAN OBS STUDIO -->
   <div class="border-b border-slate-800 pb-4 pt-4">
     <h3 class="text-base font-bold text-blue-400">Huong Dan Them Vao OBS Studio</h3>
     <p class="text-xs text-slate-400 mt-1">Cac buoc thiet lap hien thi tren phan mem livestream</p>
@@ -2486,7 +2452,7 @@
       <div class="w-8 h-8 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold text-sm">1</div>
       <h4 class="text-sm font-bold text-white">Them Nguon Browser</h4>
       <p class="text-xs text-slate-400 leading-relaxed">
-        Trong OBS Studio hoac TikTok Live Studio, nhan dau cong tai bang Sources va chon Browser.
+        Trong OBS Studio hoac TikTok Live Studio nhan nut cong tai bang Sources va chon Browser
       </p>
     </div>
 
@@ -2494,7 +2460,7 @@
       <div class="w-8 h-8 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-sm">2</div>
       <h4 class="text-sm font-bold text-white">Dan Duong Link Overlay</h4>
       <p class="text-xs text-slate-400 leading-relaxed">
-        Nhan nut Sao chep o thanh tren cung va dan vao o URL cua nguon Browser.
+        Nhan nut Sao chep o thanh tren cung va dan vao o URL cua nguon Browser
       </p>
     </div>
 
@@ -2502,7 +2468,7 @@
       <div class="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">3</div>
       <h4 class="text-sm font-bold text-white">Dien Kich Thuoc Chuan 1080x1920</h4>
       <p class="text-xs text-slate-400 leading-relaxed">
-        Dien Width 1080 va Height 1920. Khong de 800x600 roi keo to vi se lam mo man hinh.
+        Dien Width 1080 va Height 1920 de hinh anh sac net khong bi mo
       </p>
     </div>
   </div>
