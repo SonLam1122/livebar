@@ -2972,9 +2972,122 @@
       "gameType": "di_chua",
       "title": "Chánh Điện An Lạc",
       "subtitle": "Nam Mô A Di Đà Phật",
-      "maxSeats": 24,
-      "autoChant": true,
-      "chantEveryMin": 5,
+      "rules": [
+        {
+          "trigger": "comment",
+          "keyword": "xin xăm",
+          "action": "draw_fortune",
+          "label": "Rút thẻ xăm an lạc",
+          "merit": 5,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "gõ mõ",
+          "action": "ritual_mo",
+          "label": "Gõ mõ tụng kinh",
+          "merit": 3,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "thỉnh chuông",
+          "action": "ritual_bell",
+          "label": "Thỉnh chuông thanh tịnh",
+          "merit": 3,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "thắp hương",
+          "action": "ritual_incense",
+          "label": "Dâng hương bàn thờ",
+          "merit": 3,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "lạy Phật",
+          "action": "ritual_bow",
+          "label": "Quỳ lạy sám hối",
+          "merit": 3,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "cầu",
+          "action": "pray_lantern",
+          "label": "Gửi lời nguyện cầu an",
+          "merit": 5,
+          "enabled": true
+        },
+        {
+          "trigger": "comment",
+          "keyword": "kinh hành",
+          "action": "walk_altar",
+          "label": "Đi kinh hành quanh điện",
+          "merit": 2,
+          "enabled": true
+        },
+        {
+          "trigger": "comment_any",
+          "action": "join_seat",
+          "label": "Ngồi bồ đoàn thiền định",
+          "merit": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "like",
+          "minCount": 5,
+          "action": "like_merit",
+          "label": "Thả tim tích công đức",
+          "merit": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftId": "all",
+          "action": "speak_dedication",
+          "label": "Xướng tên hồi hướng công đức",
+          "merit": 10,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "minDiamonds": 10,
+          "action": "golden_cushion",
+          "label": "Lên bồ đoàn vàng danh dự",
+          "merit": 50,
+          "enabled": true
+        },
+        {
+          "trigger": "follow",
+          "action": "thank_follow",
+          "label": "Tri ân thí chủ theo dõi",
+          "merit": 10,
+          "enabled": true
+        },
+        {
+          "trigger": "share",
+          "action": "thank_share",
+          "label": "Tri ân chia sẻ đạo tràng",
+          "merit": 5,
+          "enabled": true
+        }
+      ],
+      "sound": {
+        "enabled": true,
+        "pack": "zen",
+        "volume": 0.8,
+        "muted": [],
+        "bgmSource": "template",
+        "bgmUrl": "/assets/music/music1.mp3"
+      },
+      "templeSettings": {
+        "title": "Chánh Điện An Lạc",
+        "subtitle": "Nam Mô A Di Đà Phật",
+        "moBpm": 60
+      },
       "version": 1
     }
   }

@@ -432,6 +432,59 @@ const SoundSynth = {
         break;
       }
 
+      case 'mo': {
+        const osc = ctx.createOscillator();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(620, now);
+        osc.frequency.exponentialRampToValueAtTime(380, now + 0.05);
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = 700;
+        filter.Q.value = 3;
+        const oscGain = ctx.createGain();
+        oscGain.gain.setValueAtTime(volume * 0.8, now);
+        oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+        osc.connect(filter);
+        filter.connect(oscGain);
+        oscGain.connect(gainNode);
+        osc.start(now);
+        osc.stop(now + 0.16);
+        break;
+      }
+
+      case 'bell': {
+        [ [216, 0.55, 3.5], [432, 0.35, 2.8], [1296, 0.12, 1.8], [2160, 0.05, 1.2] ].forEach(([freq, amp, dur]) => {
+          const osc = ctx.createOscillator();
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          const oscGain = ctx.createGain();
+          oscGain.gain.setValueAtTime(0, now);
+          oscGain.gain.linearRampToValueAtTime(amp * volume * 0.7, now + 0.015);
+          oscGain.gain.exponentialRampToValueAtTime(0.0005, now + dur);
+          osc.connect(oscGain);
+          oscGain.connect(gainNode);
+          osc.start(now);
+          osc.stop(now + dur + 0.05);
+        });
+        break;
+      }
+
+      case 'fortune': {
+        [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+          const osc = ctx.createOscillator();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, now + i * 0.07);
+          const oscGain = ctx.createGain();
+          oscGain.gain.setValueAtTime(0.3 * volume, now + i * 0.07);
+          oscGain.gain.exponentialRampToValueAtTime(0.001, now + (i + 1) * 0.15);
+          osc.connect(oscGain);
+          oscGain.connect(gainNode);
+          osc.start(now + i * 0.07);
+          osc.stop(now + (i + 1) * 0.16);
+        });
+        break;
+      }
+
       default: {
         const osc = ctx.createOscillator();
         const oscGain = ctx.createGain();
@@ -530,11 +583,34 @@ const GAME_SOUNDS_MAP = {
     { key: 'chaosEvent', label: 'Biến cố mở màn', icon: '🌀' },
     { key: 'sawHeal', label: 'Lưỡi cưa cộng máu', icon: '❤️' },
     { key: 'sawShield', label: 'Lưỡi cưa nhận khiên', icon: '🛡️' }
+  ],
+  di_chua: [
+    { key: 'mo', label: 'Tiếng mõ tụng kinh', icon: '🪵' },
+    { key: 'bell', label: 'Tiếng chuông chùa', icon: '🔔' },
+    { key: 'fortune', label: 'Rút thẻ an lạc', icon: '📜' },
+    { key: 'gift', label: 'Xướng tên hồi hướng', icon: '🎁' },
+    { key: 'bigGift', label: 'Đại thí chủ cúng dường', icon: '👑' },
+    { key: 'coin', label: 'Thả tim / Theo dõi', icon: '💗' },
+    { key: 'goal', label: 'Viên mãn công đức', icon: '🎯' }
   ]
 };
 
 // Curated Free Music Tracks for BGM Library
 const CURATED_MUSIC_LIBRARY = [
+  {
+    id: 'zen-temple-peace',
+    title: 'Nhạc Thiền Chánh Điện Thanh Tịnh',
+    genre: 'Meditation / Zen',
+    duration: '3:30',
+    url: '/assets/music/music1.mp3'
+  },
+  {
+    id: 'zen-temple-stream',
+    title: 'Nhạc Thiền An Lạc Thư Thái',
+    genre: 'Meditation / Peace',
+    duration: '3:05',
+    url: '/assets/music/music2.mp3'
+  },
   {
     id: 'stadium-chant',
     title: 'Sân Vận Động Sôi Động (Football Crowd & Beat)',

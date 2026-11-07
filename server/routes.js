@@ -48,6 +48,13 @@ function handleApiRoutes(req, res, pathname, overlayIo) {
           overlayIo.emit('screen:update', screen);
         }
 
+        if (targetId === 'cmtdichua0001' && updated.config?.templeSettings) {
+          try {
+            const { updateTempleSettings } = require('./chuaBridge');
+            updateTempleSettings(updated.config.templeSettings);
+          } catch (e) {}
+        }
+
         res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
         res.end(JSON.stringify({ success: true, config: screen?.config }));
       } catch (err) {

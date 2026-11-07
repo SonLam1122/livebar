@@ -1523,51 +1523,234 @@
 
       <!-- CONFIG: ĐI CHÙA ONLINE (CHÁNH ĐIỆN AN LẠC) -->
 <div id="config-section-dichua" class="space-y-6 hidden">
+
+  <!-- PHẦN 1: BẢNG ĐIỀU HÀNH & LIÊN KẾT NHANH -->
   <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl">
-    <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-800">
       <div>
         <h3 class="text-base font-bold text-white flex items-center gap-2">
           <span>🛕</span> Chánh Điện An Lạc
         </h3>
-        <p class="text-xs text-slate-400 mt-1">Cấu hình phòng thiền, bồ đoàn và xướng tên hồi hướng</p>
+        <p class="text-xs text-slate-400 mt-1">Cấu hình phòng thiền, bồ đoàn, tụng kinh và xướng tên hồi hướng công đức</p>
       </div>
       <div class="flex items-center gap-2">
-        <a href="/chua/control.html" target="_blank" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white transition-all">
+        <a href="/chua/control.html" target="_blank" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white transition-all shadow-md shadow-amber-600/20">
           Bảng Điều Khiển
         </a>
-        <a href="/chua/overlay.html" target="_blank" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition-all">
+        <a href="/chua/overlay.html" target="_blank" class="px-4 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition-all shadow-md shadow-indigo-600/20">
           Mở Overlay
         </a>
+        <button class="btn-save-config px-4 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white transition-all shadow-md shadow-emerald-600/20">
+          Lưu cấu hình
+        </button>
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-      <div class="space-y-4">
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Tiêu đề bảng hoành phi</label>
-          <input type="text" id="cfg-dichua-title" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" value="Chánh Điện An Lạc">
-        </div>
-        <div>
-          <label class="block text-xs font-semibold text-slate-300 mb-1">Câu đối phụ</label>
-          <input type="text" id="cfg-dichua-subtitle" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" value="Nam Mô A Di Đà Phật">
+    <!-- KHỐI 1: HOÀNH PHI & KHẨU HIỆU -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-5">
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Tiêu đề hoành phi</label>
+        <input type="text" id="cfg-dichua-title" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500" value="Chánh Điện An Lạc">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Câu đối khẩu hiệu</label>
+        <input type="text" id="cfg-dichua-subtitle" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500" value="Nam Mô A Di Đà Phật">
+      </div>
+      <div class="flex items-center pt-6">
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="cfg-dichua-lunar" class="sr-only peer" checked>
+          <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+          <span class="ml-2.5 text-xs font-semibold text-slate-200">Hiển thị lịch âm</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHẦN 2: BỒ ĐOÀN & VỊ TRÍ CHỖ NGỒI -->
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
+    <div class="pb-3 border-b border-slate-800">
+      <h4 class="text-sm font-bold text-white flex items-center gap-2">
+        <span>🧎</span> Bồ Đoàn & Vị Trí Ngồi Thiền
+      </h4>
+      <p class="text-[11px] text-slate-400 mt-0.5">Quy định sức chứa chánh điện, vị trí danh dự và quyền di chuyển</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Quy mô bồ đoàn</label>
+        <select id="cfg-dichua-seatmode" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500">
+          <option value="auto">Tự động tăng dần</option>
+          <option value="24">Cố định 24 chỗ</option>
+          <option value="36">Cố định 36 chỗ</option>
+          <option value="64">Cố định 64 chỗ</option>
+          <option value="100">Cố định 100 chỗ</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Bồ đoàn vàng tối thiểu</label>
+        <div class="flex items-center gap-2">
+          <input type="number" id="cfg-dichua-vipcoins" min="1" max="10000" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" value="10">
+          <span class="text-xs text-slate-400">xu</span>
         </div>
       </div>
 
-      <div class="space-y-4">
-        <div class="p-4 bg-slate-950/60 border border-slate-800/80 rounded-xl text-xs text-slate-300 space-y-2">
-          <div class="font-bold text-amber-400">Các lệnh tương tác trên Live</div>
-          <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-400">
-            <div>• xin xăm, gieo quẻ</div>
-            <div>• gõ mõ, thỉnh chuông</div>
-            <div>• thắp hương, lạy Phật</div>
-            <div>• kinh hành, đổi chỗ</div>
-            <div>• cầu..., xin cho...</div>
-            <div>• nam, nữ, sư, ni, bà</div>
-          </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Lên bàn thờ lạy Phật từ</label>
+        <div class="flex items-center gap-2">
+          <input type="number" id="cfg-dichua-altarcoins" min="1" max="10000" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" value="10">
+          <span class="text-xs text-slate-400">xu</span>
+        </div>
+      </div>
+
+      <div class="flex items-center pt-5">
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="cfg-dichua-allowmove" class="sr-only peer" checked>
+          <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+          <span class="ml-2.5 text-xs font-semibold text-slate-200">Cho phép đổi chỗ</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHẦN 3: MÕ, CHUÔNG & TỤNG KINH -->
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
+    <div class="pb-3 border-b border-slate-800">
+      <h4 class="text-sm font-bold text-white flex items-center gap-2">
+        <span>🪵</span> Mõ Gỗ, Chuông & Tụng Kinh Tự Động
+      </h4>
+      <p class="text-[11px] text-slate-400 mt-0.5">Điều chỉnh nhịp gõ mõ tự nhiên và chu kỳ tụng kệ niệm Phật</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+      <div class="flex items-center pt-5">
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="cfg-dichua-mo" class="sr-only peer" checked>
+          <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+          <span class="ml-2.5 text-xs font-semibold text-slate-200">Bật tiếng mõ nền</span>
+        </label>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Tốc độ gõ mõ nhịp mỗi phút</label>
+        <div class="flex items-center gap-2">
+          <input type="range" id="cfg-dichua-mobpm" min="30" max="90" value="52" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
+          <span id="label-dichua-mobpm" class="text-xs font-bold text-amber-400 w-10 text-right">52</span>
+        </div>
+      </div>
+
+      <div class="flex items-center pt-5">
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="cfg-dichua-autochant" class="sr-only peer" checked>
+          <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+          <span class="ml-2.5 text-xs font-semibold text-slate-200">Tụng kinh định kỳ</span>
+        </label>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Chu kỳ tụng kinh</label>
+        <select id="cfg-dichua-chantevery" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500">
+          <option value="2">Mỗi 2 phút</option>
+          <option value="4" selected>Mỗi 4 phút</option>
+          <option value="6">Mỗi 6 phút</option>
+          <option value="10">Mỗi 10 phút</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHẦN 4: RÚT THẺ XĂM AN LẠC -->
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
+    <div class="pb-3 border-b border-slate-800">
+      <h4 class="text-sm font-bold text-white flex items-center gap-2">
+        <span>📜</span> Rút Thẻ Quẻ An Lạc
+      </h4>
+      <p class="text-[11px] text-slate-400 mt-0.5">Cấu hình điều kiện gieo quẻ, thẻ an vui và thời gian giãn cách</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Chế độ rút thẻ</label>
+        <select id="cfg-dichua-fortunemode" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500">
+          <option value="all">Mọi người xem được rút miễn phí</option>
+          <option value="gift">Chỉ người tặng quà mới được rút</option>
+          <option value="off">Tắt rút thẻ</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Mức xu rút thẻ ưu tiên</label>
+        <div class="flex items-center gap-2">
+          <input type="number" id="cfg-dichua-fortunecoins" min="1" max="1000" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" value="5">
+          <span class="text-xs text-slate-400">xu</span>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Thời gian chờ giữa hai lần rút</label>
+        <div class="flex items-center gap-2">
+          <input type="number" id="cfg-dichua-fortunecd" min="1" max="60" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" value="10">
+          <span class="text-xs text-slate-400">phút</span>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- PHẦN 5: GIỌNG ĐỌC HỒI HƯỚNG & CẦU AN -->
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-5">
+    <div class="pb-3 border-b border-slate-800">
+      <h4 class="text-sm font-bold text-white flex items-center gap-2">
+        <span>🎙️</span> Giọng Đọc Xướng Tên Hồi Hướng
+      </h4>
+      <p class="text-[11px] text-slate-400 mt-0.5">Xướng danh thí chủ cúng dường, đọc lời nguyện và hồi hướng công đức</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <div>
+        <label class="block text-xs font-semibold text-slate-300 mb-1.5">Chọn giọng đọc</label>
+        <select id="cfg-dichua-voice" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500">
+          <option value="vi-VN-NamMinhNeural">Nam Minh trầm ấm</option>
+          <option value="vi-VN-HoaiMyNeural">Hoài My truyền cảm</option>
+          <option value="vieneu:Thiền Tâm Đức">Thiền Tâm Đức thanh tịnh</option>
+          <option value="vieneu:Hải Đăng">Hải Đăng</option>
+          <option value="vieneu:Thiện Minh">Thiện Minh</option>
+          <option value="vieneu:Minh Đức">Minh Đức</option>
+          <option value="vieneu:Mai Anh">Mai Anh</option>
+        </select>
+      </div>
+
+      <div class="flex items-center pt-5">
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="cfg-dichua-readgifts" class="sr-only peer" checked>
+          <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+          <span class="ml-2.5 text-xs font-semibold text-slate-200">Xướng tên khi tặng quà</span>
+        </label>
+      </div>
+
+      <div class="flex items-center pt-5">
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="cfg-dichua-readgiftwish" class="sr-only peer" checked>
+          <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-amber-500"></div>
+          <span class="ml-2.5 text-xs font-semibold text-slate-200">Đọc kèm lời nguyện</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHẦN 6: BỘ LỌC TỪ NGỮ -->
+  <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+    <div class="pb-3 border-b border-slate-800">
+      <h4 class="text-sm font-bold text-white flex items-center gap-2">
+        <span>🛡️</span> Bộ Lọc Từ Cấm Bổ Sung
+      </h4>
+      <p class="text-[11px] text-slate-400 mt-0.5">Nhập các từ cần cấm ngăn cách bởi dấu phẩy để hệ thống tự động loại bỏ</p>
+    </div>
+
+    <div>
+      <input type="text" id="cfg-dichua-extrawords" placeholder="tu_cam_1, tu_cam_2, ..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 font-mono">
+    </div>
+  </div>
+
 </div>
 
     </section>

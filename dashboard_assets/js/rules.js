@@ -150,6 +150,46 @@ function renderRulesAddButtons(gType) {
         openAddRuleModalWithAction(act);
       });
     });
+  } else if (gType === 'di_chua') {
+    container.innerHTML = `
+      <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Thêm luật</span>
+      <button class="btn-add-rule-chua px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 hover:border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer" data-trigger="gift" data-action="speak_dedication" data-label="Xướng tên hồi hướng công đức" data-merit="10">
+        <span>🎁</span> <span>Tặng quà hồi hướng</span>
+      </button>
+      <button class="btn-add-rule-chua px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 hover:border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer" data-trigger="comment" data-keyword="xin xăm" data-action="draw_fortune" data-label="Rút thẻ xăm an lạc" data-merit="5">
+        <span>📜</span> <span>Gõ xin xăm</span>
+      </button>
+      <button class="btn-add-rule-chua px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 hover:border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer" data-trigger="comment" data-keyword="gõ mõ" data-action="ritual_mo" data-label="Gõ mõ tụng kinh" data-merit="3">
+        <span>🪵</span> <span>Gõ mõ</span>
+      </button>
+      <button class="btn-add-rule-chua px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 hover:border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer" data-trigger="comment" data-keyword="thỉnh chuông" data-action="ritual_bell" data-label="Thỉnh chuông thanh tịnh" data-merit="3">
+        <span>🔔</span> <span>Thỉnh chuông</span>
+      </button>
+      <button class="btn-add-rule-chua px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 hover:border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer" data-trigger="comment" data-keyword="lạy Phật" data-action="ritual_bow" data-label="Quỳ lạy sám hối" data-merit="3">
+        <span>🙏</span> <span>Lạy Phật</span>
+      </button>
+      <button class="btn-add-rule-chua px-3 py-1.5 rounded-xl bg-slate-950 hover:bg-slate-800 text-slate-200 hover:text-white text-xs font-bold border border-slate-800 hover:border-slate-700 flex items-center gap-1.5 transition-all cursor-pointer" data-trigger="like" data-action="like_merit" data-label="Thả tim tích công đức" data-merit="1">
+        <span>💗</span> <span>Thả tim</span>
+      </button>
+    `;
+
+    container.querySelectorAll('.btn-add-rule-chua').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const trig = btn.getAttribute('data-trigger');
+        const act = btn.getAttribute('data-action');
+        const lbl = btn.getAttribute('data-label');
+        const merit = Number(btn.getAttribute('data-merit') || 1);
+        const kw = btn.getAttribute('data-keyword');
+        if (!screenConfig.rules) screenConfig.rules = [];
+        const newRule = { trigger: trig, action: act, label: lbl, merit, enabled: true };
+        if (kw) newRule.keyword = kw;
+        if (trig === 'gift') { newRule.giftId = 'all'; newRule.giftName = 'Mọi loại quà'; }
+        screenConfig.rules.push(newRule);
+        renderRulesList();
+        saveCurrentConfig();
+        showSimActionFeedback(`✅ Đã thêm luật: ${lbl}`);
+      });
+    });
   } else {
     container.innerHTML = `
       <span class="text-xs font-bold uppercase tracking-wider text-slate-400">THÊM LUẬT</span>
@@ -223,6 +263,22 @@ function getRuleActionTarget(r, sCfg, gType) {
     if (act === 'jump') return '💃 Vũ công nhảy tưng bừng';
     if (act === 'join_bar' || act === 'join') return '🕺 Vào sàn nhảy';
     return '🎉 Sàn nhảy 3D';
+  }
+  if (gType === 'di_chua') {
+    if (act === 'draw_fortune') return '📜 Rút thẻ xăm an lạc';
+    if (act === 'ritual_mo') return '🪵 Gõ mõ tụng kinh';
+    if (act === 'ritual_bell') return '🔔 Thỉnh chuông thanh tịnh';
+    if (act === 'ritual_incense') return '🪷 Dâng hương bàn thờ';
+    if (act === 'ritual_bow') return '🙏 Quỳ lạy sám hối';
+    if (act === 'pray_lantern') return '🏮 Thả đèn lồng cầu an';
+    if (act === 'walk_altar') return '🚶 Đi kinh hành quanh điện';
+    if (act === 'join_seat') return '🧎 Ngồi bồ đoàn thiền định';
+    if (act === 'like_merit') return '💗 Thả tim tích công đức';
+    if (act === 'speak_dedication') return '🎙️ Xướng tên hồi hướng công đức';
+    if (act === 'golden_cushion') return '✨ Lên bồ đoàn vàng danh dự';
+    if (act === 'thank_follow') return '➕ Tri ân thí chủ theo dõi';
+    if (act === 'thank_share') return '↗ Tri ân chia sẻ đạo tràng';
+    return r.label || '🛕 Nghi lễ Chánh Điện';
   }
   return act;
 }
@@ -399,6 +455,31 @@ function renderRulesList() {
             <button class="btn-edit-rule px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white text-xs font-bold border border-slate-800 transition-all cursor-pointer" data-rule-idx="${idx}">
               Sửa
             </button>
+            <button class="btn-delete-rule p-2 rounded-xl text-rose-400/80 hover:text-rose-400 hover:bg-rose-500/10 border border-rose-500/20 text-xs font-bold transition-all cursor-pointer" data-rule-idx="${idx}" title="Xoá luật">
+              🗑️
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    if (gType === 'di_chua') {
+      const thenBadge = `
+        <span class="px-3.5 py-1.5 rounded-xl bg-amber-500/10 text-amber-300 border border-amber-500/30 text-xs font-bold flex items-center gap-1.5 shadow-sm">
+          <span>🛕</span> <span>${r.label || r.action} (+${r.merit || 1} công đức)</span>
+        </span>
+      `;
+      return `
+        <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-950/80 border border-slate-800/90 flex items-center justify-between gap-3 hover:border-slate-700/80 transition-all group">
+          <div class="flex items-center gap-2.5 sm:gap-3.5 flex-wrap min-w-0">
+            <span class="text-[11px] font-bold tracking-wider text-slate-400 uppercase">KHI</span>
+            <span class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-200 flex items-center gap-1.5 shadow-sm">
+              <span>${trig.badge || trig.title}</span>
+            </span>
+            <span class="text-[11px] font-bold tracking-wider text-slate-400 uppercase">THÌ</span>
+            ${thenBadge}
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
             <button class="btn-delete-rule p-2 rounded-xl text-rose-400/80 hover:text-rose-400 hover:bg-rose-500/10 border border-rose-500/20 text-xs font-bold transition-all cursor-pointer" data-rule-idx="${idx}" title="Xoá luật">
               🗑️
             </button>

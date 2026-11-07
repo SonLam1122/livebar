@@ -290,8 +290,20 @@ async function initChuaBridge(httpServer) {
   }
 }
 
+function updateTempleSettings(newSettings) {
+  if (!templeInstance || !newSettings) return;
+  templeInstance.applySettings(newSettings);
+  if (storeInstance) {
+    storeInstance.data.settings = templeInstance.settings;
+    storeInstance.save();
+  }
+  broadcast({ t: 'settings', settings: templeInstance.settings, cap: templeInstance.capacity() }, 'all');
+  log('Da dong bo cai dat Chanh Dien tu Dashboard');
+}
+
 module.exports = {
   initChuaBridge,
+  updateTempleSettings,
   broadcast,
   getTemple: () => templeInstance
 };

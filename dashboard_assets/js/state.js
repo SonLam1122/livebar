@@ -419,6 +419,39 @@ function populateAllConfigInputs() {
   const prAction = document.getElementById('cfg-printer-show-action');
   if (prAction) prAction.checked = printer.showAction !== false;
 
+  // Populate Chua Online Config Section
+  const tSet = screenConfig.templeSettings || {};
+  setVal('cfg-dichua-title', tSet.title || screenConfig.title || 'Chánh Điện An Lạc');
+  setVal('cfg-dichua-subtitle', tSet.subtitle || screenConfig.subtitle || 'Nam Mô A Di Đà Phật');
+  const dChuaLunar = document.getElementById('cfg-dichua-lunar');
+  if (dChuaLunar) dChuaLunar.checked = tSet.lunar !== false;
+  setVal('cfg-dichua-seatmode', String(tSet.seatMode || 'auto'));
+  setVal('cfg-dichua-vipcoins', tSet.vipMinCoins || 10);
+  setVal('cfg-dichua-altarcoins', tSet.altarOnGiftCoins || 10);
+  const dChuaMove = document.getElementById('cfg-dichua-allowmove');
+  if (dChuaMove) dChuaMove.checked = tSet.allowMove !== false;
+
+  const dChuaMo = document.getElementById('cfg-dichua-mo');
+  if (dChuaMo) dChuaMo.checked = tSet.mo !== false;
+  setVal('cfg-dichua-mobpm', tSet.moBpm || 52);
+  const moBpmLabel = document.getElementById('label-dichua-mobpm');
+  if (moBpmLabel) moBpmLabel.textContent = String(tSet.moBpm || 52);
+
+  const dChuaChant = document.getElementById('cfg-dichua-autochant');
+  if (dChuaChant) dChuaChant.checked = tSet.autoChant !== false;
+  setVal('cfg-dichua-chantevery', String(tSet.chantEveryMin || 4));
+
+  setVal('cfg-dichua-fortunemode', tSet.fortuneMode || 'all');
+  setVal('cfg-dichua-fortunecoins', tSet.fortuneMinCoins || 5);
+  setVal('cfg-dichua-fortunecd', tSet.fortuneCooldownMin || 10);
+
+  setVal('cfg-dichua-voice', tSet.voice || 'vi-VN-NamMinhNeural');
+  const dChuaGifts = document.getElementById('cfg-dichua-readgifts');
+  if (dChuaGifts) dChuaGifts.checked = tSet.readGifts !== false;
+  const dChuaWish = document.getElementById('cfg-dichua-readgiftwish');
+  if (dChuaWish) dChuaWish.checked = tSet.readGiftWish !== false;
+  setVal('cfg-dichua-extrawords', tSet.extraBadWords || '');
+
   // Populate Theme, Text & Widget Inputs
   const theme = screenConfig.theme || {};
   const preset = theme.preset || 'neon';
@@ -769,6 +802,32 @@ function syncFormToConfig() {
     screenConfig.receiptSpeedMs = screenConfig.printer.feedInterval;
     screenConfig.receiptShowAvatar = screenConfig.printer.showAvatar;
     screenConfig.receiptShowGift = screenConfig.printer.showAction;
+  } else if (gType === 'di_chua') {
+    if (!screenConfig.templeSettings) screenConfig.templeSettings = {};
+    const tSet = screenConfig.templeSettings;
+    tSet.title = document.getElementById('cfg-dichua-title')?.value || 'Chánh Điện An Lạc';
+    screenConfig.title = tSet.title;
+    tSet.subtitle = document.getElementById('cfg-dichua-subtitle')?.value || 'Nam Mô A Di Đà Phật';
+    screenConfig.subtitle = tSet.subtitle;
+    tSet.lunar = document.getElementById('cfg-dichua-lunar')?.checked !== false;
+    tSet.seatMode = document.getElementById('cfg-dichua-seatmode')?.value || 'auto';
+    tSet.vipMinCoins = Number(document.getElementById('cfg-dichua-vipcoins')?.value) || 10;
+    tSet.altarOnGiftCoins = Number(document.getElementById('cfg-dichua-altarcoins')?.value) || 10;
+    tSet.allowMove = document.getElementById('cfg-dichua-allowmove')?.checked !== false;
+
+    tSet.mo = document.getElementById('cfg-dichua-mo')?.checked !== false;
+    tSet.moBpm = Number(document.getElementById('cfg-dichua-mobpm')?.value) || 52;
+    tSet.autoChant = document.getElementById('cfg-dichua-autochant')?.checked !== false;
+    tSet.chantEveryMin = Number(document.getElementById('cfg-dichua-chantevery')?.value) || 4;
+
+    tSet.fortuneMode = document.getElementById('cfg-dichua-fortunemode')?.value || 'all';
+    tSet.fortuneMinCoins = Number(document.getElementById('cfg-dichua-fortunecoins')?.value) || 5;
+    tSet.fortuneCooldownMin = Number(document.getElementById('cfg-dichua-fortunecd')?.value) || 10;
+
+    tSet.voice = document.getElementById('cfg-dichua-voice')?.value || 'vi-VN-NamMinhNeural';
+    tSet.readGifts = document.getElementById('cfg-dichua-readgifts')?.checked !== false;
+    tSet.readGiftWish = document.getElementById('cfg-dichua-readgiftwish')?.checked !== false;
+    tSet.extraBadWords = document.getElementById('cfg-dichua-extrawords')?.value || '';
   }
 
   // Theme Sync
@@ -946,6 +1005,14 @@ function setupThemeListeners() {
   if (scaleSlider && scaleSpan) {
     scaleSlider.addEventListener('input', () => {
       scaleSpan.textContent = `${Number(scaleSlider.value).toFixed(2)}×`;
+    });
+  }
+
+  const moSlider = document.getElementById('cfg-dichua-mobpm');
+  const moLabel = document.getElementById('label-dichua-mobpm');
+  if (moSlider && moLabel) {
+    moSlider.addEventListener('input', () => {
+      moLabel.textContent = moSlider.value;
     });
   }
 
