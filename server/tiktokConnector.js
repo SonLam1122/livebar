@@ -1,21 +1,27 @@
 // =========================================================================
-// TIKTOK LIVE CONNECTOR SERVICE
-// Lang nghe su kien truc tiep tu Webcast WebSocket cua TikTok
+// TIKTOK LIVE CONNECTOR SERVICE (100% TRUC TIEP - KHONG QUA BEN THU 3)
+// Ket noi truc tiep toi may chu Webcast cua TikTok, khong qua Euler Stream
 // =========================================================================
 
 const path = require('path');
 const fs = require('fs');
-const tiktokModule = require('tiktok-live-connector');
+const {
+  WebcastHttpClient,
+  getWebConfig,
+  getRandomPresets,
+  deserializeMessage
+} = require('tiktok-live-connector');
+
 const { getScreenById } = require('./screens');
 const { getMatchState } = require('./matchState');
 const { handleSimulation } = require('./simulator');
 
-// Ho tro ca hai ten goi class tuy phien ban thu vien
-const ConnectorClass = tiktokModule.TikTokLiveConnection || tiktokModule.WebcastPushConnection;
-
-let connectionInstance = null;
+let isPolling = false;
+let pollingTimer = null;
 let currentUsername = '';
 let currentScreenId = 'cmta2zkpq00aokx08uyc7iys2';
+let currentRoomId = '';
+let currentCursor = '';
 let connectionStatus = 'DISCONNECTED'; // DISCONNECTED, CONNECTING, CONNECTED, ERROR
 let lastErrorMessage = '';
 let liveStats = {
@@ -80,6 +86,7 @@ function getTikTokStatus() {
   return {
     status: connectionStatus,
     username: currentUsername,
+    roomId: currentRoomId,
     screenId: currentScreenId,
     error: lastErrorMessage,
     stats: liveStats,
@@ -87,63 +94,97 @@ function getTikTokStatus() {
   };
 }
 
-// Khoi tao ket noi toi phong TikTok Live theo username
-async function connectToTikTok(rawUsername, screenId, overlayIo) {
-  if (!rawUsername) {
-    throw new Error('Vui long cung cap username TikTok');
+// Lay Room ID truc tiep tu may chu TikTok
+async function fetchRoomIdDirectly(client, username) {
+  // Cach 1: Goi truc tiep API Live cua TikTok
+  try {
+    const apiRes = await client.getJsonObjectFromTikTokApi("api-live/user/room/", {
+      ...client.clientParams,
+      uniqueId: username,
+      sourceType: "54"
+    });
+
+    const roomId = apiRes?.data?.user?.roomId;
+    if (roomId) return roomId;
+  } catch (err) {
+    console.warn(`[TikTok Direct] API live loi, thu scrape HTML: ${err.message}`);
   }
 
-  const username = rawUsername.replace(/^@/, '').trim();
+  // Cach 2: Scrape HTML trang live truc tiep tu TikTok
+  try {
+    const html = await client.getHtmlFromTikTokWebsite(`@${username}/live`);
+    const match = html.match(/<script id="SIGI_STATE"[^>]*>([^<]+)<\/script>/) ||
+                  html.match(/<script id="__UNIVERSAL_DATA_FOR_REHYDRATION__"[^>]*>([^<]+)<\/script>/);
 
-  // Ngat ket noi cu neu dang ton tai
-  if (connectionInstance) {
-    disconnectFromTikTok();
-  }
-
-  currentUsername = username;
-  currentScreenId = screenId || 'cmta2zkpq00aokx08uyc7iys2';
-  connectionStatus = 'CONNECTING';
-  lastErrorMessage = '';
-  liveStats = { viewerCount: 0, likeCount: 0, totalGifts: 0, totalComments: 0 };
-
-  const connection = new ConnectorClass(username, {
-    processInitialData: false,
-    enableExtendedGiftInfo: true,
-    requestPollingIntervalMs: 1000,
-    clientParams: {
-      app_language: 'vi-VN',
-      webcast_language: 'vi-VN'
+    if (match && match[1]) {
+      const parsed = JSON.parse(match[1]);
+      const roomId = parsed?.LiveRoom?.liveRoomUserInfo?.user?.roomId ||
+                     parsed?.__DEFAULT_SCOPE__?.['webapp.live-detail']?.liveRoom?.liveRoomUserInfo?.user?.roomId;
+      if (roomId) return roomId;
     }
-  });
+  } catch (err) {
+    console.warn(`[TikTok Direct] Scrape HTML loi: ${err.message}`);
+  }
 
-  // Dang ky cac su kien tu Webcast
-  connection.on('connected', (state) => {
-    connectionStatus = 'CONNECTED';
-    lastErrorMessage = '';
-    const roomId = state?.roomId || connection.roomId || 'unknown';
-    console.log(`[TikTok Live] Da ket noi toi @${username} (Room ID: ${roomId})`);
-  });
+  throw new Error(`Khong the lay Room ID cua @${username}. Hay kiem tra kenh da phat truc tiep chua.`);
+}
 
-  connection.on('disconnected', () => {
-    connectionStatus = 'DISCONNECTED';
-    console.log(`[TikTok Live] Da ngat ket noi @${username}`);
-  });
+// Vong lap lang nghe tin nhan truc tiep tu TikTok Webcast qua HTTP Fetch
+async function pollWebcast(client, roomId, overlayIo) {
+  if (!isPolling) return;
 
-  connection.on('streamEnd', () => {
-    connectionStatus = 'DISCONNECTED';
-    console.log(`[TikTok Live] Phong live @${username} da ket thuc.`);
-  });
+  try {
+    const params = {
+      ...client.clientParams,
+      room_id: roomId
+    };
+    if (currentCursor) {
+      params.cursor = currentCursor;
+    }
 
-  connection.on('error', (err) => {
-    lastErrorMessage = err?.info || err?.message || 'Loi ket noi TikTok Webcast';
-    console.error(`[TikTok Live] Loi: ${lastErrorMessage}`);
-  });
+    const fetchResult = await client.getDeserializedObjectFromWebcastApi(
+      'im/fetch/',
+      params,
+      'ProtoMessageFetchResult',
+      false
+    );
 
-  // 1. Su kien Binh luan (Chat)
-  connection.on('chat', (data) => {
+    if (fetchResult?.cursor) {
+      currentCursor = fetchResult.cursor;
+    }
+
+    // Xu ly tung tin nhan trong danh sach tra ve
+    if (Array.isArray(fetchResult?.messages) && fetchResult.messages.length > 0) {
+      for (const msg of fetchResult.messages) {
+        if (!msg.method || !msg.payload) continue;
+
+        try {
+          const decoded = deserializeMessage(msg.method, msg.payload);
+          processDecodedMessage(msg.method, decoded, overlayIo);
+        } catch (decErr) {
+          // Bo qua cac goi tin khong quan trong hoac chua co schema
+        }
+      }
+    }
+  } catch (err) {
+    console.warn(`[TikTok Direct] Loi poll Webcast: ${err.message}`);
+  }
+
+  // Lap lai sau 1000ms
+  if (isPolling) {
+    pollingTimer = setTimeout(() => pollWebcast(client, roomId, overlayIo), 1000);
+  }
+}
+
+// Xu ly goi tin tuong tac cu the sau khi giai ma
+function processDecodedMessage(method, decoded, overlayIo) {
+  if (!decoded) return;
+
+  // 1. Binh luan (Chat)
+  if (method === 'WebcastChatMessage') {
     liveStats.totalComments++;
-    const user = extractTikTokUser(data);
-    const comment = data.content || data.comment || '';
+    const user = extractTikTokUser(decoded);
+    const comment = decoded.content || decoded.comment || '';
     if (!comment) return;
 
     const payload = {
@@ -153,19 +194,15 @@ async function connectToTikTok(rawUsername, screenId, overlayIo) {
       user
     };
     dispatchToGame(payload, currentScreenId, overlayIo);
-  });
+  }
 
-  // 2. Su kien Tang qua (Gift)
-  connection.on('gift', (data) => {
-    if (data.giftType === 1 && !data.repeatEnd) {
-      return;
-    }
-
-    const giftId = Number(data.giftId);
+  // 2. Tang qua (Gift)
+  else if (method === 'WebcastGiftMessage') {
+    const giftId = Number(decoded.giftId);
     const known = giftsMap.get(giftId);
-    const giftName = data.giftName || data.extendedGiftInfo?.name || known?.name || 'Hoa Hong';
-    const singleDiamonds = Number(data.diamondCount || data.extendedGiftInfo?.diamondCount || known?.diamonds || 1);
-    const repeat = Number(data.repeatCount || 1);
+    const giftName = decoded.giftName || decoded.extendedGiftInfo?.name || known?.name || 'Hoa Hong';
+    const singleDiamonds = Number(decoded.diamondCount || decoded.extendedGiftInfo?.diamondCount || known?.diamonds || 1);
+    const repeat = Number(decoded.repeatCount || 1);
     const totalDiamonds = singleDiamonds * repeat;
     liveStats.totalGifts += repeat;
 
@@ -174,7 +211,7 @@ async function connectToTikTok(rawUsername, screenId, overlayIo) {
       gift: giftName,
       diamonds: totalDiamonds,
       points: totalDiamonds >= 50 ? totalDiamonds * 2 : totalDiamonds * 5,
-      user: extractTikTokUser(data)
+      user: extractTikTokUser(decoded)
     };
 
     if (totalDiamonds >= 50) {
@@ -182,11 +219,11 @@ async function connectToTikTok(rawUsername, screenId, overlayIo) {
     }
 
     dispatchToGame(payload, currentScreenId, overlayIo);
-  });
+  }
 
-  // 3. Su kien Tha tim (Like)
-  connection.on('like', (data) => {
-    const count = Number(data.count || data.likeCount || 1);
+  // 3. Tha tim (Like)
+  else if (method === 'WebcastLikeMessage') {
+    const count = Number(decoded.count || 1);
     liveStats.likeCount += count;
 
     const payload = {
@@ -194,74 +231,97 @@ async function connectToTikTok(rawUsername, screenId, overlayIo) {
       type: 'like',
       likes: count,
       points: Math.max(1, Math.floor(count / 10)),
-      user: extractTikTokUser(data)
+      user: extractTikTokUser(decoded)
     };
 
     dispatchToGame(payload, currentScreenId, overlayIo);
-  });
+  }
 
-  // 4. Su kien Chia se (Share)
-  connection.on('share', (data) => {
-    const payload = {
-      screenId: currentScreenId,
-      type: 'share',
-      points: 5,
-      user: extractTikTokUser(data)
-    };
-
-    dispatchToGame(payload, currentScreenId, overlayIo);
-  });
-
-  // 5. Su kien Nguoi xem tham gia (Member)
-  connection.on('member', (data) => {
+  // 4. Nguoi xem vao phong (Member)
+  else if (method === 'WebcastMemberMessage') {
     const payload = {
       screenId: currentScreenId,
       type: 'join',
-      user: extractTikTokUser(data)
+      user: extractTikTokUser(decoded)
     };
 
     dispatchToGame(payload, currentScreenId, overlayIo);
-  });
+  }
 
-  // 6. Su kien Theo doi (Follow)
-  connection.on('follow', (data) => {
-    const payload = {
-      screenId: currentScreenId,
-      type: 'follow',
-      points: 10,
-      user: extractTikTokUser(data)
-    };
+  // 5. Chia se hoac Theo doi (Social)
+  else if (method === 'WebcastSocialMessage') {
+    const key = decoded.common?.displayText?.key || '';
+    const user = extractTikTokUser(decoded);
 
-    dispatchToGame(payload, currentScreenId, overlayIo);
-  });
-
-  // 7. Cap nhat so luong nguoi xem trong phong
-  connection.on('roomUser', (data) => {
-    if (data?.viewerCount !== undefined) {
-      liveStats.viewerCount = data.viewerCount;
+    if (key.includes('share')) {
+      dispatchToGame({ screenId: currentScreenId, type: 'share', points: 5, user }, currentScreenId, overlayIo);
+    } else if (key.includes('follow')) {
+      dispatchToGame({ screenId: currentScreenId, type: 'follow', points: 10, user }, currentScreenId, overlayIo);
     }
-  });
+  }
+
+  // 6. Cap nhat so luong mat xem
+  else if (method === 'WebcastRoomUserSeqMessage') {
+    if (decoded.total !== undefined || decoded.viewerCount !== undefined) {
+      liveStats.viewerCount = Number(decoded.total || decoded.viewerCount || 0);
+    }
+  }
+}
+
+// Khoi tao ket noi truc tiep vao TikTok Live
+async function connectToTikTok(rawUsername, screenId, overlayIo) {
+  if (!rawUsername) {
+    throw new Error('Vui long cung cap username TikTok');
+  }
+
+  const username = rawUsername.replace(/^@/, '').trim();
+
+  // Ngat ket noi cu neu dang chay
+  disconnectFromTikTok();
+
+  currentUsername = username;
+  currentScreenId = screenId || 'cmta2zkpq00aokx08uyc7iys2';
+  connectionStatus = 'CONNECTING';
+  lastErrorMessage = '';
+  currentCursor = '';
+  liveStats = { viewerCount: 0, likeCount: 0, totalGifts: 0, totalComments: 0 };
+
+  const client = new WebcastHttpClient(getWebConfig(getRandomPresets()));
 
   try {
-    await connection.connect();
-    connectionInstance = connection;
-    return { success: true, message: `Dang ket noi toi @${username}...` };
+    const roomId = await fetchRoomIdDirectly(client, username);
+    currentRoomId = String(roomId);
+    connectionStatus = 'CONNECTED';
+    isPolling = true;
+
+    console.log(`[TikTok Direct] Da ket noi truc tiep toi phong live @${username} (Room ID: ${roomId})`);
+
+    // Bat dau vong lap doc su kien truc tiep
+    pollWebcast(client, roomId, overlayIo);
+
+    return {
+      success: true,
+      message: `Da ket noi truc tiep toi @${username}`,
+      roomId
+    };
   } catch (err) {
     connectionStatus = 'ERROR';
-    lastErrorMessage = err?.info || err?.message || 'Khong the ket noi toi phong live';
+    lastErrorMessage = err.message || 'Khong the ket noi truc tiep toi TikTok';
+    console.error(`[TikTok Direct] Loi: ${lastErrorMessage}`);
     throw new Error(lastErrorMessage);
   }
 }
 
-// Ngat ket noi khoi TikTok
+// Ngat ket noi
 function disconnectFromTikTok() {
-  if (connectionInstance) {
-    try {
-      connectionInstance.disconnect();
-    } catch (e) {}
-    connectionInstance = null;
+  isPolling = false;
+  if (pollingTimer) {
+    clearTimeout(pollingTimer);
+    pollingTimer = null;
   }
   connectionStatus = 'DISCONNECTED';
+  currentRoomId = '';
+  currentCursor = '';
   return { success: true, message: 'Da ngat ket noi TikTok' };
 }
 

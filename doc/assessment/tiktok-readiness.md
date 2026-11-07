@@ -13,11 +13,14 @@ Tai lieu danh gia he thong mang, ket noi tunnel va kha nang tich hop TikTok Live
 
 ---
 
-## 2. Trang Thai Tich Hop API TikTok
+## 2. Trang Thai Tich Hop API TikTok (Ket Noi Truc Tiep 100%)
 
-- Da tich hop thanh cong thu vien `tiktok-live-connector` (phien ban 2.5.0) qua module `server/tiktokConnector.js`.
-- Tuong thich lop khoi tao `TikTokLiveConnection` tren phien ban 2.5.0 (khac phuc loi `WebcastPushConnection is not a constructor`).
-- Ho tro tu dong chuyen tiep cac su kien va hien thi toast:
+- He thong ket noi truc tiep 100% toi may chu chinh thuc cua TikTok (`tiktok.com` va `webcast.tiktok.com`), loai bo hoan toan cac ben thu ba nhu Euler Stream.
+- Co che hoat dong:
+  - Lay Room ID truc tiep qua endpoint TikTok Live API `api-live/user/room/` va fallback qua trang HTML cua TikTok.
+  - Lang nghe su kien truc tiep qua co che Webcast HTTP Polling tu dong cap nhat cursor theo thoi gian thuc.
+  - Giai ma truc tiep du lieu Protobuf noi bo cua TikTok ma khong gui bat ky du lieu nao ra ben thu ba.
+- Ho tro day du cac su kien va hien thi len man hinh live:
   - Member Join: Tao vu cong tren san nhay va hien toast thong bao nguoi xem vao phong.
   - Chat Comment: Phat hieu ung nhay, cap nhat danh hieu Thuyen truong va hien noi dung binh luan.
   - Gift: Tinh diem, cong kim cuong, kich hoat che do Spotlight khi dat moc va hien toast qua tang.
