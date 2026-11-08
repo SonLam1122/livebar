@@ -2,6 +2,35 @@
 // DASHBOARD CONSTANTS & STATIC CATALOGS
 // =========================================================================
 
+// Danh sách quà DÙNG CHUNG cho cả Phòng thử (nút bắn quà) và Bảng luật quà
+// của Live Bar — tên phải KHỚP NHAU thì luật mới trúng khi bấm thử.
+const GIFT_CATALOG = [
+  { name: 'Hoa Hồng',       diamonds: 1,     emoji: '🌹' },
+  { name: 'Trái Tim',       diamonds: 1,     emoji: '💖' },
+  { name: 'Kem',            diamonds: 1,     emoji: '🍦' },
+  { name: 'TikTok',         diamonds: 1,     emoji: '🎵' },
+  { name: 'GG',             diamonds: 1,     emoji: '👍' },
+  { name: 'Ngón Tay Tim',   diamonds: 5,     emoji: '🫰' },
+  { name: 'Rosa',           diamonds: 10,    emoji: '🌷' },
+  { name: 'Nước Hoa',       diamonds: 20,    emoji: '🧴' },
+  { name: 'Bánh Donut',     diamonds: 30,    emoji: '🍩' },
+  { name: 'Gấu Ôm Tim',     diamonds: 99,    emoji: '🧸' },
+  { name: 'Mũ Bóng Chày',   diamonds: 99,    emoji: '🧢' },
+  { name: 'Hạc Giấy',       diamonds: 99,    emoji: '🕊️' },
+  { name: 'Kính Mát',       diamonds: 199,   emoji: '🕶️' },
+  { name: 'Chó Corgi',      diamonds: 299,   emoji: '🐕' },
+  { name: 'Vương Miện',     diamonds: 500,   emoji: '👑' },
+  { name: 'Thiên Hà',       diamonds: 1000,  emoji: '🌠' },
+  { name: 'Pháo Hoa',       diamonds: 1088,  emoji: '🎆' },
+  { name: 'Mô Tô',          diamonds: 2988,  emoji: '🏍️' },
+  { name: 'Vua Sư Tử',      diamonds: 5000,  emoji: '🦁' },
+  { name: 'Siêu Xe',        diamonds: 7000,  emoji: '🏎️' },
+  { name: 'Du Thuyền',      diamonds: 10000, emoji: '🛥️' },
+  { name: 'Rồng Vàng',      diamonds: 15000, emoji: '🐉' },
+  { name: 'Phượng Hoàng',   diamonds: 25999, emoji: '🔥' },
+  { name: 'Vũ Trụ TikTok',  diamonds: 29999, emoji: '🌌' },
+];
+
 const DEMO_USERS = [
   { username: 'nguoi_xem_demo1', name: 'Khán giả Demo', avatar: '/api/avatars/nguoi_xem_demo1.svg' },
   { username: 'thanh_hoa_12', name: 'Thanh Hoa Streamer', avatar: '/api/avatars/nguoi_xem_demo2.svg' },

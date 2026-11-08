@@ -7,6 +7,41 @@ const LEGACY_SCREEN_FILE = path.join(ROOT_DIR, 'screen_data.json');
 
 let screensList = [];
 
+const DANCERS_DIR = path.join(ROOT_DIR, 'bar', 'dancers');
+let _dancerScanKey = '';
+
+// Đặt tên đẹp từ tên file: "anh-vest-xanh.gif" -> "Anh vest xanh"
+function labelFromFile(file) {
+  const base = file.replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ').trim();
+  return base ? base.charAt(0).toUpperCase() + base.slice(1) : file;
+}
+
+// Tự động nạp MỌI nhân vật trong bar/dancers/ vào thư viện skin của Live Bar.
+// Nhờ vậy chỉ cần thả file .gif/.webp/.png vào thư mục là nhân vật tự xuất hiện,
+// không cần sửa tay screens_data.json.
+function mergeDancerSkins(list) {
+  let files;
+  try {
+    files = fs.readdirSync(DANCERS_DIR).filter(f => /\.(gif|webp|png|apng)$/i.test(f)).sort();
+  } catch (e) {
+    return;
+  }
+  const scanKey = files.join('|');
+  _dancerScanKey = scanKey;
+  const liveBar = list.find(s => s.gameType === 'live_bar');
+  if (!liveBar) return;
+  if (!liveBar.config) liveBar.config = {};
+  if (!Array.isArray(liveBar.config.skinLibrary)) liveBar.config.skinLibrary = [];
+  const lib = liveBar.config.skinLibrary;
+  const have = new Set(lib.map(s => s.imageUrl));
+  for (const f of files) {
+    const url = '/bar/dancers/' + f;
+    if (have.has(url)) continue;
+    lib.push({ id: 'auto_' + f.replace(/[^a-zA-Z0-9]+/g, '_'), label: labelFromFile(f), imageUrl: url });
+    have.add(url);
+  }
+}
+
 function loadScreens() {
   try {
     if (fs.existsSync(SCREENS_FILE)) {
@@ -19,6 +54,7 @@ function loadScreens() {
     console.error('Error loading screens:', err);
     screensList = [];
   }
+  mergeDancerSkins(screensList);
   return screensList;
 }
 

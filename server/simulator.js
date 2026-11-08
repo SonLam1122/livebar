@@ -1,5 +1,64 @@
 let spotlightTimer = null;
 
+// =========================================================================
+// FEATURE 1: Avatar người donate lên màn DJ ("con chó")
+// Donate -> hiện avatar người tặng 2 phút. Hết 2 phút -> hiện avatar top
+// (Đại gia > Ông hoàng > Bà chúa). Không có ai -> trả lại màn mặc định (con chó).
+// Điều khiển qua overlay:config (djScreenUrl), không đụng bundle 3D.
+// =========================================================================
+let djTimer = null;
+let djHoldUntil = 0;
+let _djLastUrl = null;
+const DJ_HOLD_MS = 120000; // 2 phút
+
+function _djPush(overlayIo, targetScreen, url, mState) {
+  if (!overlayIo || !targetScreen || !targetScreen.config) return;
+  const u = url || '';
+  if (u === _djLastUrl) return; // không đổi thì không đẩy lại (tránh dựng lại sàn liên tục)
+  _djLastUrl = u;
+  // Đẩy config để đổi màn LED. Vì overlay áp lại config có thể dựng lại sàn,
+  // ta GỬI LẠI match:state ngay sau đó để khách trên sàn không bị xoá.
+  const cfg = { ...targetScreen.config, djScreenUrl: u, showDjScreen: true };
+  overlayIo.emit('overlay:config', { config: cfg });
+  if (mState) overlayIo.emit('match:state', mState);
+}
+
+function _topSupporterAvatar(mState) {
+  const guests = (mState && mState.guests) || [];
+  const byBadge = (bn) => guests.find(g => g.badgeName === bn && g.avatarUrl);
+  const g = byBadge('Đại gia') || byBadge('Ông hoàng sàn nhảy') || byBadge('Bà chúa vũ trường');
+  return g ? g.avatarUrl : null;
+}
+
+// activeForThisGift: true khi món quà vừa tặng được gán hiệu ứng 'dj_avatar' (theo dropdown từng quà).
+function triggerDjAvatar(overlayIo, targetScreen, mState, donorAvatar, activeForThisGift) {
+  if (!overlayIo || !targetScreen) return;
+  const cfg = targetScreen.config || {};
+  const passive = cfg.djAvatarPassive !== false; // BỊ ĐỘNG (ô tick): Đại gia/Ông hoàng/Bà chúa, không có -> màn mặc định
+  if (!activeForThisGift && !passive) return;
+
+  const settle = () => {
+    djHoldUntil = 0;
+    if (passive) {
+      const top = _topSupporterAvatar(mState);
+      _djPush(overlayIo, targetScreen, top || '', mState); // top hoặc '' = màn mặc định (con chó)
+    } else {
+      _djPush(overlayIo, targetScreen, '', mState); // về màn mặc định
+    }
+  };
+
+  if (activeForThisGift && donorAvatar) {
+    // CHỦ ĐỘNG theo quà: hiện avatar người tặng 2 phút
+    _djPush(overlayIo, targetScreen, donorAvatar, mState);
+    djHoldUntil = Date.now() + DJ_HOLD_MS;
+    clearTimeout(djTimer);
+    djTimer = setTimeout(settle, DJ_HOLD_MS);
+  } else if (passive && Date.now() >= djHoldUntil) {
+    // Quà thường + đang không giữ avatar người tặng -> cập nhật top (bị động)
+    settle();
+  }
+}
+
 function normalizeUser(rawUser) {
   const u = rawUser || {};
   const username = (u.username || 'nguoi_xem_demo1').trim();
@@ -15,10 +74,35 @@ function normalizeUser(rawUser) {
   };
 }
 
+// Đọc luật quà→đội từ config.mappings cho các game 2 phe (action 'team_0'/'team_1').
+function resolveGiftTeam(payload, targetScreen) {
+  if (!payload || !payload.gift || !Array.isArray(targetScreen?.config?.mappings)) return null;
+  for (const m of targetScreen.config.mappings) {
+    if (m.trigger === 'gift' && m.giftName === payload.gift) {
+      if (m.action === 'team_1') return 1;
+      if (m.action === 'team_0') return 0;
+    }
+  }
+  return null;
+}
+
+// Đọc luật quà→hành động từ config.mappings cho các game 1 hành động (cá, cưa, in...).
+function resolveGiftAction(payload, targetScreen) {
+  if (!payload || !payload.gift || !Array.isArray(targetScreen?.config?.mappings)) return null;
+  const m = targetScreen.config.mappings.find(x => x.trigger === 'gift' && x.giftName === payload.gift);
+  return m && m.action ? m.action : null;
+}
+
 function handleSimulation(mState, payload, targetScreen, overlayIo) {
   const gType = targetScreen?.gameType || mState.gameType;
   const user = normalizeUser(payload.user);
   const fxList = [];
+
+  // Game 1-hành-động (cá, cưa...): lấy hành động theo luật quà nếu payload chưa có
+  if (payload.gift && !payload.action && (gType === 'fish_tank' || gType === 'chainsaw_clash')) {
+    const a = resolveGiftAction(payload, targetScreen);
+    if (a) payload.action = a;
+  }
 
   mState.serverNow = Date.now();
 
@@ -45,7 +129,7 @@ function handleSimulation(mState, payload, targetScreen, overlayIo) {
 
   // 1. ARMY CLASH
   if (gType === 'army_clash') {
-    const tIdx = payload.boostTeam ?? 0;
+    const tIdx = payload.boostTeam ?? resolveGiftTeam(payload, targetScreen) ?? 0;
     const pts = payload.points || 1;
     const winDist = targetScreen?.config?.winDistance || 300;
 
@@ -114,7 +198,7 @@ function handleSimulation(mState, payload, targetScreen, overlayIo) {
 
   // TEAM BATTLE / CUỘC CHIẾN THÁP (XÂY THÁP)
   if (gType === 'team_battle') {
-    const tIdx = payload.boostTeam ?? 0;
+    const tIdx = payload.boostTeam ?? resolveGiftTeam(payload, targetScreen) ?? 0;
     const pts = payload.points || 1;
     const diamonds = payload.diamonds || 0;
     const goalPts = targetScreen?.config?.goalPoints || 500;
@@ -276,7 +360,7 @@ function handleSimulation(mState, payload, targetScreen, overlayIo) {
 
   // 3. FOOTBALL DUEL
   else if (gType === 'football_duel') {
-    const tIdx = payload.boostTeam ?? 0;
+    const tIdx = payload.boostTeam ?? resolveGiftTeam(payload, targetScreen) ?? 0;
     const pts = payload.points || 1;
     const goalPts = targetScreen?.config?.goalPoints || 50;
 
@@ -348,7 +432,7 @@ function handleSimulation(mState, payload, targetScreen, overlayIo) {
 
   // 4. VOTE TANK
   else if (gType === 'vote_tank') {
-    const tIdx = payload.boostTeam ?? 0;
+    const tIdx = payload.boostTeam ?? resolveGiftTeam(payload, targetScreen) ?? 0;
     const pts = payload.points || 10;
     const winPts = targetScreen?.config?.winPoints || 1000;
 
@@ -500,6 +584,10 @@ function handleSimulation(mState, payload, targetScreen, overlayIo) {
 
   // 6. RECEIPT PRINTER
   else if (gType === 'receipt_printer') {
+    // Bỏ qua in nếu quà được gán "skip_receipt" trong bảng luật
+    if (payload.gift && resolveGiftAction(payload, targetScreen) === 'skip_receipt') {
+      return { mState, fxList };
+    }
     if (!mState.receipt) {
       mState.receipt = { entries: [] };
     }
@@ -658,6 +746,21 @@ function handleSimulation(mState, payload, targetScreen, overlayIo) {
     const pts = payload.points || 10;
     const diamonds = payload.diamonds || 1;
 
+    // --- CUSTOM THEO LOẠI QUÀ TIKTOK ---
+    // Đọc config.mappings: nếu tên quà (payload.gift) khớp một luật trigger='gift',
+    // thì ép kích đúng hiệu ứng (spotlight / wing / skin|vip / jump) bất kể số kim cương.
+    const giftActions = new Set();
+    let hasLiveBarMapping = false; // quà đã được gán luật rõ ràng (kể cả 'floor' = chỉ vào sàn)
+    if (payload.gift && Array.isArray(targetScreen?.config?.mappings)) {
+      for (const m of targetScreen.config.mappings) {
+        if (m.trigger === 'gift' && m.giftName && m.giftName === payload.gift && m.action) {
+          hasLiveBarMapping = true;
+          // Hỗ trợ combo: 'spotlight+skin+wing' -> tách thành từng hiệu ứng
+          String(m.action).split('+').forEach(a => { const t = a.trim(); if (t) giftActions.add(t); });
+        }
+      }
+    }
+
     mState.score += pts;
 
     let guest = mState.guests.find(g => g.username === user.username);
@@ -689,6 +792,8 @@ function handleSimulation(mState, payload, targetScreen, overlayIo) {
       if (diamonds > (guest.maxSingleGiftDiamonds || 0)) {
         guest.maxSingleGiftDiamonds = diamonds;
       }
+      // Màn LED: chủ động (quà gán 'dj_avatar' -> avatar người tặng 2 phút) + bị động (toggle)
+      triggerDjAvatar(overlayIo, targetScreen, mState, user.avatarUrl, giftActions.has('dj_avatar'));
     }
     if (payload.comment) {
       guest.commentCount = (guest.commentCount || 0) + 1;
@@ -773,7 +878,7 @@ function handleSimulation(mState, payload, targetScreen, overlayIo) {
     // Tự động đưa Top 1 2 3 tặng quà nhiều nhất lên Sân Khấu (Podium)
     updateLiveBarPodium(mState, fxList);
 
-    if (diamonds >= 50 || payload.action === 'spotlight') {
+    if (hasLiveBarMapping ? giftActions.has('spotlight') : (diamonds >= 50 || payload.action === 'spotlight')) {
       clearTimeout(spotlightTimer);
       const spotSec = targetScreen?.config?.spotlightSeconds || 5;
       mState.spotlight = {
@@ -805,8 +910,40 @@ function handleSimulation(mState, payload, targetScreen, overlayIo) {
       }, spotSec * 1000);
     }
 
+    // --- Cấp skin VIP theo loại quà (mapping action 'skin' hoặc 'vip') ---
+    if (giftActions.has('skin') || giftActions.has('vip')) {
+      const vipLib = targetScreen?.config?.vipSkinLibrary || [];
+      if (vipLib.length > 0) {
+        const chosenVip = vipLib[Math.floor(Math.random() * vipLib.length)];
+        guest.vipSkin = chosenVip.id;
+        guest.skinUrl = chosenVip.imageUrl || guest.skinUrl;
+        fxList.push({
+          kind: 'alert',
+          alert: {
+            title: '👑 HÓA THÂN VIP 👑',
+            subtitle: `${user.nickname} hóa thành ${chosenVip.label}!`,
+            avatarUrl: user.avatarUrl,
+            color: '#a855f7',
+            durationMs: 4000
+          }
+        });
+        fxList.push({ kind: 'sound', name: 'level_up' });
+        const vipSec = targetScreen?.config?.vipSeconds || 0;
+        if (vipSec > 0) {
+          setTimeout(() => {
+            if (guest && guest.vipSkin === chosenVip.id) {
+              guest.vipSkin = null;
+              if (mState.bar) mState.bar.guests = mState.guests;
+              mState.serverNow = Date.now();
+              if (overlayIo) overlayIo.emit('match:state', mState);
+            }
+          }, vipSec * 1000);
+        }
+      }
+    }
+
     // Cấp ngẫu nhiên 1 trong 6 đôi Cánh khi tặng quà lớn (>= 20 kim cương hoặc action wing)
-    if (diamonds >= 20 || payload.action === 'wing') {
+    if (hasLiveBarMapping ? giftActions.has('wing') : (diamonds >= 20 || payload.action === 'wing')) {
       const wingLib = targetScreen?.config?.wingLibrary || [];
       if (wingLib.length > 0) {
         const chosenWing = wingLib[Math.floor(Math.random() * wingLib.length)];
@@ -825,26 +962,23 @@ function handleSimulation(mState, payload, targetScreen, overlayIo) {
         });
         fxList.push({ kind: 'sound', name: 'level_up' });
 
-        const wingSec = targetScreen?.config?.wingSeconds || 60;
+        // Cánh giữ trong 2 phút rồi tự gỡ (trừ khi config đặt khác; 0 = vĩnh viễn)
+        const wingSec = targetScreen?.config?.wingSeconds != null ? targetScreen.config.wingSeconds : 120;
         if (wingSec > 0) {
           setTimeout(() => {
             if (guest && guest.wing === chosenWing.id) {
               guest.wing = null;
               guest.wingName = null;
-              if (mState.bar) {
-                mState.bar.guests = mState.guests;
-              }
+              if (mState.bar) mState.bar.guests = mState.guests;
               mState.serverNow = Date.now();
-              if (overlayIo) {
-                overlayIo.emit('match:state', mState);
-              }
+              if (overlayIo) overlayIo.emit('match:state', mState);
             }
           }, wingSec * 1000);
         }
       }
     }
 
-    if (payload.action === 'jump') {
+    if (hasLiveBarMapping ? giftActions.has('jump') : (payload.action === 'jump' || giftActions.has('jump'))) {
       const jumpSec = targetScreen?.config?.jumpSeconds || 4;
       mState.jumps.push({
         username: user.username,
@@ -886,53 +1020,31 @@ function updateLiveBarBadges(mState, fxList) {
 
   const assignedUsers = new Set();
 
-  // 1. Người dẫn đầu (người vào phòng đầu tiên)
-  const firstGuest = [...guests].sort((a, b) => (a.enteredAt || 0) - (b.enteredAt || 0))[0];
-  if (firstGuest) {
-    firstGuest.badge = 'cmsla49vr001qnu16lzo2spf8';
-    firstGuest.badgeName = 'Người dẫn đầu';
-    assignedUsers.add(firstGuest.username);
-  }
-
-  // 2. Đại gia (người tặng quà có giá trị cao nhất)
-  const daiGiaCandidates = [...guests].filter(g => (g.maxSingleGiftDiamonds || 0) > 0 || (g.diamonds || 0) > 0)
-    .sort((a, b) => ((b.maxSingleGiftDiamonds || 0) - (a.maxSingleGiftDiamonds || 0)) || ((b.diamonds || 0) - (a.diamonds || 0)));
-  
-  if (daiGiaCandidates.length > 0) {
-    const topDaiGia = daiGiaCandidates[0];
-    topDaiGia.badge = 'cmsla49vr001rnu16wstb5qhf';
-    topDaiGia.badgeName = 'Đại gia';
-    assignedUsers.add(topDaiGia.username);
-  }
-
-  // 3. Ông hoàng sàn nhảy (người tặng nhiều số lượng quà nhất)
-  const giftSenders = [...guests].filter(g => (g.giftCount || 0) > 0)
-    .sort((a, b) => (b.giftCount || 0) - (a.giftCount || 0));
-
-  if (giftSenders.length > 0) {
-    const ongHoang = giftSenders[0];
-    if (ongHoang.badge !== 'cmsla49vr001rnu16wstb5qhf') {
-      ongHoang.badge = 'cmsla49vr001snu16hcwqtrjt';
-      ongHoang.badgeName = 'Ông hoàng sàn nhảy';
-      assignedUsers.add(ongHoang.username);
-    }
-  }
-
-  // 4. Bà chúa vũ trường (người tặng nhiều số lượng quà tiếp theo)
-  const baChuaCandidates = giftSenders.filter(g => g.badge !== 'cmsla49vr001snu16hcwqtrjt' && g.badge !== 'cmsla49vr001rnu16wstb5qhf');
-  if (baChuaCandidates.length > 0) {
-    const baChua = baChuaCandidates[0];
-    baChua.badge = 'cmsla49vr001tnu16viiab444';
-    baChua.badgeName = 'Bà chúa vũ trường';
-    assignedUsers.add(baChua.username);
-  }
+  // 1-4. Bốn danh hiệu lớn trao cho TOP NGƯỜI TẶNG QUÀ (tổng kim cương cao nhất),
+  //      theo thứ hạng: #1 Đại gia, #2 Ông hoàng, #3 Bà chúa, #4 Người dẫn đầu.
+  const BIG_BADGES = [
+    { id: 'cmsla49vr001rnu16wstb5qhf', name: 'Đại gia' },
+    { id: 'cmsla49vr001snu16hcwqtrjt', name: 'Ông hoàng sàn nhảy' },
+    { id: 'cmsla49vr001tnu16viiab444', name: 'Bà chúa vũ trường' },
+    { id: 'cmsla49vr001qnu16lzo2spf8', name: 'Người dẫn đầu' },
+  ];
+  const topGifters = [...guests]
+    .filter(g => (g.diamonds || 0) > 0)
+    .sort((a, b) => ((b.diamonds || 0) - (a.diamonds || 0))
+      || ((b.maxSingleGiftDiamonds || 0) - (a.maxSingleGiftDiamonds || 0))
+      || ((b.giftCount || 0) - (a.giftCount || 0)));
+  topGifters.slice(0, BIG_BADGES.length).forEach((g, i) => {
+    g.badge = BIG_BADGES[i].id;
+    g.badgeName = BIG_BADGES[i].name;
+    assignedUsers.add(g.username);
+  });
 
   // 5. Thuyền trưởng (người comment nhiều nhất)
   const commenters = [...guests].filter(g => (g.commentCount || 0) > 0)
     .sort((a, b) => (b.commentCount || 0) - (a.commentCount || 0));
 
-  if (commenters.length > 0) {
-    const thuyenTruong = commenters.find(g => !assignedUsers.has(g.username)) || commenters[0];
+  const thuyenTruong = commenters.find(g => !assignedUsers.has(g.username));
+  if (thuyenTruong) {
     thuyenTruong.badge = 'cmsla49vr001unu16ws5ulamr';
     thuyenTruong.badgeName = 'Thuyền trưởng';
     assignedUsers.add(thuyenTruong.username);
@@ -942,8 +1054,8 @@ function updateLiveBarBadges(mState, fxList) {
   const likers = [...guests].filter(g => (g.likeCount || 0) > 0)
     .sort((a, b) => (b.likeCount || 0) - (a.likeCount || 0));
 
-  if (likers.length > 0) {
-    const thaThinh = likers.find(g => !assignedUsers.has(g.username)) || likers[0];
+  const thaThinh = likers.find(g => !assignedUsers.has(g.username));
+  if (thaThinh) {
     thaThinh.badge = 'cmsla49vr001vnu16l6wfgx7w';
     thaThinh.badgeName = 'Thả thính';
     assignedUsers.add(thaThinh.username);

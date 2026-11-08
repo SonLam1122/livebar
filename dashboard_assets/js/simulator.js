@@ -2,7 +2,22 @@
 // DASHBOARD SIMULATOR DRAWER & ACTIONS
 // =========================================================================
 
+// Render các nút quà trong Phòng thử từ GIFT_CATALOG (cùng nguồn với Bảng luật).
+function renderSimGiftButtons() {
+  const grid = document.getElementById('sim-quick-gifts-grid');
+  if (!grid || typeof GIFT_CATALOG === 'undefined') return;
+  grid.innerHTML = GIFT_CATALOG.map(g => `
+    <button class="sim-gift-send p-3 rounded-2xl bg-slate-950/80 border border-slate-800 hover:border-rose-500 flex items-center gap-2.5 transition-all text-left" data-gift="${g.name}" data-diamonds="${g.diamonds}">
+      <span class="text-2xl">${g.emoji || '🎁'}</span>
+      <div>
+        <p class="text-xs font-bold text-white">${g.name}</p>
+        <p class="text-[10px] text-amber-400 font-bold">${g.diamonds} 💎</p>
+      </div>
+    </button>`).join('');
+}
+
 function setupSimulatorDrawer() {
+  renderSimGiftButtons();
   const drawer = document.getElementById('simulator-drawer');
   const toggleDrawer = () => {
     if (drawer) {

@@ -7,10 +7,16 @@
       "gameType": "live_bar",
       "teams": [
         {
-          "name": "Sàn nhảy",
-          "color": "#a855f7",
-          "emoji": "🍸",
-          "backgroundUrl": ""
+          "name": "ĐỘI XANH",
+          "color": "#3b82f6",
+          "emoji": "🔵",
+          "backgroundUrl": "/army/hero-panda.webp"
+        },
+        {
+          "name": "ĐỘI ĐỎ",
+          "color": "#ef4444",
+          "emoji": "🔴",
+          "backgroundUrl": "/army/hero-dragon.webp"
         }
       ],
       "scene": "club",
@@ -66,7 +72,53 @@
         }
       ],
       "skinSeconds": 0,
-      "skins": [],
+      "skins": [
+        "cmsla49vr000hnu16cqd59yt1",
+        "cmsla49vr000inu16kdxj8nei",
+        "cmsla49vr000jnu16h2tvva65",
+        "cmsla49vr000knu1637ny3n7g",
+        "cmsla49vr000lnu16sby27mpk",
+        "cmsla49vr000mnu16tkliw8cw",
+        "cmsla49vr000nnu16g54gnz18",
+        "cmsla49vr000onu16ud7czc4n",
+        "cmsla49vr000pnu16vwk7f6ym",
+        "cmsla49vr000qnu16f9pd10yi",
+        "cmsla49vr000rnu16jpi8o2pe",
+        "cmsla49vr000snu165rhh2xvp",
+        "cmsla49vr000tnu160r18wzf7",
+        "cmsla49vr000unu166veoku0v",
+        "cmsla49vr000vnu16k2xjc175",
+        "cmsla49vr000wnu16pb5oa0mf",
+        "cmsla49vr000xnu16m5ii2s85",
+        "cmsla49vr000ynu16nxcwjj26",
+        "cmsla49vr000znu169p17k48t",
+        "cmsla49vr0010nu16wyyimf7y",
+        "cmsla49vr0011nu1677ziox1i",
+        "cmsla49vr0012nu16o79gto2k",
+        "cmsla49vr0013nu16t0rhrg6f",
+        "cmsla49vr0014nu16z2fuwgeh",
+        "cmsla49vr0015nu16fnsjor9p",
+        "cmsla49vr0016nu16u0esve4p",
+        "cmsla49vr0017nu16wyimh0de",
+        "cmsla49vr0018nu160ek5g0us",
+        "cmsla49vr0019nu16tnpos779",
+        "cmsla49vr001anu16r1d2ayan",
+        "cmsla49vr001bnu16tfeo9jxl",
+        "cmsla49vr001cnu16yb4wcten",
+        "cmsla49vr001dnu16b7hsdf7r",
+        "cmsla49vr001enu1677qun785",
+        "cmsla49vr001fnu16nck3d7ls",
+        "cmsla49vr001gnu16duxtojep",
+        "cmsla49vr001hnu1651eg01hr",
+        "ns_cmsla49vr001inu16e4xmcvfl",
+        "ns_cmsla49vr001jnu16e70768ho",
+        "ns_cmsla49vr001knu16sqxovgwf",
+        "ns_cmsla49vr001lnu16ezi08gmm",
+        "ns_cmsla49vr001mnu16kayve8kd",
+        "ns_cmsla49vr001nnu1636bmu8qd",
+        "ns_cmsla49vr001onu16ove02cw4",
+        "ns_cmsla49vr001pnu164xcul2jj"
+      ],
       "skinLibrary": [
         {
           "id": "cmsla49vr000hnu16cqd59yt1",
@@ -225,7 +277,7 @@
         },
         {
           "id": "cmsla49vr001cnu16yb4wcten",
-          "label": "Mặt bự",
+          "label": "Mặt b��",
           "imageUrl": "/bar/dancers/mat-bu.gif"
         },
         {
@@ -252,9 +304,54 @@
           "id": "cmsla49vr001hnu1651eg01hr",
           "label": "Tuần lộc Noel",
           "imageUrl": "/bar/dancers/tuan-loc.gif"
+        },
+        {
+          "id": "ns_cmsla49vr001inu16e4xmcvfl",
+          "label": "Yêu tinh Dobby",
+          "imageUrl": "/bar/vips/dobby.gif"
+        },
+        {
+          "id": "ns_cmsla49vr001jnu16e70768ho",
+          "label": "Anh áo khoác xám",
+          "imageUrl": "/bar/vips/anh-ao-xam.gif"
+        },
+        {
+          "id": "ns_cmsla49vr001knu16sqxovgwf",
+          "label": "Vũ công áo xanh",
+          "imageUrl": "/bar/vips/vu-cong-xanh.gif"
+        },
+        {
+          "id": "ns_cmsla49vr001lnu16ezi08gmm",
+          "label": "Lính hồng mặt nạ",
+          "imageUrl": "/bar/vips/linh-hong.gif"
+        },
+        {
+          "id": "ns_cmsla49vr001mnu16kayve8kd",
+          "label": "Người xanh lá",
+          "imageUrl": "/bar/vips/nguoi-xanh-la.gif"
+        },
+        {
+          "id": "ns_cmsla49vr001nnu1636bmu8qd",
+          "label": "Thầy hiệu trưởng",
+          "imageUrl": "/bar/vips/thay-hieu-truong.gif"
+        },
+        {
+          "id": "ns_cmsla49vr001onu16ove02cw4",
+          "label": "Gà cao su",
+          "imageUrl": "/bar/vips/ga-cao-su.gif"
+        },
+        {
+          "id": "ns_cmsla49vr001pnu164xcul2jj",
+          "label": "Anh vest xanh",
+          "imageUrl": "/bar/vips/anh-vest-xanh.gif"
+        },
+        {
+          "id": "custom_skin_1794138198697",
+          "label": "bubu-dudu",
+          "imageUrl": "/bar/dancers/custom_skin_1794155077042.gif"
         }
       ],
-      "wingSeconds": 60,
+      "wingSeconds": 120,
       "wings": [
         "cmsyjn6yx000hdyd8h95830ov",
         "cmsyjn6yx000idyd8tjcyajqw",
@@ -290,7 +387,7 @@
         },
         {
           "id": "cmsyjn6yx000ldyd8h3letr6i",
-          "label": "Cánh thuyền trưởng",
+          "label": "Cánh thuy��n trưởng",
           "imageUrl": "/bar/wings/thuyen-truong-trai.webp",
           "secondaryImageUrl": "/bar/wings/thuyen-truong-phai.webp"
         },
@@ -351,7 +448,7 @@
       "cameraOrbitSeconds": 26,
       "cameraZoom": 1.55,
       "lightShow": true,
-      "bgmUrl": "",
+      "bgmUrl": "https://www.youtube.com/watch?v=pajHsiqQt-E&list=RDpajHsiqQt-E&start_radio=1",
       "bgmVolume": 0.45,
       "bgmDuckVolume": 0.12,
       "mappings": [
@@ -404,33 +501,163 @@
         },
         {
           "trigger": "gift",
-          "giftName": "Mũ Bóng Chày",
-          "action": "wing",
-          "points": 20
+          "giftName": "Đỉnh",
+          "giftId": 15232,
+          "action": "spotlight",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Rose",
+          "giftId": 5655,
+          "action": "spotlight",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Hoa Hồng",
+          "giftId": "",
+          "action": "spotlight",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "GG",
+          "giftId": "",
+          "action": "spotlight",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Rosa",
+          "giftId": "",
+          "action": "jump",
+          "points": 1,
+          "enabled": true
         },
         {
           "trigger": "gift",
           "giftName": "Vương Miện",
-          "action": "wing",
-          "points": 20
+          "giftId": "",
+          "action": "spotlight+skin+wing+jump+dj_avatar",
+          "points": 1,
+          "enabled": true
         },
         {
           "trigger": "gift",
           "giftName": "Pháo Hoa",
-          "action": "wing",
-          "points": 20
+          "giftId": "",
+          "action": "spotlight+skin+wing+jump+dj_avatar",
+          "points": 1,
+          "enabled": true
         },
         {
           "trigger": "gift",
           "giftName": "Vua Sư Tử",
-          "action": "wing",
-          "points": 20
+          "giftId": "",
+          "action": "spotlight+skin+wing+jump+dj_avatar",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Du Thuyền",
+          "giftId": "",
+          "action": "spotlight+skin+wing+jump+dj_avatar",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Phượng Hoàng",
+          "giftId": "",
+          "action": "spotlight+skin+wing+jump+dj_avatar",
+          "points": 1,
+          "enabled": true
         },
         {
           "trigger": "gift",
           "giftName": "Vũ Trụ TikTok",
+          "giftId": "",
+          "action": "spotlight+skin+wing+jump+dj_avatar",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Rồng Vàng",
+          "giftId": "",
+          "action": "spotlight+skin+wing+jump+dj_avatar",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Siêu Xe",
+          "giftId": "",
+          "action": "spotlight+skin+wing+jump+dj_avatar",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Mô Tô",
+          "giftId": "",
+          "action": "spotlight+skin+wing+jump+dj_avatar",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Thiên Hà",
+          "giftId": "",
+          "action": "spotlight+skin+wing+jump+dj_avatar",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Kính Mát",
+          "giftId": "",
+          "action": "spotlight+skin+wing+jump+dj_avatar",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Mũ Bóng Chày",
+          "giftId": "",
+          "action": "spotlight+skin+wing+jump+dj_avatar",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Bánh Donut",
+          "giftId": "",
+          "action": "dj_avatar",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "TikTok",
+          "giftId": "",
+          "action": "skin",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Kem",
+          "giftId": "",
           "action": "wing",
-          "points": 20
+          "points": 1,
+          "enabled": true
         }
       ],
       "roundSeconds": 3600,
@@ -589,7 +816,9 @@
         },
         "texts": [],
         "accentColor": "#22d3ee",
-        "transparent": true
+        "transparent": true,
+        "bgColor": "#0b0e14",
+        "bgImage": ""
       },
       "sound": {
         "enabled": true,
@@ -671,7 +900,32 @@
       "cameraIdleOrbit": true,
       "showDjScreen": true,
       "zoom": 1.55,
-      "orbitSeconds": 20
+      "orbitSeconds": 26,
+      "customTexts": {
+        "football.power": "LỰC SÚT",
+        "football.goal": "⚽ VÀO! VÀO! VÀO!",
+        "football.target": "MỐC GHI BÀN: {points}",
+        "leaderboard.title": "TOP TẶNG QUÀ",
+        "leaderboard.rank1": "👑 QUÁN QUÂN",
+        "clock.label": "THỜI GIAN",
+        "alert.follow": "{name} vừa theo dõi kênh",
+        "alert.share": "{name} vừa chia sẻ livestream",
+        "alert.gift": "👑 {name} TẶNG {gift} ×{count}",
+        "guide.chat": "💬 GÕ CHỮ ĐƯỢC GÌ",
+        "guide.gift": "🎁 QUÀ NÀO ĐƯỢC GÌ",
+        "status.reconnect": "Đang kết nối lại TikTok Live...",
+        "status.pause": "Trò chơi đang tạm dừng",
+        "status.ended": "Cảm ơn mọi người đã tham gia!",
+        "winner.title": "👑 {name} CHIẾN THẮNG!",
+        "winner.mvp": "🏆 CẦU THỦ XUẤT SẮC NHẤT",
+        "army.title": "CUỘC CHIẾN NGÀN QUÂN",
+        "army.team1": "ĐỘI XANH",
+        "army.team2": "ĐỘI ĐỎ",
+        "army.power": "SỨC ĐẨY: {n}"
+      },
+      "chatGuideTitle": "💬 GÕ CHỮ ĐƯỢC GÌ",
+      "giftGuideTitle": "🎁 QUÀ NÀO ĐƯỢC GÌ",
+      "powerLabel": "LỰC SÚT"
     },
     "token": "SSsss9xEp6B5GGMf0e1xHyFl56Tj2fqI",
     "overlayUrl": "https://overlay.taolivetuongtac.com/?token=SSsss9xEp6B5GGMf0e1xHyFl56Tj2fqI",
@@ -1339,16 +1593,16 @@
       "bgmDuckVolume": 0.12,
       "teams": [
         {
-          "name": "ĐỘI XANH",
-          "color": "#3b82f6",
-          "emoji": "🔵",
-          "backgroundUrl": "/football-duel/mbappe-idle.png"
+          "name": "RONALDO",
+          "color": "#1d4ed8",
+          "emoji": "🇵🇹",
+          "backgroundUrl": "/football-duel/ronaldo-idle.png"
         },
         {
-          "name": "ĐỘI ĐỎ",
-          "color": "#ef4444",
-          "emoji": "🔴",
-          "backgroundUrl": "/football-duel/yamal-idle.png"
+          "name": "MESSI",
+          "color": "#e11d48",
+          "emoji": "🇦🇷",
+          "backgroundUrl": "/football-duel/messi-idle.png"
         }
       ],
       "mappings": [
@@ -1362,18 +1616,8 @@
           "trigger": "comment",
           "keyword": "2",
           "action": "boost_team_2",
-          "points": 1
-        },
-        {
-          "trigger": "like",
-          "minCount": 20,
-          "action": "boost_team_1",
-          "points": 20
-        },
-        {
-          "trigger": "share",
-          "action": "boost_team_2",
-          "points": 50
+          "points": 1,
+          "hiddenOnHud": false
         }
       ],
       "roundSeconds": 3600,
@@ -3073,11 +3317,20 @@
           "label": "Tri ân chia sẻ đạo tràng",
           "merit": 5,
           "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "action": "speak_dedication",
+          "label": "Xướng tên hồi hướng công đức",
+          "merit": 10,
+          "enabled": true,
+          "giftId": "all",
+          "giftName": "Mọi loại quà"
         }
       ],
       "sound": {
         "enabled": true,
-        "pack": "zen",
+        "pack": "arcade",
         "volume": 0.8,
         "muted": [],
         "bgmSource": "template",
@@ -3086,9 +3339,95 @@
       "templeSettings": {
         "title": "Chánh Điện An Lạc",
         "subtitle": "Nam Mô A Di Đà Phật",
-        "moBpm": 60
+        "moBpm": 60,
+        "lunar": true,
+        "seatMode": "auto",
+        "vipMinCoins": 10,
+        "altarOnGiftCoins": 10,
+        "allowMove": true,
+        "mo": true,
+        "autoChant": true,
+        "chantEveryMin": 4,
+        "fortuneMode": "all",
+        "fortuneMinCoins": 5,
+        "fortuneCooldownMin": 10,
+        "voice": "vi-VN-NamMinhNeural",
+        "readGifts": true,
+        "readGiftWish": true,
+        "extraBadWords": ""
       },
-      "version": 1
+      "version": 1,
+      "teams": [
+        {
+          "name": "ĐỘI XANH",
+          "color": "#3b82f6",
+          "emoji": "🔵",
+          "backgroundUrl": "/army/hero-panda.webp"
+        },
+        {
+          "name": "ĐỘI ĐỎ",
+          "color": "#ef4444",
+          "emoji": "🔴",
+          "backgroundUrl": "/army/hero-dragon.webp"
+        }
+      ],
+      "theme": {
+        "preset": "neon",
+        "accent": "#22d3ee",
+        "accentColor": "#22d3ee",
+        "accentAlt": "#a855f7",
+        "textColor": "#ffffff",
+        "fontFamily": "roboto",
+        "leaderboardPosition": "top-right",
+        "leaderboardSize": 5,
+        "toastPosition": "bottom-left",
+        "scale": 1,
+        "panelOpacity": 0.55,
+        "transparent": true,
+        "bgColor": "#0b0e14",
+        "bgImage": ""
+      },
+      "customTexts": {
+        "football.power": "LỰC SÚT",
+        "football.goal": "⚽ VÀO! VÀO! VÀO!",
+        "football.target": "MỐC GHI BÀN: {points}",
+        "leaderboard.title": "TOP TẶNG QUÀ",
+        "leaderboard.rank1": "👑 QUÁN QUÂN",
+        "clock.label": "THỜI GIAN",
+        "alert.follow": "{name} vừa theo dõi kênh",
+        "alert.share": "{name} vừa chia sẻ livestream",
+        "alert.gift": "👑 {name} TẶNG {gift} ×{count}",
+        "guide.chat": "💬 GÕ CHỮ ĐƯỢC GÌ",
+        "guide.gift": "🎁 QUÀ NÀO ĐƯỢC GÌ",
+        "status.reconnect": "Đang kết nối lại TikTok Live...",
+        "status.pause": "Trò chơi đang tạm dừng",
+        "status.ended": "Cảm ơn mọi người đã tham gia!",
+        "winner.title": "👑 {name} CHIẾN THẮNG!",
+        "winner.mvp": "🏆 CẦU THỦ XUẤT SẮC NHẤT",
+        "army.title": "CUỘC CHIẾN NGÀN QUÂN",
+        "army.team1": "PHE XANH",
+        "army.team2": "PHE ĐỎ",
+        "army.power": "SỨC ĐẨY: {n}"
+      },
+      "chatGuideTitle": "💬 GÕ CHỮ ĐƯỢC GÌ",
+      "giftGuideTitle": "🎁 QUÀ NÀO ĐƯỢC GÌ",
+      "powerLabel": "LỰC SÚT",
+      "alerts": {
+        "tts": {
+          "enabled": false,
+          "lang": "vi-VN",
+          "minDiamonds": 10,
+          "rate": 1,
+          "volume": 1,
+          "voiceId": "",
+          "giftTemplate": "Cảm ơn {name} đã tặng {gift}",
+          "readFollow": false,
+          "followTemplate": "{name} vừa theo dõi kênh"
+        }
+      },
+      "bgmUrl": "",
+      "bgmVolume": 0.5,
+      "bgmDuckVolume": 0.12
     }
   }
 ]

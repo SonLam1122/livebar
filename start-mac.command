@@ -9,6 +9,12 @@ cd "$(dirname "$0")" || exit 1
 LIVEBAR_DIR="$(pwd)"
 CHUA_DIR="$LIVEBAR_DIR/chua-online-live-main"
 
+# --- Nạp biến môi trường từ .env (SIGN_API_KEY...) nếu có; file này đã gitignore ---
+if [ -f "$LIVEBAR_DIR/.env" ]; then
+  set -a; . "$LIVEBAR_DIR/.env"; set +a
+  [ -n "$SIGN_API_KEY" ] && echo " • Đã nạp SIGN_API_KEY từ .env (Euler Stream)"
+fi
+
 echo "============================================================"
 echo " Đang khởi động 2 server..."
 echo "============================================================"

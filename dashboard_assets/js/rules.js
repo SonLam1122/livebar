@@ -4,6 +4,106 @@
 
 let lastSimulatedEvent = null;
 
+// =========================================================================
+// LIVE BAR — BẢNG QUÀ BẤM-1-NÚT (chọn hiệu ứng cho từng món quà TikTok)
+// =========================================================================
+const LIVEBAR_EFFECTS = [
+  { v: '',          label: '(Mặc định: quà to tự spotlight)' },
+  { v: 'floor',     label: '🚶 Chỉ vào sàn (không hiệu ứng)' },
+  { v: 'spotlight', label: '⭐ Spotlight VIP + Vương miện' },
+  { v: 'wing',      label: '🪽 Cánh thần thoại' },
+  { v: 'skin',      label: '👑 Hóa thân skin VIP' },
+  { v: 'jump',      label: '💃 Nhảy tưng bừng' },
+  { v: 'dj_avatar', label: '🎁 Avatar lên màn LED (2 phút)' },
+  // --- Kết hợp với Spotlight ---
+  { v: 'spotlight+skin',      label: '⭐➕👑 Spotlight + Hóa thân VIP' },
+  { v: 'spotlight+wing',      label: '⭐➕🪽 Spotlight + Cánh' },
+  { v: 'spotlight+jump',      label: '⭐➕💃 Spotlight + Nhảy' },
+  { v: 'spotlight+dj_avatar', label: '⭐➕🎁 Spotlight + Avatar màn LED' },
+  { v: 'spotlight+skin+wing',           label: '⭐➕👑➕🪽 Spotlight + VIP + Cánh' },
+  { v: 'spotlight+skin+wing+jump',      label: '⭐➕👑➕🪽➕💃 Spotlight + VIP + Cánh + Nhảy' },
+  { v: 'spotlight+skin+wing+jump+dj_avatar', label: '🌟 TẤT CẢ (Spotlight+VIP+Cánh+Nhảy+Avatar LED)' },
+];
+// Mọi giá trị hiệu ứng (gồm cả combo) để nhận biết & thay thế luật của một món quà
+const LIVEBAR_SPECIAL = LIVEBAR_EFFECTS.filter(e => e.v).map(e => e.v);
+let _giftPresetCache = null;
+
+// Đặt/huỷ hiệu ứng cho một món quà (upsert vào screenConfig.mappings), tự lưu.
+function setLiveBarGiftEffect(giftName, giftId, action) {
+  if (!screenConfig.mappings) screenConfig.mappings = [];
+  // Bỏ luật cũ của đúng món quà này (chỉ các hiệu ứng đặc biệt), giữ nguyên luật khác
+  screenConfig.mappings = screenConfig.mappings.filter(
+    m => !(m.trigger === 'gift' && m.giftName === giftName && LIVEBAR_SPECIAL.includes(m.action))
+  );
+  if (action) {
+    screenConfig.mappings.push({ trigger: 'gift', giftName, giftId, action, points: 1, enabled: true });
+  }
+  saveCurrentConfig();
+  if (typeof showSimActionFeedback === 'function') {
+    const lbl = (LIVEBAR_EFFECTS.find(e => e.v === action) || {}).label || 'Chỉ vào sàn';
+    showSimActionFeedback(`✅ ${giftName} → ${lbl}`);
+  }
+  renderRulesList();
+}
+
+function renderLiveBarGiftTable(container) {
+  // Dùng CHUNG danh sách với Phòng thử (GIFT_CATALOG) nên tên quà luôn khớp luật.
+  const gifts = (typeof GIFT_CATALOG !== 'undefined' ? GIFT_CATALOG : []).slice()
+    .sort((a, b) => (a.diamonds || 0) - (b.diamonds || 0));
+  if (gifts.length === 0) {
+    container.innerHTML = '<div class="text-xs text-slate-500 text-center py-6">Chưa có danh sách quà.</div>';
+    return;
+  }
+  const maps = screenConfig?.mappings || [];
+  const curOf = (name) => (maps.find(m => m.trigger === 'gift' && m.giftName === name && LIVEBAR_SPECIAL.includes(m.action)) || {}).action || '';
+
+  const rows = gifts.map((g, idx) => {
+    const cur = curOf(g.name);
+    const opts = LIVEBAR_EFFECTS.map(e => `<option value="${e.v}" ${e.v === cur ? 'selected' : ''}>${e.label}</option>`).join('');
+    const active = cur ? 'border-pink-500/50' : 'border-slate-800/90';
+    return `
+      <div class="flex items-center justify-between gap-3 p-2.5 rounded-xl bg-slate-950/80 border ${active} transition-all">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <span class="w-9 h-9 rounded-lg bg-slate-900 shrink-0 flex items-center justify-center text-xl">${g.emoji || '🎁'}</span>
+          <div class="min-w-0">
+            <div class="text-xs font-bold text-slate-100 truncate">${g.name}</div>
+            <div class="text-[10px] font-semibold text-amber-300/90">💎 ${g.diamonds || 1}</div>
+          </div>
+        </div>
+        <select data-idx="${idx}" class="livebar-gift-effect shrink-0 text-xs font-semibold bg-slate-900 border border-slate-700 text-white rounded-lg px-2.5 py-2 focus:outline-none focus:border-pink-500 cursor-pointer">
+          ${opts}
+        </select>
+      </div>`;
+  }).join('');
+
+  const djPassive = screenConfig?.djAvatarPassive !== false;
+  container.innerHTML = `
+    <label class="mb-3 flex items-center justify-between gap-3 p-3 rounded-xl bg-slate-950/80 border ${djPassive ? 'border-amber-500/50' : 'border-slate-800/90'} cursor-pointer transition-all">
+      <span class="text-xs font-semibold text-slate-200">👑 Bị động — Avatar Đại gia / Ông hoàng / Bà chúa lên màn LED
+        <span class="block text-[10px] text-slate-400 font-normal mt-0.5">Khi rảnh (không có lượt donate avatar) hiện người đứng đầu; không có thì về màn mặc định.</span>
+      </span>
+      <input type="checkbox" id="lb-dj-passive" ${djPassive ? 'checked' : ''} class="w-4 h-4 rounded border-slate-700 bg-slate-900 text-amber-500 focus:ring-0 shrink-0">
+    </label>
+    <div class="mb-3 text-xs text-slate-400">Mỗi món quà chọn <b class="text-slate-200">1 hiệu ứng</b> ở ô bên phải — tự lưu ngay. Muốn donate quà nào hiện avatar lên màn LED thì chọn <b class="text-slate-200">🎁 Avatar lên màn LED</b>.</div>
+    <div class="grid sm:grid-cols-2 gap-2.5">${rows}</div>
+  `;
+
+  const djToggle = container.querySelector('#lb-dj-passive');
+  if (djToggle) djToggle.addEventListener('change', () => {
+    screenConfig.djAvatarPassive = djToggle.checked;
+    saveCurrentConfig();
+    if (typeof showSimActionFeedback === 'function') showSimActionFeedback(djToggle.checked ? '✅ Bật avatar Đại gia/Ông hoàng/Bà chúa' : '⛔ Tắt avatar bị động');
+    renderRulesList();
+  });
+
+  container.querySelectorAll('.livebar-gift-effect').forEach(sel => {
+    sel.addEventListener('change', () => {
+      const g = gifts[+sel.dataset.idx];
+      if (g) setLiveBarGiftEffect(g.name, '', sel.value);
+    });
+  });
+}
+
 function getRuleTriggerDetails(r) {
   const trig = r.trigger || '';
   if ((trig === 'comment' || trig === 'chat') && r.keyword && r.keyword !== 'all') {
@@ -190,6 +290,11 @@ function renderRulesAddButtons(gType) {
         showSimActionFeedback(`✅ Đã thêm luật: ${lbl}`);
       });
     });
+  } else if (gType === 'live_bar') {
+    container.innerHTML = `
+      <span class="text-xs font-bold uppercase tracking-wider text-pink-300">🎁 Bảng quà → hiệu ứng</span>
+      <span class="text-xs text-slate-400">Chọn hiệu ứng cho từng món quà ở bảng bên dưới. Tự lưu ngay, không cần mở bảng phụ.</span>
+    `;
   } else {
     container.innerHTML = `
       <span class="text-xs font-bold uppercase tracking-wider text-slate-400">THÊM LUẬT</span>
@@ -283,12 +388,176 @@ function getRuleActionTarget(r, sCfg, gType) {
   return act;
 }
 
+// ===== BẢNG QUÀ BẤM-1-NÚT DÙNG CHUNG cho các game khác (giống Live Bar) =====
+// Upsert 1 luật quà->hành động, bỏ các luật cũ (trong tập managed) của món quà đó.
+function setGiftMapping(giftName, action, managed) {
+  if (!screenConfig.mappings) screenConfig.mappings = [];
+  screenConfig.mappings = screenConfig.mappings.filter(
+    m => !(m.trigger === 'gift' && m.giftName === giftName && managed.includes(m.action))
+  );
+  if (action) screenConfig.mappings.push({ trigger: 'gift', giftName, action, points: 1, enabled: true });
+  saveCurrentConfig();
+  if (typeof showSimActionFeedback === 'function') showSimActionFeedback('✅ Đã cập nhật luật quà: ' + giftName);
+  renderRulesList();
+}
+
+// Danh sách hiệu ứng theo từng game (null nếu game chưa hỗ trợ bảng quà)
+function giftEffectsFor(gType) {
+  const tName = (i, fb) => (screenConfig?.teams?.[i]?.name) || fb;
+  if (gType === 'football_duel' || gType === 'army_clash' || gType === 'team_battle') {
+    return [
+      { v: '',       label: '— Không tính —' },
+      { v: 'team_0', label: '🔵 ' + tName(0, 'Đội 1') },
+      { v: 'team_1', label: '🔴 ' + tName(1, 'Đội 2') },
+    ];
+  }
+  if (gType === 'vote_tank') {
+    return [
+      { v: '',       label: '— Không tính —' },
+      { v: 'team_0', label: '🅰️ ' + tName(0, 'Bình 1') },
+      { v: 'team_1', label: '🅱️ ' + tName(1, 'Bình 2') },
+    ];
+  }
+  if (gType === 'fish_tank') {
+    return [
+      { v: '',           label: '— Không tính —' },
+      { v: 'spawn_fish', label: '🐟 Thả cá mới' },
+      { v: 'feed',       label: '🍤 Cho cá ăn (lớn nhanh)' },
+      { v: 'spawn_shark', label: '🦈 Triệu hồi cá mập' },
+    ];
+  }
+  if (gType === 'chainsaw_clash') {
+    return [
+      { v: '',      label: '— Không tính —' },
+      { v: 'spawn', label: '🪚 Thả lưỡi cưa' },
+      { v: 'grow',  label: '❤️ Cộng máu lưỡi cưa' },
+      { v: 'chaos', label: '🌀 Biến cố hỗn loạn' },
+    ];
+  }
+  if (gType === 'receipt_printer') {
+    return [
+      { v: '',             label: '🧾 In hóa đơn (mặc định)' },
+      { v: 'skip_receipt', label: '🚫 Bỏ qua (không in)' },
+    ];
+  }
+  return null;
+}
+
+function renderGameGiftTable(container, effects, note) {
+  const gifts = (typeof GIFT_CATALOG !== 'undefined' ? GIFT_CATALOG : []).slice()
+    .sort((a, b) => (a.diamonds || 0) - (b.diamonds || 0));
+  const managed = effects.filter(e => e.v).map(e => e.v);
+  const maps = screenConfig?.mappings || [];
+  const curOf = (name) => (maps.find(m => m.trigger === 'gift' && m.giftName === name && managed.includes(m.action)) || {}).action || '';
+  const rows = gifts.map((g, idx) => {
+    const cur = curOf(g.name);
+    const opts = effects.map(e => `<option value="${e.v}" ${e.v === cur ? 'selected' : ''}>${e.label}</option>`).join('');
+    const active = cur ? 'border-pink-500/50' : 'border-slate-800/90';
+    return `
+      <div class="flex items-center justify-between gap-3 p-2.5 rounded-xl bg-slate-950/80 border ${active} transition-all">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <span class="w-9 h-9 rounded-lg bg-slate-900 shrink-0 flex items-center justify-center text-xl">${g.emoji || '🎁'}</span>
+          <div class="min-w-0">
+            <div class="text-xs font-bold text-slate-100 truncate">${g.name}</div>
+            <div class="text-[10px] font-semibold text-amber-300/90">💎 ${g.diamonds || 1}</div>
+          </div>
+        </div>
+        <select data-idx="${idx}" class="game-gift-effect shrink-0 text-xs font-semibold bg-slate-900 border border-slate-700 text-white rounded-lg px-2.5 py-2 focus:outline-none focus:border-pink-500 cursor-pointer">${opts}</select>
+      </div>`;
+  }).join('');
+  container.innerHTML = `
+    <div class="mb-3 text-xs text-slate-400">${note || 'Chọn hiệu ứng cho từng món quà — tự lưu ngay. Danh sách này <b class="text-slate-200">khớp đúng</b> các quà trong Phòng thử.'}</div>
+    <div class="grid sm:grid-cols-2 gap-2.5">${rows}</div>`;
+  container.querySelectorAll('.game-gift-effect').forEach(sel => {
+    sel.addEventListener('change', () => { const g = gifts[+sel.dataset.idx]; if (g) setGiftMapping(g.name, sel.value, managed); });
+  });
+}
+
+// ===== VIDEO REACT: bảng quà -> clip =====
+function setVideoGiftClip(giftName, videoKey) {
+  if (!screenConfig.mappings) screenConfig.mappings = [];
+  screenConfig.mappings = screenConfig.mappings.filter(m => !(m.trigger === 'gift' && m.giftName === giftName && m.action === 'play_video'));
+  if (videoKey) screenConfig.mappings.push({ trigger: 'gift', giftName, action: 'play_video', videoKey, points: 1, enabled: true });
+  saveCurrentConfig();
+  if (typeof showSimActionFeedback === 'function') showSimActionFeedback('✅ Đã gán clip cho ' + giftName);
+  renderRulesList();
+}
+
+function renderVideoReactGiftTable(container) {
+  const clips = (screenConfig && screenConfig.template && screenConfig.template.actions) || [];
+  if (clips.length === 0) {
+    container.innerHTML = '<div class="text-xs text-slate-500 text-center py-6">Chưa có clip nào — thêm clip ở tab Cấu hình Game trước.</div>';
+    return;
+  }
+  const names = screenConfig?.videoNames || {};
+  const effects = [{ v: '', label: '— Không phát —' }].concat(clips.map(c => {
+    const cn = names[c.key] || {};
+    return { v: c.key, label: (cn.emoji || c.emoji || '🎬') + ' ' + (cn.label || c.label || c.key) };
+  }));
+  const gifts = (typeof GIFT_CATALOG !== 'undefined' ? GIFT_CATALOG : []).slice().sort((a, b) => (a.diamonds || 0) - (b.diamonds || 0));
+  const maps = screenConfig?.mappings || [];
+  const curOf = (name) => { const m = maps.find(x => x.trigger === 'gift' && x.giftName === name && x.action === 'play_video'); return m ? (m.videoKey || '') : ''; };
+  const rows = gifts.map((g, idx) => {
+    const cur = curOf(g.name);
+    const opts = effects.map(e => `<option value="${e.v}" ${e.v === cur ? 'selected' : ''}>${e.label}</option>`).join('');
+    const active = cur ? 'border-pink-500/50' : 'border-slate-800/90';
+    return `
+      <div class="flex items-center justify-between gap-3 p-2.5 rounded-xl bg-slate-950/80 border ${active} transition-all">
+        <div class="flex items-center gap-2.5 min-w-0">
+          <span class="w-9 h-9 rounded-lg bg-slate-900 shrink-0 flex items-center justify-center text-xl">${g.emoji || '🎁'}</span>
+          <div class="min-w-0"><div class="text-xs font-bold text-slate-100 truncate">${g.name}</div><div class="text-[10px] font-semibold text-amber-300/90">💎 ${g.diamonds || 1}</div></div>
+        </div>
+        <select data-idx="${idx}" class="video-gift-clip shrink-0 text-xs font-semibold bg-slate-900 border border-slate-700 text-white rounded-lg px-2.5 py-2 focus:outline-none focus:border-pink-500 cursor-pointer">${opts}</select>
+      </div>`;
+  }).join('');
+  container.innerHTML = `
+    <div class="mb-3 text-xs text-slate-400">Chọn <b class="text-slate-200">clip sẽ phát</b> khi tặng mỗi món quà — tự lưu ngay.</div>
+    <div class="grid sm:grid-cols-2 gap-2.5">${rows}</div>`;
+  container.querySelectorAll('.video-gift-clip').forEach(sel => sel.addEventListener('change', () => { const g = gifts[+sel.dataset.idx]; if (g) setVideoGiftClip(g.name, sel.value); }));
+}
+
 function renderRulesList() {
   const container = document.getElementById('rules-list-container');
   if (!container) return;
 
   const gType = screenData?.gameType;
   renderRulesAddButtons(gType);
+
+  // Live Bar: dùng bảng quà bấm-1-nút thay cho danh sách luật khó dùng
+  if (gType === 'live_bar') { renderLiveBarGiftTable(container); return; }
+
+  // Video React: bảng quà -> clip
+  if (gType === 'video_react') {
+    const ab = document.getElementById('rules-add-buttons-container');
+    if (ab) ab.innerHTML = '<span class="text-xs font-bold uppercase tracking-wider text-pink-300">🎬 Bảng quà → clip</span><span class="text-xs text-slate-400">Chọn clip phát theo từng món quà ở bảng bên dưới. Tự lưu ngay.</span>';
+    renderVideoReactGiftTable(container);
+    return;
+  }
+
+  // Đi chùa: bảng quà -> nghi lễ (bình luận gõ mõ/xin xăm... đã tự hoạt động)
+  if (gType === 'di_chua') {
+    const ab = document.getElementById('rules-add-buttons-container');
+    if (ab) ab.innerHTML = '<span class="text-xs font-bold uppercase tracking-wider text-amber-300">🎁 Bảng quà → nghi lễ</span><span class="text-xs text-slate-400">Bình luận (gõ mõ, xin xăm, thỉnh chuông, lạy Phật…) đã TỰ hoạt động trong chánh điện.</span>';
+    const DICHUA_GIFT_EFFECTS = [
+      { v: '',               label: '🙏 Chỉ xướng tên hồi hướng (mặc định)' },
+      { v: 'ritual_fortune', label: '📜 + Rút thẻ xăm an lạc' },
+      { v: 'ritual_mo',      label: '🪵 + Gõ mõ tụng kinh' },
+      { v: 'ritual_bell',    label: '🔔 + Thỉnh chuông' },
+      { v: 'ritual_incense', label: '🪷 + Thắp hương' },
+      { v: 'ritual_bow',     label: '🙇 + Quỳ lạy Phật' },
+    ];
+    renderGameGiftTable(container, DICHUA_GIFT_EFFECTS, 'Mọi quà vẫn <b class="text-slate-200">xướng tên hồi hướng + cộng công đức</b>. Chọn thêm nghi lễ cho từng món quà (nếu muốn) — tự lưu ngay.');
+    return;
+  }
+
+  // Các game khác có bảng quà (đội/bình...): dùng chung bảng quà bấm-1-nút
+  const giftEffects = giftEffectsFor(gType);
+  if (giftEffects) {
+    const ab = document.getElementById('rules-add-buttons-container');
+    if (ab) ab.innerHTML = '<span class="text-xs font-bold uppercase tracking-wider text-pink-300">🎁 Bảng quà → hiệu ứng</span><span class="text-xs text-slate-400">Chọn hiệu ứng cho từng món quà ở bảng bên dưới. Tự lưu ngay.</span>';
+    renderGameGiftTable(container, giftEffects);
+    return;
+  }
 
   const rules = (screenConfig?.mappings && screenConfig.mappings.length > 0) ? screenConfig.mappings : (screenConfig?.rules || []);
   if (rules.length === 0) {

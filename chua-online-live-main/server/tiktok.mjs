@@ -22,6 +22,20 @@ export class TikTokLink {
     Object.assign(this, o);
     this.conn = null; this.gen = 0; this.retry = 0; this.retryTimer = null;
     this.state = { status: 'idle', uniqueId: '', error: '', roomId: '' };
+    // [DEBUG ĐO EVENT THÔ] đếm mọi sự kiện nhận trực tiếp từ TikTok (trước khi engine throttle).
+    // So số này với hiệu ứng hiển thị để biết đang mất ở đường truyền hay bị throttle.
+    // Bật/tắt bằng biến môi trường: DEBUG_RAW=0 để tắt hẳn.
+    this.raw = { chat: 0, gift: 0, like: 0, follow: 0, share: 0, member: 0 };
+    if (process.env.DEBUG_RAW !== '0') {
+      this._rawTimer = setInterval(() => {
+        const r = this.raw;
+        if (r.chat || r.gift || r.like || r.follow || r.share || r.member) {
+          this.log(`📊 [THÔ 15s] chat=${r.chat} gift=${r.gift} like=${r.like} follow=${r.follow} share=${r.share} join=${r.member}`);
+          this.raw = { chat: 0, gift: 0, like: 0, follow: 0, share: 0, member: 0 };
+        }
+      }, 15000);
+      if (this._rawTimer.unref) this._rawTimer.unref();
+    }
   }
 
   set(st) { this.state = { ...this.state, ...st }; this.onState(this.state); }
@@ -48,16 +62,19 @@ export class TikTokLink {
       });
       const T = this.temple;
       const live = fn => (...a) => { if (gen === this.gen) { try { fn(...a); } catch (e) { this.log('Lỗi xử lý sự kiện: ' + e.message); } } };
-      conn.on(WebcastEvent.CHAT, live(d => { const u = who(d.user); if (u.id) T.onChat(u, d.content ?? d.comment ?? ''); }));
-      conn.on(WebcastEvent.LIKE, live(d => { const u = who(d.user); if (u.id) T.onLike(u, d.count ?? d.likeCount ?? 1); }));
-      conn.on(WebcastEvent.FOLLOW, live(d => { const u = who(d.user); if (u.id) T.onFollow(u); }));
-      conn.on(WebcastEvent.SHARE, live(d => { const u = who(d.user); if (u.id) T.onShare(u); }));
-      conn.on(WebcastEvent.MEMBER, live(d => { const u = who(d.user); if (u.id) T.onJoin(u); }));
+      conn.on(WebcastEvent.CHAT, live(d => { this.raw.chat++; const u = who(d.user); if (u.id) T.onChat(u, d.content ?? d.comment ?? ''); }));
+      conn.on(WebcastEvent.LIKE, live(d => { this.raw.like += (d.count ?? d.likeCount ?? 1); const u = who(d.user); if (u.id) T.onLike(u, d.count ?? d.likeCount ?? 1); }));
+      conn.on(WebcastEvent.FOLLOW, live(d => { this.raw.follow++; const u = who(d.user); if (u.id) T.onFollow(u); }));
+      conn.on(WebcastEvent.SHARE, live(d => { this.raw.share++; const u = who(d.user); if (u.id) T.onShare(u); }));
+      conn.on(WebcastEvent.MEMBER, live(d => { this.raw.member++; const u = who(d.user); if (u.id) T.onJoin(u); }));
       conn.on(WebcastEvent.ROOM_USER, live(d => T.onViewerCount(+(d.total ?? d.viewerCount ?? 0))));
       conn.on(WebcastEvent.GIFT, live(d => {
+        this.raw.gift++;
         const u = who(d.user); if (!u.id) return;
         const g = d.gift || {}, x = d.extendedGiftInfo || {}, gd = d.giftDetails || {};
         const type = g.type ?? gd.giftType ?? x.type;
+        if (process.env.DEBUG_RAW !== '0')
+          this.log(`🎁 [THÔ quà] ${u.name}: ${g.name || gd.giftName || x.name || '?'} x${d.repeatCount || 1} (${g.diamondCount ?? gd.diamondCount ?? x.diamond_count ?? 1} xu) streak=${type === 1 ? 'Y' : 'N'} end=${d.repeatEnd ? 'Y' : 'N'}`);
         T.onGift({
           userId: u.id, name: u.name, avatar: u.avatar,
           giftId: String(d.giftId || g.id || gd.id || ''), giftName: g.name || gd.giftName || x.name || 'lễ vật',

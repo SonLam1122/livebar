@@ -99,3 +99,66 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden;font-family:var(-
 #unmute{position:absolute;z-index:9;left:50%;top:1540px;transform:translateX(-50%);font:600 36px var(--body);padding:22px 44px;border-radius:24px;border:3px solid var(--gold2);background:var(--red);color:#fff4dc;cursor:pointer}
 #conn{position:absolute;z-index:4;right:16px;bottom:12px;font-size:20px;color:var(--muted);opacity:.6}
 @media (prefers-reduced-motion:reduce){.banner,#gift,#fortune{transition:none}.lantern{animation-duration:1ms}}
+
+/* =========================================================================
+   NÂNG CẤP GIAO DIỆN — tông vàng ấm chánh điện (giữ nguyên bố cục)
+   ========================================================================= */
+:root{
+  --gold:#ecc06a; --gold2:#ffe6a8; --line:rgba(236,192,106,.62);
+  --panel:rgba(34,16,9,.80);
+}
+
+/* Ánh sáng chánh điện: tia sáng vàng từ trên + hào quang giữa + tối góc (vignette).
+   Nằm trên canvas (z1) nhưng dưới mọi UI (z3) nên chữ vẫn sắc nét. */
+#stage::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    radial-gradient(130% 55% at 50% -6%, rgba(255,214,140,.20), rgba(255,214,140,0) 60%),
+    radial-gradient(42% 30% at 50% 44%, rgba(255,226,170,.16), rgba(255,226,170,0) 70%);
+  mix-blend-mode:screen;animation:hallGlow 7s ease-in-out infinite}
+#stage::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  box-shadow:inset 0 0 260px 70px rgba(0,0,0,.5), inset 0 -120px 160px rgba(0,0,0,.4)}
+@keyframes hallGlow{0%,100%{opacity:.85}50%{opacity:1}}
+
+/* Panel: thêm blur nhẹ + viền vàng đôi + đổ bóng sâu cho nổi khối */
+.card,#merit,#guide,.pill,#goal,.banner{backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.card,#merit,#guide{
+  box-shadow:0 12px 34px rgba(0,0,0,.5), 0 0 0 1px rgba(255,228,170,.14) inset, 0 0 30px rgba(236,192,106,.12) inset}
+.pill{box-shadow:0 6px 18px rgba(0,0,0,.4), 0 0 0 1px rgba(255,228,170,.12) inset}
+
+/* Biển hiệu: hào quang thở nhẹ */
+#plaque{animation:plaqueGlow 5.5s ease-in-out infinite}
+@keyframes plaqueGlow{
+  0%,100%{box-shadow:0 0 0 6px rgba(0,0,0,.35), 0 0 44px rgba(236,192,106,.22) inset}
+  50%{box-shadow:0 0 0 6px rgba(0,0,0,.35), 0 0 72px rgba(255,214,130,.42) inset, 0 0 42px rgba(236,192,106,.3)}}
+#plaque::before,#plaque::after{animation:floret 6s ease-in-out infinite}
+@keyframes floret{0%,100%{transform:translateY(-50%) rotate(0);opacity:.9}50%{transform:translateY(-50%) rotate(14deg);opacity:1}}
+
+/* Tiêu đề: chữ ánh kim chạy nhẹ */
+#title{
+  background:linear-gradient(100deg,#ffd98a 0%,#fff6d8 28%,#eac164 50%,#fff6d8 72%,#ffd98a 100%);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;
+  color:transparent;-webkit-text-fill-color:transparent;text-shadow:none;
+  filter:drop-shadow(0 2px 0 #3a1406) drop-shadow(0 0 18px rgba(255,200,110,.35));
+  animation:titleSheen 7s linear infinite}
+@keyframes titleSheen{0%{background-position:0 0}100%{background-position:220% 0}}
+
+/* Chấm "đang thiền" thở */
+.dot{animation:breathe 2.6s ease-in-out infinite}
+@keyframes breathe{0%,100%{box-shadow:0 0 10px #46d36b;transform:scale(1)}
+  50%{box-shadow:0 0 20px #46d36b,0 0 34px rgba(70,211,107,.55);transform:scale(1.16)}}
+
+/* Thanh công đức lấp lánh */
+#goalFill{background:linear-gradient(90deg,#8f440f,#e2b04f,#ffe9bd,#e2b04f,#8f440f);
+  background-size:240% 100%;animation:goalSheen 3.4s linear infinite}
+@keyframes goalSheen{to{background-position:-240% 0}}
+
+/* Tiêu đề bảng công đức: gạch chân vàng mảnh */
+#merit h3{padding-bottom:8px;background:linear-gradient(90deg,transparent,var(--line),transparent) bottom/80% 2px no-repeat}
+
+/* Banner quà: viền vàng phát sáng nhịp nhàng khi hiện */
+#gift.show{animation:giftRing 1.8s ease-in-out infinite}
+@keyframes giftRing{0%,100%{box-shadow:0 0 50px rgba(255,190,90,.4)}50%{box-shadow:0 0 85px rgba(255,205,120,.7)}}
+
+@media (prefers-reduced-motion:reduce){
+  #stage::before,#plaque,#plaque::before,#plaque::after,#title,.dot,#goalFill,#gift.show{animation:none}
+}

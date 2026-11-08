@@ -36,6 +36,15 @@ let liveStats = {
   totalComments: 0
 };
 
+// Đi chùa: map hành động nghi lễ (từ bảng quà) -> từ khoá bình luận mà temple.onChat hiểu
+const TEMPLE_RITUAL_KEYWORD = {
+  ritual_fortune: 'xin xăm',
+  ritual_mo: 'gõ mõ',
+  ritual_bell: 'thỉnh chuông',
+  ritual_incense: 'thắp hương',
+  ritual_bow: 'lạy Phật',
+};
+
 // Map qua tang de tra cuu ten va kim cuong
 const giftsMap = new Map();
 try {
@@ -136,6 +145,90 @@ function extractTikTokUser(data) {
     avatar: String(avatarUrl),
     avatarUrl: String(avatarUrl)
   };
+}
+
+// --- Dinh tuyen rieng cho man hinh Di Chua (di_chua): su kien phai vao engine
+//     Temple cua chuaBridge, KHONG di qua handleSimulation (vi handleSimulation
+//     khong co nhanh di_chua -> roi vao nhanh Live Bar -> mState.guests.find() loi). ---
+function currentScreenIsTemple(screenId) {
+  const sc = getScreenById(screenId);
+  return !!(sc && sc.gameType === 'di_chua');
+}
+
+function getTempleEngine() {
+  try {
+    return require('./chuaBridge').getTemple();
+  } catch (e) {
+    return null;
+  }
+}
+
+function templeUser(data) {
+  const u = extractTikTokUser(data);
+  const avatar = /^https?:\/\//.test(u.avatarUrl) ? u.avatarUrl : '';
+  return { id: u.username, name: u.nickname, avatar };
+}
+
+// Tra ve true neu da route su kien vao engine Temple (man dang la di_chua).
+function routeToTempleIfNeeded(kind, data, screenId) {
+  if (!currentScreenIsTemple(screenId)) return false;
+  const temple = getTempleEngine();
+  if (!temple) {
+    console.error('[Di Chua] Engine Temple chua san sang, bo qua su kien', kind);
+    return true; // van coi la da xu ly de khong roi xuong handleSimulation gay loi
+  }
+  try {
+    const who = templeUser(data);
+    if (!who.id) return true;
+    switch (kind) {
+      case 'chat':
+        temple.onChat(who, data.content || data.comment || '');
+        break;
+      case 'gift': {
+        const giftId = Number(data.giftId);
+        const known = giftsMap.get(giftId);
+        const giftName = data.giftName || data.extendedGiftInfo?.name || known?.name || 'le vat';
+        const single = Number(data.diamondCount || data.extendedGiftInfo?.diamondCount || known?.diamonds || 1);
+        const type = data.giftType ?? data.gift?.type ?? data.extendedGiftInfo?.type;
+        temple.onGift({
+          userId: who.id, name: who.name, avatar: who.avatar,
+          giftId: String(giftId || giftName), giftName,
+          groupId: String(data.groupId || ''),
+          streakable: type === 1,
+          repeatCount: Number(data.repeatCount || data.comboCount || 1),
+          repeatEnd: !!data.repeatEnd,
+          diamonds: single
+        });
+        // Đi chùa: quà có gắn nghi lễ (bảng quà) -> kích nghi lễ bằng từ khoá (dùng onChat sẵn có)
+        try {
+          const sc = getScreenById(screenId);
+          const rule = (sc && sc.config && Array.isArray(sc.config.mappings) ? sc.config.mappings : [])
+            .find(mm => mm.trigger === 'gift' && mm.giftName === giftName && /^ritual_/.test(mm.action || ''));
+          const kw = rule && TEMPLE_RITUAL_KEYWORD[rule.action];
+          if (kw) temple.onChat(who, kw);
+        } catch (e) {}
+        break;
+      }
+      case 'like':
+        temple.onLike(who, Number(data.likeCount || data.count || 1));
+        break;
+      case 'follow':
+        temple.onFollow(who);
+        break;
+      case 'share':
+        temple.onShare(who);
+        break;
+      case 'member':
+        temple.onJoin(who);
+        break;
+      case 'roomUser':
+        if (data?.viewerCount !== undefined) temple.onViewerCount(Number(data.viewerCount));
+        break;
+    }
+  } catch (e) {
+    console.error('[Di Chua] Loi dua su kien vao Temple:', e.message);
+  }
+  return true;
 }
 
 // Dieu phoi su kien TikTok vao vung nho game va broadcast cho Overlay qua Socket.IO
@@ -265,6 +358,7 @@ async function connectToTikTok(rawInput, screenId, overlayIo) {
 
     // 1. Su kien Binh luan
     connection.on('chat', (data) => {
+      if (routeToTempleIfNeeded('chat', data, currentScreenId)) return;
       const comment = data.content || data.comment || '';
       if (!comment) return;
 
@@ -279,6 +373,7 @@ async function connectToTikTok(rawInput, screenId, overlayIo) {
 
     // 2. Su kien Tang qua
     connection.on('gift', (data) => {
+      if (routeToTempleIfNeeded('gift', data, currentScreenId)) return;
       const giftId = Number(data.giftId);
       const known = giftsMap.get(giftId);
       const giftName = data.giftName || data.extendedGiftInfo?.name || known?.name || 'Hoa Hong';
@@ -298,6 +393,7 @@ async function connectToTikTok(rawInput, screenId, overlayIo) {
 
     // 3. Su kien Tha tim
     connection.on('like', (data) => {
+      if (routeToTempleIfNeeded('like', data, currentScreenId)) return;
       const count = Number(data.count || data.likeCount || 1);
       injectTikTokEvent({
         screenId: currentScreenId,
@@ -309,6 +405,7 @@ async function connectToTikTok(rawInput, screenId, overlayIo) {
 
     // 4. Su kien Nguoi xem vao phong
     connection.on('member', (data) => {
+      if (routeToTempleIfNeeded('member', data, currentScreenId)) return;
       injectTikTokEvent({
         screenId: currentScreenId,
         type: 'join',
@@ -318,6 +415,7 @@ async function connectToTikTok(rawInput, screenId, overlayIo) {
 
     // 5. Su kien Chia se
     connection.on('share', (data) => {
+      if (routeToTempleIfNeeded('share', data, currentScreenId)) return;
       injectTikTokEvent({
         screenId: currentScreenId,
         type: 'share',
@@ -327,6 +425,7 @@ async function connectToTikTok(rawInput, screenId, overlayIo) {
 
     // 6. Su kien Theo doi
     connection.on('follow', (data) => {
+      if (routeToTempleIfNeeded('follow', data, currentScreenId)) return;
       injectTikTokEvent({
         screenId: currentScreenId,
         type: 'follow',
@@ -336,6 +435,7 @@ async function connectToTikTok(rawInput, screenId, overlayIo) {
 
     // 7. Cap nhat so luong mat xem
     connection.on('roomUser', (data) => {
+      if (routeToTempleIfNeeded('roomUser', data, currentScreenId)) return;
       if (data?.viewerCount !== undefined) {
         liveStats.viewerCount = Number(data.viewerCount);
       }
