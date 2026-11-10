@@ -12,6 +12,9 @@ services:
       # Cong lang nghe cua Node.js server
       - PORT=3000
       - NODE_ENV=production
+    # Nap SIGN_API_KEY (Euler Stream) tu file .env tren VPS - bat buoc de ket noi TikTok that
+    env_file:
+      - .env
     volumes:
       # Dong bo du lieu cau hinh man hinh giua host va container
       - ./screens_data.json:/app/screens_data.json

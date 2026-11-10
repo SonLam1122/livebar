@@ -6,6 +6,21 @@ let screensList = [];
 let screenData = null;
 let screenConfig = null;
 let currentTab = 'overview';
+
+// Nội dung bảng hướng dẫn mặc định (khớp overlay) — hiện sẵn trong ô để người dùng sửa
+const DICHUA_DEFAULT_GUIDE = [
+  '💬 **Bình luận** để vào chánh điện',
+  'Gõ **xin xăm** rút thẻ an lạc',
+  '**gõ mõ · thỉnh chuông · thắp hương**',
+  'Gõ **cầu …** gửi lời nguyện',
+  '🎁 Quà được **xướng tên hồi hướng**',
+  '---',
+  '🚶 **sang trái · sang phải · lên · xuống** đổi chỗ',
+  'Gõ **kinh hành** đi một vòng',
+  'Gõ **lên lạy Phật** lên trước bàn thờ',
+  'Gõ **nam · nữ · sư · ni · bà** đổi hình',
+  '✨ Top 3 công đức ngồi **bồ đoàn vàng**',
+].join('\n');
 let currentUser = { ...DEMO_USERS[0] };
 
 async function loadScreensData() {
@@ -421,6 +436,10 @@ function populateAllConfigInputs() {
 
   // Populate Chua Online Config Section
   const tSet = screenConfig.templeSettings || {};
+  const tn = Array.isArray(tSet.teacherNames) ? tSet.teacherNames : ['Thầy Minh Đạo', 'Sư Trụ Trì', 'Thầy Tâm Từ'];
+  setVal('cfg-dichua-teacher1', tn[0] || 'Thầy Minh Đạo');
+  setVal('cfg-dichua-teacher2', tn[1] || 'Sư Trụ Trì');
+  setVal('cfg-dichua-teacher3', tn[2] || 'Thầy Tâm Từ');
   setVal('cfg-dichua-title', tSet.title || screenConfig.title || 'Chánh Điện An Lạc');
   setVal('cfg-dichua-subtitle', tSet.subtitle || screenConfig.subtitle || 'Nam Mô A Di Đà Phật');
   const dChuaLunar = document.getElementById('cfg-dichua-lunar');
@@ -451,6 +470,26 @@ function populateAllConfigInputs() {
   const dChuaWish = document.getElementById('cfg-dichua-readgiftwish');
   if (dChuaWish) dChuaWish.checked = tSet.readGiftWish !== false;
   setVal('cfg-dichua-extrawords', tSet.extraBadWords || '');
+
+  // Các cài đặt mới (trước ở /chua/control.html): thời gian, đọc gì, giọng quẻ
+  const dChuaReqGift = document.getElementById('cfg-dichua-requiregift');
+  if (dChuaReqGift) dChuaReqGift.checked = tSet.requireGiftToJoin === true;
+  setVal('cfg-dichua-nametagmode', tSet.nameTagMode || 'auto');
+  setVal('cfg-dichua-nametagtopn', tSet.nameTagTopN != null ? tSet.nameTagTopN : 6);
+  setVal('cfg-dichua-walkspeed', tSet.walkSpeed || 100);
+  const dChuaRate = document.getElementById('cfg-dichua-rate');
+  if (dChuaRate) { dChuaRate.value = (tSet.rate != null ? tSet.rate : -20); const rl = document.getElementById('label-dichua-rate'); if (rl) rl.textContent = dChuaRate.value + '%'; }
+  const dChuaGap = document.getElementById('cfg-dichua-readgap');
+  if (dChuaGap) { dChuaGap.value = (tSet.readGapSec != null ? tSet.readGapSec : 0.3); const gl = document.getElementById('label-dichua-readgap'); if (gl) gl.textContent = dChuaGap.value + 's'; }
+  const dChuaShowGuide = document.getElementById('cfg-dichua-showguide');
+  if (dChuaShowGuide) dChuaShowGuide.checked = tSet.showGuide !== false;
+  setVal('cfg-dichua-guide', tSet.guideText || DICHUA_DEFAULT_GUIDE);
+  setVal('cfg-dichua-fortunehold', tSet.fortuneHoldSec || 24);
+  setVal('cfg-dichua-fortunevoice', tSet.fortuneVoice || '');
+  const dChuaRF = document.getElementById('cfg-dichua-readfortune');
+  if (dChuaRF) dChuaRF.checked = tSet.readFortune !== false;
+  const dChuaRC = document.getElementById('cfg-dichua-readchant');
+  if (dChuaRC) dChuaRC.checked = tSet.readChant !== false;
 
   // Populate Theme, Text & Widget Inputs
   const theme = screenConfig.theme || {};
@@ -807,6 +846,11 @@ function syncFormToConfig() {
     const tSet = screenConfig.templeSettings;
     tSet.title = document.getElementById('cfg-dichua-title')?.value || 'Chánh Điện An Lạc';
     screenConfig.title = tSet.title;
+    tSet.teacherNames = [
+      document.getElementById('cfg-dichua-teacher1')?.value || 'Thầy Minh Đạo',
+      document.getElementById('cfg-dichua-teacher2')?.value || 'Sư Trụ Trì',
+      document.getElementById('cfg-dichua-teacher3')?.value || 'Thầy Tâm Từ',
+    ];
     tSet.subtitle = document.getElementById('cfg-dichua-subtitle')?.value || 'Nam Mô A Di Đà Phật';
     screenConfig.subtitle = tSet.subtitle;
     tSet.lunar = document.getElementById('cfg-dichua-lunar')?.checked !== false;
@@ -828,6 +872,22 @@ function syncFormToConfig() {
     tSet.readGifts = document.getElementById('cfg-dichua-readgifts')?.checked !== false;
     tSet.readGiftWish = document.getElementById('cfg-dichua-readgiftwish')?.checked !== false;
     tSet.extraBadWords = document.getElementById('cfg-dichua-extrawords')?.value || '';
+
+    tSet.requireGiftToJoin = document.getElementById('cfg-dichua-requiregift')?.checked === true;
+    tSet.nameTagMode = document.getElementById('cfg-dichua-nametagmode')?.value || 'auto';
+    tSet.nameTagTopN = Number(document.getElementById('cfg-dichua-nametagtopn')?.value);
+    if (!Number.isFinite(tSet.nameTagTopN)) tSet.nameTagTopN = 6;
+    tSet.walkSpeed = Number(document.getElementById('cfg-dichua-walkspeed')?.value) || 100;
+    tSet.rate = Number(document.getElementById('cfg-dichua-rate')?.value);
+    if (!Number.isFinite(tSet.rate)) tSet.rate = -20;
+    tSet.readGapSec = Number(document.getElementById('cfg-dichua-readgap')?.value);
+    if (!Number.isFinite(tSet.readGapSec)) tSet.readGapSec = 0.3;
+    tSet.showGuide = document.getElementById('cfg-dichua-showguide')?.checked !== false;
+    tSet.guideText = document.getElementById('cfg-dichua-guide')?.value || '';
+    tSet.fortuneHoldSec = Number(document.getElementById('cfg-dichua-fortunehold')?.value) || 24;
+    tSet.fortuneVoice = document.getElementById('cfg-dichua-fortunevoice')?.value || '';
+    tSet.readFortune = document.getElementById('cfg-dichua-readfortune')?.checked !== false;
+    tSet.readChant = document.getElementById('cfg-dichua-readchant')?.checked !== false;
   }
 
   // Theme Sync
@@ -1006,6 +1066,18 @@ function setupThemeListeners() {
     scaleSlider.addEventListener('input', () => {
       scaleSpan.textContent = `${Number(scaleSlider.value).toFixed(2)}×`;
     });
+  }
+
+  const rateSlider = document.getElementById('cfg-dichua-rate');
+  const rateSpan = document.getElementById('label-dichua-rate');
+  if (rateSlider && rateSpan) {
+    rateSlider.addEventListener('input', () => { rateSpan.textContent = `${rateSlider.value}%`; });
+  }
+
+  const gapSlider = document.getElementById('cfg-dichua-readgap');
+  const gapSpan = document.getElementById('label-dichua-readgap');
+  if (gapSlider && gapSpan) {
+    gapSlider.addEventListener('input', () => { gapSpan.textContent = `${gapSlider.value}s`; });
   }
 
   const moSlider = document.getElementById('cfg-dichua-mobpm');

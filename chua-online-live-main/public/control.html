@@ -95,9 +95,12 @@ code{background:#0f0805;border:1px solid var(--line);border-radius:6px;padding:1
       <label>Tên chánh điện<input data-k="title"></label>
       <label>Dòng phụ<input data-k="subtitle"></label>
       <label>Giọng đọc<select data-k="voice"><optgroup label="VieNeu Turbo (máy có card NVIDIA)"><option value="vieneu:Thiền Tâm Đức">Thiền Tâm Đức (nam, trầm)</option><option value="vieneu:Hải Đăng">Hải Đăng (nam)</option><option value="vieneu:Thiện Minh">Thiện Minh (nam)</option><option value="vieneu:Minh Đức">Minh Đức (nam, Bắc)</option><option value="vieneu:Quang Sơn">Quang Sơn (nam, Trung)</option><option value="vieneu:Ngọc Huyền">Ngọc Huyền (nữ)</option><option value="vieneu:Mai Anh">Mai Anh (nữ)</option><option value="vieneu:Thùy Dung">Thùy Dung (nữ, Nam)</option><option value="vieneu:Ngọc Trân">Ngọc Trân (nữ, Trung)</option><option value="vieneu:Trúc Ly">Trúc Ly (nữ)</option></optgroup><optgroup label="VieNeu Nano (máy không card rời; Mai Anh, Trúc Ly cũng dùng được)"><option value="vieneu:Minh Quân">Minh Quân</option><option value="vieneu:Hữu Quân">Hữu Quân</option><option value="vieneu:Mạnh Dũng">Mạnh Dũng</option><option value="vieneu:Đức Trí">Đức Trí</option><option value="vieneu:Anh Khôi">Anh Khôi</option><option value="vieneu:Adam">Adam</option><option value="vieneu:Ái Hân">Ái Hân</option><option value="vieneu:Mỹ Duyên">Mỹ Duyên</option><option value="vieneu:Xuân Tiên">Xuân Tiên</option></optgroup><optgroup label="Edge (qua Internet)"><option value="vi-VN-NamMinhNeural">Nam Minh (nam)</option><option value="vi-VN-HoaiMyNeural">Hoài My (nữ)</option></optgroup></select></label>
+      <label>Giọng đọc thẻ an lạc (quẻ) riêng<select data-k="fortuneVoice"><option value="">— Dùng giọng chính —</option><optgroup label="VieNeu Turbo (máy có card NVIDIA)"><option value="vieneu:Thiền Tâm Đức">Thiền Tâm Đức (nam, trầm)</option><option value="vieneu:Hải Đăng">Hải Đăng (nam)</option><option value="vieneu:Ngọc Huyền">Ngọc Huyền (nữ)</option><option value="vieneu:Mai Anh">Mai Anh (nữ)</option><option value="vieneu:Trúc Ly">Trúc Ly (nữ)</option></optgroup><optgroup label="Edge (qua Internet)"><option value="vi-VN-NamMinhNeural">Nam Minh (nam)</option><option value="vi-VN-HoaiMyNeural">Hoài My (nữ)</option></optgroup></select></label>
       <label>Âm lượng tổng (%)<input data-k="volume" type="number" min="0" max="100"></label>
       <label>Độ trầm giọng (Hz, chỉ giọng Edge)<input data-k="pitch" type="number"></label>
-      <label>Tốc độ đọc (%, chỉ giọng Edge)<input data-k="rate" type="number"></label>
+      <label>Tốc độ đọc (%, chỉ giọng Edge; số dương = đọc nhanh hơn)<input data-k="rate" type="number"></label>
+      <label>Thẻ an lạc hiển thị tối đa (giây, 10–45)<input data-k="fortuneHoldSec" type="number" min="10" max="45"></label>
+      <label>Tốc độ di chuyển nhân vật (%, 40–300)<input data-k="walkSpeed" type="number" min="40" max="300"></label>
       <label class="check"><input type="checkbox" data-k="music"> Nhạc nền</label>
       <label class="check"><input type="checkbox" data-k="mo"> Mõ nền</label>
       <label>Nhịp mõ (BPM)<input data-k="moBpm" type="number" min="20" max="120"></label>
@@ -107,6 +110,8 @@ code{background:#0f0805;border:1px solid var(--line);border-radius:6px;padding:1
       <label class="check"><input type="checkbox" data-k="joinOnEnter"> Vào phòng là được ngồi</label>
       <label class="check"><input type="checkbox" data-k="readGifts"> Đọc tên người tặng quà</label>
       <label class="check"><input type="checkbox" data-k="readGiftWish"> Đọc kèm lời nguyện gần nhất</label>
+      <label class="check"><input type="checkbox" data-k="readFortune"> Đọc thẻ an lạc (quẻ) — tắt thì vẫn hiện thẻ nhưng không đọc</label>
+      <label class="check"><input type="checkbox" data-k="readChant"> Đọc/tụng câu kinh</label>
       <label class="check"><input type="checkbox" data-k="thankFollow"> Cảm ơn người theo dõi</label>
       <label>Rút thẻ an lạc<select data-k="fortuneMode"><option value="all">Bình luận “xin xăm” hoặc tặng quà</option><option value="gift">Chỉ khi tặng quà</option><option value="off">Tắt</option></select></label>
       <label>Quà tối thiểu để rút thẻ (xu)<input data-k="fortuneMinCoins" type="number" min="1"></label>

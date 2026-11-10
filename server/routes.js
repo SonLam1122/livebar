@@ -1,7 +1,7 @@
 const { getScreens, getScreenById, updateScreenConfig } = require('./screens');
 const { getMatchState, resetMatchState, resetAllMatchStates } = require('./matchState');
 const { handleSimulation } = require('./simulator');
-const { connectToTikTok, disconnectFromTikTok, getTikTokStatus, injectTikTokEvent } = require('./tiktokConnector');
+const { connectToTikTok, disconnectFromTikTok, getTikTokStatus, injectTikTokEvent, routeSimulateToTemple, resetSimulateTemple } = require('./tiktokConnector');
 
 function handleApiRoutes(req, res, pathname, overlayIo) {
   // CORS Preflight
@@ -101,6 +101,12 @@ function handleApiRoutes(req, res, pathname, overlayIo) {
 
         // Reset single match state
         if (payload.reset) {
+          // Man Di Chua: don chanh dien thay vi reset match state cua Live Bar
+          if (resetSimulateTemple(screenId)) {
+            res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+            res.end(JSON.stringify({ success: true, temple: true, message: 'Đã dọn chánh điện!' }));
+            return;
+          }
           const cleanState = resetMatchState(screenId);
           if (overlayIo) {
             overlayIo.emit('match:state', cleanState);
@@ -108,6 +114,14 @@ function handleApiRoutes(req, res, pathname, overlayIo) {
           }
           res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
           res.end(JSON.stringify({ success: true, message: 'Đã dọn sạch dữ liệu ván đấu về 0!', state: cleanState }));
+          return;
+        }
+
+        // Man Di Chua: dua su kien phong thu vao engine Temple (KHONG qua handleSimulation,
+        // vi handleSimulation khong co nhanh di_chua -> se roi vao Live Bar gay loi).
+        if (routeSimulateToTemple(payload, screenId)) {
+          res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+          res.end(JSON.stringify({ success: true, temple: true }));
           return;
         }
 

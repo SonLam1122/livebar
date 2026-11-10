@@ -1,11 +1,13 @@
 // Seat geometry, shared by the server (who sits where, moves) and the overlay (where to draw).
 // Floor trapezoid in the painting: back row just below the altar, front row near the bottom.
 // Layout adapted from kentjuno/chanh-dien-online (MIT, © 2026 Kent Juno).
-export const FLOOR = { yTop: 1215, yBot: 1845, halfTop: 290, halfBot: 430 };
+// Hàng ghế bắt đầu NGAY DƯỚI 3 sư (sư là hàng cao nhất, trên nữa không có ghế) tới gần camera.
+export const FLOOR = { yTop: 1345, yBot: 1890, halfTop: 356, halfBot: 492 };
 export const GRID = { 24: [6, 4], 36: [6, 6], 64: [8, 8], 100: [10, 10] };
 export const CAPS = [24, 36, 64, 100];
-// golden cushions in front of the altar for the top donors
-export const VIP_SPOTS = [{ x: 540, y: 1196 }, { x: 405, y: 1188 }, { x: 675, y: 1188 }];
+// golden cushions: hàng danh dự cho top donor, ngay dưới 3 sư (không đặt trên sư)
+// Hàng danh dự top donor — ĐẶT LỆCH 2 BÊN, CHỪA GIỮA làm lối đi (không có bồ đoàn giữa đường)
+export const VIP_SPOTS = [{ x: 405, y: 1360 }, { x: 675, y: 1360 }, { x: 290, y: 1374 }];
 // where people stand to bow at the altar (one spot each, up to 6 at a time)
 export const ALTAR_SPOTS = [470, 610, 400, 680, 330, 750].map(x => ({ x, y: 1206 }));
 
@@ -26,7 +28,8 @@ export function seatOrder(cap) {
       seats.push({ x: 540 + u * half, y, scale, r, k, rows, cols, gap });
     }
   }
-  seats.sort((a, b) => (b.r - a.r) || (Math.abs(a.x - 540) - Math.abs(b.x - 540)));
+  // Ai vào trước ngồi TRƯỚC (hàng r=0 sát bàn thờ), từ giữa ra, rồi lùi dần về sau.
+  seats.sort((a, b) => (a.r - b.r) || (Math.abs(a.x - 540) - Math.abs(b.x - 540)));
   cache.set(cap, seats);
   return seats;
 }

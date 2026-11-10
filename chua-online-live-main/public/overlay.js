@@ -31,11 +31,13 @@ let cap = 24, seats = seatOrder(24), vipIds = [];
 const visitors = new Map();
 function layout(c) { cap = GRID[c] ? c : 24; seats = seatOrder(cap); for (const v of visitors.values()) v.seat = seats[v.slot] || null; }
 function home(v) {
-  const i = vipIds.indexOf(v.id);
-  return i >= 0 ? { x: VIP_SPOTS[i].x, y: VIP_SPOTS[i].y, scale: .3, gap: 200, vip: true } : v.seat;
+  // Xếp theo công đức: ai cũng ngồi trên ghế lưới (server đã đưa người công đức cao lên slot đầu).
+  // Top 3 chỉ ĐỔI KIỂU (bồ đoàn vàng + bảng tên VIP), KHÔNG dời ra chỗ nổi riêng -> hết chồng chỗ.
+  if (!v.seat) return v.seat;
+  return vipIds.includes(v.id) ? { ...v.seat, vip: true } : v.seat;
 }
 const sc = v => home(v)?.scale || .4;
-const TEACHERS = [{ name: 'Thầy Minh Đạo', skin: 'monk', x: 300, y: 1085, s: .36 }, { name: 'Sư Trụ Trì', skin: 'monk', x: 540, y: 1100, s: .4, master: true }, { name: 'Thầy Tâm Từ', skin: 'monk', x: 780, y: 1085, s: .36 }];
+const TEACHERS = [{ name: 'Thầy Minh Đạo', skin: 'monk', x: 300, y: 1255, s: .36 }, { name: 'Sư Trụ Trì', skin: 'monk', x: 540, y: 1275, s: .4, master: true }, { name: 'Thầy Tâm Từ', skin: 'monk', x: 780, y: 1255, s: .36 }];
 function addVisitor(p, instant) {
   if (visitors.has(p.id)) { Object.assign(visitors.get(p.id), { name: p.name, skin: p.skin, avatar: p.avatar, coins: p.coins }); setSlot(visitors.get(p.id), p.slot); return; }
   const v = { ...p, seat: seats[p.slot] || null, state: 'walk', x: 540, y: 2020, frame: 0, ft: 0, sitT: 0, flip: false, fade: 0, bubble: null, glow: 0, bow: 0,
@@ -53,8 +55,8 @@ const seated = v => v && home(v);
 function setSlot(v, slot) {
   if (!v || v.slot === slot && v.seat === seats[slot]) return;
   v.slot = slot; v.seat = seats[slot] || null;
-  if (vipIds.includes(v.id) || v.state === 'path' || v.state === 'kneel' || v.state === 'stand') return;
-  travel(v, home(v));
+  if (v.state === 'path' || v.state === 'kneel' || v.state === 'stand') return;
+  travel(v, home(v));                              // công đức đổi -> tự đi tới chỗ mới (lên đầu / lùi xuống)
 }
 /** Get from where v is to `to` and sit there: walk if it is up or level, otherwise fade across. */
 function travel(v, to, then = 'sit') {
@@ -161,7 +163,7 @@ function renderCard(m) {
   setTimeout(() => {
     $('fortune').classList.remove('show'); stage.classList.remove('card-open');
     setTimeout(() => { cardBusy = false; pumpCards(); }, 700);
-  }, Math.max(12_000, m.duration - 600));
+  }, Math.max(4_000, m.duration - 600));
 }
 let spot = null;
 
@@ -202,19 +204,32 @@ let moTimer = null; function scheduleMo() { clearInterval(moTimer); if (AC && se
 let lastLikeMo = 0;
 
 // voice lines play one after another; `speak` = server could not reach Edge TTS → browser voice instead
-const ttsQ = []; let ttsPlaying = false;
+const ttsQ = []; let ttsPlaying = false, curAudio = null;
 function queueTTS(m) {
   if (!AUDIO || !AC) { waitingKey.get(m.key)?.(); return; }       // silent preview / sound not enabled yet
   if (ttsQ.length >= 12) ttsQ.shift();
   ttsQ.push(m); playTTS();
 }
+// Dọn dữ liệu / buổi mới: dừng NGAY mọi thứ đang đọc & đang hiện
+function hush() {
+  try { ttsQ.length = 0; } catch (e) {} ttsPlaying = false;
+  try { if (curAudio) { curAudio.pause(); curAudio.onended = curAudio.onerror = null; curAudio = null; } } catch (e) {}
+  try { if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch (e) {}
+  try { waitingKey.clear(); } catch (e) {}
+  try { cards.length = 0; } catch (e) {} cardBusy = false; spot = null;
+  try { bannerQ.length = 0; } catch (e) {} bannerBusy = false;
+  // ẩn hết banner (quà/tụng kinh/mốc/...) + thẻ quẻ
+  try { document.querySelectorAll('.banner, #fortune').forEach(el => el.classList.remove('show')); } catch (e) {}
+  try { stage.classList.remove('card-open'); } catch (e) {}
+  try { duck(false); } catch (e) {}
+}
 function playTTS() {
   if (ttsPlaying || !ttsQ.length || !AC) return; ttsPlaying = true;
   const m = ttsQ.shift();
-  const done = () => { duck(false); ttsPlaying = false; setTimeout(playTTS, 350); };
+  const done = () => { duck(false); ttsPlaying = false; curAudio = null; setTimeout(playTTS, Math.max(0, (settings.readGapSec != null ? settings.readGapSec : 0.3) * 1000)); };
   const start = () => { duck(true); waitingKey.get(m.key)?.(); };
   if (m.url) {
-    const el = new Audio(m.url); const src = AC.createMediaElementSource(el); const g = AC.createGain(); g.gain.value = 1.25; src.connect(g); g.connect(master);
+    const el = new Audio(m.url); curAudio = el; const src = AC.createMediaElementSource(el); const g = AC.createGain(); g.gain.value = 1.25; src.connect(g); g.connect(master);
     el.onplay = start; el.onended = el.onerror = done; el.play().catch(done);
   } else if ('speechSynthesis' in window && speechSynthesis.getVoices().some(v => /^vi/i.test(v.lang))) {
     // only with a real Vietnamese voice installed; an English voice reading Vietnamese sounds broken on stream
@@ -259,17 +274,14 @@ function onMsg(m) {
     case 'settings': Object.assign(settings, m.settings); applySettings(); if (m.cap !== cap) { layout(m.cap); updateCount(); } break;
     case 'join': if (m.cap !== cap) layout(m.cap); addVisitor(m.v, m.v.demo && visitors.size > 8); updateCount(); break;
     case 'leave': removeVisitor(m.id); updateCount(); break;
+    case 'hush': hush(); break;                                     // dọn dữ liệu -> dừng đọc + ẩn thẻ quẻ/banner
     case 'slots': layout(m.cap); for (const [id, slot] of m.slots) setSlot(visitors.get(id), slot); updateCount(); break;
     case 'seat': setSlot(v, m.slot); break;
     case 'walk': if (v) startWalk(v, m.kind, m.spot); break;
     case 'vip': {
+      // chỉ đổi kiểu hiển thị (bồ đoàn vàng + tên VIP); việc dời chỗ do 'slots' (xếp theo công đức) lo
       const was = vipIds; vipIds = m.ids || [];
-      for (const id of new Set([...was, ...vipIds])) {
-        const w = visitors.get(id); if (!w || w.state === 'walk') continue;
-        if (vipIds.includes(id) && !was.includes(id)) { w.glow = 1.5; travel(w, home(w)); }       // walks up to a golden cushion
-        else if (!vipIds.includes(id) && was.includes(id)) travel(w, home(w));                  // back to their own cushion
-        else if (vipIds.indexOf(id) !== was.indexOf(id)) travel(w, home(w));                     // swapped golden cushions
-      }
+      for (const id of vipIds) if (!was.includes(id)) { const w = visitors.get(id); if (w) w.glow = Math.max(w.glow, 1.4); }
       break;
     }
     case 'skin': if (v) { v.skin = m.skin; v.glow = .8; if (v.state !== 'sit') { v.state = 'sit'; v.frame = 7; } } break;
@@ -302,7 +314,22 @@ function applySettings() {
   $('title').textContent = settings.title || 'Chánh Điện An Lạc';
   $('subtitle').textContent = settings.subtitle || 'Nam Mô A Di Đà Phật';
   if (master) master.gain.value = (settings.volume ?? 80) / 100;
+  renderGuide();
   duck(false); scheduleMo(); renderLunar(); renderMerit();
+}
+// Bảng hướng dẫn người xem: tuỳ chỉnh từ dashboard (guideText), '---' = sang trang, **đậm**.
+function renderGuide() {
+  const g = $('guide'); if (!g) return;
+  if (settings.showGuide === false) { g.style.display = 'none'; return; }
+  g.style.display = '';
+  const txt = (settings.guideText || '').trim();
+  if (!txt) return;                                  // trống -> giữ bảng mặc định dựng sẵn
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const fmt = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+  const pages = txt.split(/^\s*---\s*$/m).map(p => p.split('\n').map(l => l.trim()).filter(Boolean)).filter(p => p.length);
+  if (!pages.length) return;
+  g.innerHTML = pages.map((lines, i) => `<div class="page${i === 0 ? ' show' : ''}">${lines.map(l => `<div>${fmt(l)}</div>`).join('')}</div>`).join('');
+  guidePage = 0;
 }
 connect();
 
@@ -311,9 +338,24 @@ const ctx = $('c').getContext('2d');
 function sprite(im, x, y, s, ay = 1) { if (!im?.naturalWidth) return; const w = im.naturalWidth * s, h = im.naturalHeight * s; ctx.drawImage(im, x - w / 2, y - h * ay, w, h); }
 function rr(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
 function tag(text, x, y, s, style, av, maxW) {
-  const fs = Math.max(15, Math.round(30 * s / .4)); ctx.font = `600 ${fs}px "Be Vietnam Pro",system-ui,sans-serif`;
-  const pad = fs * .5; let aw = av ? fs * 1.15 : 0;
-  if (maxW) { if (aw && maxW < fs * 5) { aw = 0; av = null; } let t = text; while (t.length > 2 && ctx.measureText(t).width + pad * 2 + aw > maxW) t = t.slice(0, -1); if (t !== text) text = t.trimEnd() + '…'; }
+  let fs = Math.max(15, Math.round(30 * s / .4));
+  const setFont = () => ctx.font = `600 ${fs}px "Be Vietnam Pro",system-ui,sans-serif`;
+  setFont();
+  let pad = fs * .5, aw = av ? fs * 1.15 : 0;
+  if (maxW) {
+    if (aw && maxW < fs * 5) { aw = 0; av = null; }
+    // Thu NHỎ cỡ chữ cho vừa khoảng trống, thay vì cắt mất tên
+    const need = ctx.measureText(text).width + pad * 2 + aw;
+    if (need > maxW) {
+      const minFs = 11;
+      fs = Math.max(minFs, Math.floor(fs * (maxW / need)));
+      setFont(); pad = fs * .5; aw = av ? fs * 1.15 : 0;
+      // chỉ khi ở cỡ nhỏ nhất vẫn quá dài mới cắt (hiếm gặp)
+      let t = text;
+      while (t.length > 2 && ctx.measureText(t).width + pad * 2 + aw > maxW) t = t.slice(0, -1);
+      if (t !== text) text = t.trimEnd() + '…';
+    }
+  }
   const w = ctx.measureText(text).width + pad * 2 + aw, h = fs * 1.5;
   ctx.fillStyle = style === 'gold' ? 'rgba(70,30,8,.92)' : 'rgba(18,9,5,.72)'; rr(x - w / 2, y - h / 2, w, h, h / 2); ctx.fill();
   ctx.lineWidth = style === 'gold' ? 3 : 1.5; ctx.strokeStyle = style === 'gold' ? '#e2b04f' : 'rgba(226,176,79,.55)'; ctx.stroke();
@@ -330,13 +372,38 @@ function bubble(text, x, y, s) {
 }
 // When the hall is crowded, only the top donors and the newest few get a name tag.
 function labelSet(list) {
+  const mode = settings.nameTagMode || 'auto';
+  if (mode === 'all') return null;                                 // luôn hiện mọi tên
+  const topN = settings.nameTagTopN != null ? settings.nameTagTopN : 6;
+  const keep = new Set();
+  // LUÔN giữ: bảng Công Đức (top merit, cả buổi lẫn trọn đời) + VIP + top N người tặng nhiều xu
+  for (const b of (boards.session || [])) keep.add(b.id);
+  for (const b of (boards.allTime || [])) keep.add(b.id);
+  for (const id of vipIds) keep.add(id);
+  for (const v of list.filter(v => v.coins > 0).sort((a, b) => b.coins - a.coins).slice(0, topN)) keep.add(v.id);
+  if (mode === 'topOnly') return keep;                             // chỉ hiện top + VIP, ẩn người thường
+  // auto: ít người thì hiện hết; đông (>36) mới ẩn bớt người thường (vẫn giữ nhóm trên)
   if (list.length <= 36) return null;
-  const keep = new Set(list.filter(v => v.coins > 0).sort((a, b) => b.coins - a.coins).slice(0, 6).map(v => v.id));
   for (const v of list.slice().sort((a, b) => b.joined - a.joined).slice(0, 5)) keep.add(v.id);
-  for (const v of list) if (v.state !== 'sit' || vipIds.includes(v.id)) keep.add(v.id);     // whoever is moving or on a golden cushion
+  for (const v of list) if (v.state !== 'sit') keep.add(v.id);     // whoever is moving
   return keep;
 }
 let last = performance.now();
+// Vẽ 1 bồ đoàn (ghế thiền) nâu ở (x,y), kích thước theo scale của chỗ ngồi.
+function drawCushion(x, y, scl) {
+  const rx = 132 * scl, ry = 44 * scl;
+  ctx.save();
+  ctx.fillStyle = 'rgba(0,0,0,.26)';
+  ctx.beginPath(); ctx.ellipse(x, y + ry * 0.22, rx * 1.04, ry * 1.02, 0, 0, 6.29); ctx.fill();
+  const g = ctx.createLinearGradient(x, y - ry, x, y + ry);
+  g.addColorStop(0, '#8a5d35'); g.addColorStop(0.55, '#5f3d21'); g.addColorStop(1, '#3a2512');
+  ctx.fillStyle = g;
+  ctx.beginPath(); ctx.ellipse(x, y, rx, ry, 0, 0, 6.29); ctx.fill();
+  ctx.fillStyle = 'rgba(205,155,95,.32)';
+  ctx.beginPath(); ctx.ellipse(x, y - ry * 0.3, rx * 0.8, ry * 0.56, 0, 0, 6.29); ctx.fill();
+  ctx.restore();
+}
+
 function frame(now) {
   requestAnimationFrame(frame); const dt = Math.min((now - last) / 1000, .05); last = now; const t = now / 1000;
   ctx.clearRect(0, 0, 1080, 1920);
@@ -346,10 +413,14 @@ function frame(now) {
   ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = .2 + .08 * Math.sin(t * 1.2) + haloPulse * .5; sprite(A.halo, 540, 560, 2.7 + haloPulse * .35, .5); ctx.restore();
   ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = .05 + .035 * Math.sin(t * 9) * Math.sin(t * 13.3); ctx.fillStyle = '#ffb347'; ctx.fillRect(0, 300, 1080, 800); ctx.restore();
   ctx.save(); ctx.fillStyle = '#efe3cc'; for (let i = 0; i < 16; i++) { const a = (t * .08 + i * .0625) % 1; ctx.globalAlpha = .28 * (1 - a); ctx.beginPath(); ctx.arc(540 + Math.sin(a * 7 + i) * 20 * a, 1000 - a * 280, 4 + a * 15, 0, 6.28); ctx.fill(); } ctx.restore();
-  for (const tc of TEACHERS) {
+  // Bồ đoàn: vẽ ghế dưới mỗi chỗ ngồi (theo sức chứa — tự tăng khi đông) + dưới 3 sư
+  for (const st of (seats && seats.length ? seats : seatOrder(cap))) drawCushion(st.x, st.y, st.scale);
+  for (const tc of TEACHERS) drawCushion(tc.x, tc.y, tc.s * 0.92);
+  TEACHERS.forEach((tc, i) => {
     if (tc.master) { ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = .35 + .1 * Math.sin(t * 1.5); sprite(A.halo, tc.x, tc.y - 120, .9, .5); ctx.restore(); }
-    sprite(A[tc.skin], tc.x, tc.y, tc.s); tag(tc.name, tc.x, tc.y - tc.s * 260 - 22, tc.s, 'gold');
-  }
+    const nm = (settings.teacherNames && settings.teacherNames[i]) || tc.name;    // tên sư thầy tuỳ chỉnh
+    sprite(A[tc.skin], tc.x, tc.y, tc.s); tag(nm, tc.x, tc.y - tc.s * 260 - 22, tc.s, 'gold');
+  });
   // spotlight on whoever is drawing a fortune card
   if (spot && now < spot.until && visitors.has(spot.v.id)) {
     const v = spot.v, s = sc(v);
@@ -357,17 +428,20 @@ function frame(now) {
     const g = ctx.createRadialGradient(v.x, v.y - 120 * s, 10, v.x, v.y - 120 * s, 320 * s); g.addColorStop(0, 'rgba(255,220,140,.9)'); g.addColorStop(1, 'rgba(255,180,80,0)');
     ctx.fillStyle = g; ctx.fillRect(v.x - 340 * s, v.y - 460 * s, 680 * s, 560 * s); ctx.restore();
   } else spot = null;
-  // golden cushions for the top donors
-  VIP_SPOTS.forEach((p, i) => {
-    ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = vipIds[i] ? .55 + .15 * Math.sin(t * 2 + i) : .18;
-    const g = ctx.createRadialGradient(p.x, p.y - 6, 4, p.x, p.y - 6, 70); g.addColorStop(0, 'rgba(255,215,120,.95)'); g.addColorStop(1, 'rgba(255,170,60,0)');
-    ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(p.x, p.y - 6, 70, 22, 0, 0, 6.29); ctx.fill(); ctx.restore();
+  // bồ đoàn vàng cho top công đức — vẽ ngay dưới chỗ họ đang ngồi (top đã ở hàng đầu nhờ xếp theo công đức)
+  vipIds.forEach((id, i) => {
+    const w = visitors.get(id), h = w && home(w);
+    if (!h) return;
+    const s = h.scale || .3, px = h.x, py = h.y + 2;
+    ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = .5 + .15 * Math.sin(t * 2 + i);
+    const g = ctx.createRadialGradient(px, py, 4, px, py, 150 * s); g.addColorStop(0, 'rgba(255,215,120,.95)'); g.addColorStop(1, 'rgba(255,170,60,0)');
+    ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(px, py, 150 * s, 48 * s, 0, 0, 6.29); ctx.fill(); ctx.restore();
   });
   // visitors back to front
   const bubbles = [], list = [...visitors.values()].filter(seated).sort((a, b) => a.y - b.y), labels = labelSet(list);
   for (const v of list) {
     const anim = hasAnim(v.skin), h = home(v), s = h.scale;
-    const depth = (v.y - FLOOR.yTop) / (FLOOR.yBot - FLOOR.yTop), sp = (170 + 190 * Math.max(0, Math.min(1.5, depth))) * dt;
+    const depth = (v.y - FLOOR.yTop) / (FLOOR.yBot - FLOOR.yTop), sp = (170 + 190 * Math.max(0, Math.min(1.5, depth))) * dt * ((settings.walkSpeed || 100) / 100);
     const step = () => { v.ft += dt; if (v.ft > .15) { v.ft = 0; v.frame = (v.frame + 1) % 4; } };
     if (v.state === 'walk') {                                                   // entering: up the centre aisle, then sideways
       const dx = h.x - v.x, dy = h.y - v.y;
@@ -410,8 +484,11 @@ function frame(now) {
     if (anim) { const a = ANIM[v.skin], k = ws * 1.05 * 260 / a.seatH; if (v.flip) ctx.scale(-1, 1); ctx.drawImage(A['anim_' + v.skin], v.frame * a.fw, 0, a.fw, a.fh, -a.fw * k / 2, -a.fh * k + breathe, a.fw * k, a.fh * k); topY = (v.frame >= 6 ? a.seatH : a.fh * .97) * k; }
     else { const sk = v.skin === 'master' ? 'monk' : v.skin; sprite(A[sk] || A.man, 0, breathe, ws * 1.05); topY = 260 * ws; }
     ctx.restore();
-    const ty = v.y - topY - 14 * ws / .4;
-    if (!labels || labels.has(v.id) || v.bubble) tag(v.name, v.x, ty, ws, v.skin === 'master' || v.coins >= 99 ? 'gold' : '', avatar(v.avatar), v.state === 'sit' && !h.vip ? h.gap : 0);
+    // So le bang ten theo cot ghe de ten hang xom khong de len nhau khi ngoi sat
+    const col = (h && h.k != null) ? h.k : Math.round((v.x - 540) / 170);
+    const stagger = v.state === 'sit' && (col & 1) ? 34 * ws / .4 : 0;
+    const ty = v.y - topY - 14 * ws / .4 - stagger;
+    if (!labels || labels.has(v.id) || v.bubble) tag(v.name, v.x, ty, ws, v.skin === 'master' || vipIds.includes(v.id) ? 'gold' : '', avatar(v.avatar), v.state === 'sit' ? h.gap : 0);
     if (v.bubble && now < v.bubble.until) bubbles.push([v.bubble.text, v.x, ty - Math.max(18, 30 * ws / .4), ws]); else v.bubble = null;
   }
   for (const b of bubbles.slice(-8)) bubble(...b);

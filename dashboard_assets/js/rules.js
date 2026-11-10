@@ -516,6 +516,77 @@ function renderVideoReactGiftTable(container) {
   container.querySelectorAll('.video-gift-clip').forEach(sel => sel.addEventListener('change', () => { const g = gifts[+sel.dataset.idx]; if (g) setVideoGiftClip(g.name, sel.value); }));
 }
 
+// ====== ĐI CHÙA: Bảng tương tác (tim/chia sẻ/theo dõi/bình luận → hành động) ======
+const INTERACT_EFFECTS = [
+  { v: '', label: '— Không hiệu ứng —' },
+  { v: 'mo', label: '🪵 Gõ mõ' },
+  { v: 'bell', label: '🔔 Thỉnh chuông' },
+  { v: 'incense', label: '🪷 Thắp hương' },
+  { v: 'bow', label: '🙇 Quỳ lạy' },
+  { v: 'fortune', label: '📜 Rút thẻ xăm' },
+];
+const INTERACT_ROWS = [
+  { kind: 'comment', icon: '💬', name: 'Bình luận chứa từ khoá', extra: 'keyword' },
+  { kind: 'like',    icon: '💖', name: 'Thả tim',               extra: 'minCount' },
+  { kind: 'share',   icon: '🔁', name: 'Chia sẻ Live',          extra: null },
+  { kind: 'follow',  icon: '➕', name: 'Theo dõi kênh',          extra: null },
+];
+function setDichuaInteraction(kind, patch) {
+  if (!screenConfig.templeSettings) screenConfig.templeSettings = {};
+  const ir = screenConfig.templeSettings.interactionRules || (screenConfig.templeSettings.interactionRules = {});
+  ir[kind] = { action: '', merit: 0, read: false, text: '', requireGift: false, ...(ir[kind] || {}), ...patch };
+  saveCurrentConfig();
+}
+function renderDichuaInteractionTable(container) {
+  const ir = (screenConfig && screenConfig.templeSettings && screenConfig.templeSettings.interactionRules) || {};
+  const esc = s => String(s || '').replace(/"/g, '&quot;');
+  const INP = 'bg-slate-900 border border-slate-800 rounded-lg px-2 py-1 text-[11px] text-white focus:outline-none focus:border-amber-500';
+  const opts = sel => INTERACT_EFFECTS.map(e => `<option value="${e.v}"${e.v === (sel || '') ? ' selected' : ''}>${e.label}</option>`).join('');
+  const rows = INTERACT_ROWS.map(row => {
+    const r = ir[row.kind] || {};
+    const extra = row.extra === 'keyword'
+      ? `<input type="text" data-ir-kind="${row.kind}" data-ir-field="keyword" value="${esc(r.keyword)}" placeholder="từ khoá, vd: a di đà" class="${INP} w-40">`
+      : row.extra === 'minCount'
+        ? `<div class="flex items-center gap-1"><span class="text-[11px] text-slate-400">đủ</span><input type="number" min="1" data-ir-kind="${row.kind}" data-ir-field="minCount" value="${r.minCount || 15}" class="${INP} w-16 text-right"><span class="text-[11px] text-slate-400">tim</span></div>`
+        : `<span class="text-[11px] text-slate-600">tức thì</span>`;
+    return `
+      <div class="bg-slate-950 border border-slate-800 rounded-xl p-3 space-y-2">
+        <div class="flex items-center justify-between gap-2">
+          <span class="text-xs font-bold text-slate-200">${row.icon} ${row.name}</span>
+          ${extra}
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <select data-ir-kind="${row.kind}" data-ir-field="action" class="${INP}">${opts(r.action)}</select>
+          <div class="flex items-center gap-1"><span class="text-[11px] text-slate-400 whitespace-nowrap">+ công đức</span><input type="number" min="0" data-ir-kind="${row.kind}" data-ir-field="merit" value="${r.merit || 0}" class="${INP} w-full text-right"></div>
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="flex items-center gap-1.5 text-[11px] text-slate-300 whitespace-nowrap"><input type="checkbox" data-ir-kind="${row.kind}" data-ir-field="read" ${r.read ? 'checked' : ''} class="accent-amber-500"> Đọc câu</label>
+          <input type="text" data-ir-kind="${row.kind}" data-ir-field="text" value="${esc(r.text)}" placeholder="vd: Cảm ơn {name} đã ${row.name.toLowerCase()}" class="${INP} flex-1">
+        </div>
+        <label class="flex items-center gap-1.5 text-[11px] text-amber-300 whitespace-nowrap"><input type="checkbox" data-ir-kind="${row.kind}" data-ir-field="requireGift" ${r.requireGift ? 'checked' : ''} class="accent-amber-500"> 🎁 Chỉ khi đã tặng quà</label>
+      </div>`;
+  }).join('');
+  const wrap = document.createElement('div');
+  wrap.className = 'mt-7 pt-6 border-t border-slate-800';
+  wrap.innerHTML = `
+    <div class="mb-3">
+      <span class="text-xs font-bold uppercase tracking-wider text-sky-300">💬 Bảng tương tác → hành động</span>
+      <p class="text-xs text-slate-400 mt-1">Tùy chỉnh <b class="text-slate-200">bình luận · thả tim · chia sẻ · theo dõi</b>: chọn nghi lễ, cộng công đức, đọc câu riêng (<code class="text-amber-300">{name}</code> = tên thí chủ), đặt ngưỡng. Tự lưu ngay.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">${rows}</div>`;
+  container.appendChild(wrap);
+  wrap.querySelectorAll('[data-ir-kind]').forEach(el => {
+    el.addEventListener('change', () => {
+      const kind = el.getAttribute('data-ir-kind'), field = el.getAttribute('data-ir-field');
+      let val;
+      if (el.type === 'checkbox') val = el.checked;
+      else if (el.type === 'number') val = Number(el.value) || 0;
+      else val = el.value;
+      setDichuaInteraction(kind, { [field]: val });
+    });
+  });
+}
+
 function renderRulesList() {
   const container = document.getElementById('rules-list-container');
   if (!container) return;
@@ -547,6 +618,7 @@ function renderRulesList() {
       { v: 'ritual_bow',     label: '🙇 + Quỳ lạy Phật' },
     ];
     renderGameGiftTable(container, DICHUA_GIFT_EFFECTS, 'Mọi quà vẫn <b class="text-slate-200">xướng tên hồi hướng + cộng công đức</b>. Chọn thêm nghi lễ cho từng món quà (nếu muốn) — tự lưu ngay.');
+    renderDichuaInteractionTable(container);
     return;
   }
 

@@ -448,7 +448,7 @@
       "cameraOrbitSeconds": 26,
       "cameraZoom": 1.55,
       "lightShow": true,
-      "bgmUrl": "https://www.youtube.com/watch?v=pajHsiqQt-E&list=RDpajHsiqQt-E&start_radio=1",
+      "bgmUrl": "blob:https://experiments-amendment-customize-demonstration.trycloudflare.com/f47863b5-b1a2-4281-9550-4aa7f173102f",
       "bgmVolume": 0.45,
       "bgmDuckVolume": 0.12,
       "mappings": [
@@ -528,14 +528,6 @@
           "giftName": "GG",
           "giftId": "",
           "action": "spotlight",
-          "points": 1,
-          "enabled": true
-        },
-        {
-          "trigger": "gift",
-          "giftName": "Rosa",
-          "giftId": "",
-          "action": "jump",
           "points": 1,
           "enabled": true
         },
@@ -654,6 +646,14 @@
         {
           "trigger": "gift",
           "giftName": "Kem",
+          "giftId": "",
+          "action": "spotlight",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Rosa",
           "giftId": "",
           "action": "wing",
           "points": 1,
@@ -3214,7 +3214,7 @@
     "token": "cmtdichua0001_token",
     "config": {
       "gameType": "di_chua",
-      "title": "Chánh Điện An Lạc",
+      "title": "Động Thăng Thiên",
       "subtitle": "Nam Mô A Di Đà Phật",
       "rules": [
         {
@@ -3337,24 +3337,11 @@
         "bgmUrl": "/assets/music/music1.mp3"
       },
       "templeSettings": {
-        "title": "Chánh Điện An Lạc",
-        "subtitle": "Nam Mô A Di Đà Phật",
-        "moBpm": 60,
-        "lunar": true,
-        "seatMode": "auto",
-        "vipMinCoins": 10,
-        "altarOnGiftCoins": 10,
-        "allowMove": true,
-        "mo": true,
-        "autoChant": true,
-        "chantEveryMin": 4,
-        "fortuneMode": "all",
-        "fortuneMinCoins": 5,
-        "fortuneCooldownMin": 10,
-        "voice": "vi-VN-NamMinhNeural",
-        "readGifts": true,
-        "readGiftWish": true,
-        "extraBadWords": ""
+        "teacherNames": [
+          "Thầy Minh Đạo",
+          "Sư Trụ Trì",
+          "Thầy Tâm Từ"
+        ]
       },
       "version": 1,
       "teams": [
@@ -3427,7 +3414,30 @@
       },
       "bgmUrl": "",
       "bgmVolume": 0.5,
-      "bgmDuckVolume": 0.12
+      "bgmDuckVolume": 0.12,
+      "mappings": [
+        {
+          "trigger": "gift",
+          "giftName": "Rosa",
+          "action": "ritual_fortune",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Bánh Donut",
+          "action": "ritual_fortune",
+          "points": 1,
+          "enabled": true
+        },
+        {
+          "trigger": "gift",
+          "giftName": "Mũ Bóng Chày",
+          "action": "ritual_fortune",
+          "points": 1,
+          "enabled": true
+        }
+      ]
     }
   }
 ]

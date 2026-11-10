@@ -447,7 +447,7 @@
     "cameraOrbitSeconds": 26,
     "cameraZoom": 1.55,
     "lightShow": true,
-    "bgmUrl": "https://www.youtube.com/watch?v=pajHsiqQt-E&list=RDpajHsiqQt-E&start_radio=1",
+    "bgmUrl": "blob:https://experiments-amendment-customize-demonstration.trycloudflare.com/f47863b5-b1a2-4281-9550-4aa7f173102f",
     "bgmVolume": 0.45,
     "bgmDuckVolume": 0.12,
     "mappings": [
@@ -527,14 +527,6 @@
         "giftName": "GG",
         "giftId": "",
         "action": "spotlight",
-        "points": 1,
-        "enabled": true
-      },
-      {
-        "trigger": "gift",
-        "giftName": "Rosa",
-        "giftId": "",
-        "action": "jump",
         "points": 1,
         "enabled": true
       },
@@ -653,6 +645,14 @@
       {
         "trigger": "gift",
         "giftName": "Kem",
+        "giftId": "",
+        "action": "spotlight",
+        "points": 1,
+        "enabled": true
+      },
+      {
+        "trigger": "gift",
+        "giftName": "Rosa",
         "giftId": "",
         "action": "wing",
         "points": 1,

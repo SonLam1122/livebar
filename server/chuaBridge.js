@@ -77,6 +77,7 @@ async function initChuaBridge(httpServer) {
     templeInstance = new Temple({
       send: (m, role) => broadcast(m, role || 'all'),
       say: (text, o) => voiceInstance.say(text, o),
+      clearVoice: () => voiceInstance.clear(),
       log,
       settings: storeInstance.data.settings,
       allTime: storeInstance.data.allTime,

@@ -231,6 +231,58 @@ function routeToTempleIfNeeded(kind, data, screenId) {
   return true;
 }
 
+// Dinh tuyen su kien tu PHONG THU (/api/simulate) vao engine Temple khi man la di_chua.
+// Payload phong thu khac dinh dang TikTok tho, nen reshape ve {kind, data} roi dung lai
+// routeToTempleIfNeeded. Tra ve true neu da xu ly (man di_chua) de routes.js bo qua
+// handleSimulation (vi handleSimulation khong co nhanh di_chua).
+function routeSimulateToTemple(payload, screenId) {
+  if (!currentScreenIsTemple(screenId)) return false;
+  const user = payload.user || { username: payload.username, name: payload.nickname || payload.name, avatar: payload.avatar };
+  const data = { user };
+  let kind;
+  if (payload.gift) {
+    kind = 'gift';
+    data.giftName = payload.gift;
+    data.giftId = payload.giftId || payload.gift;
+    data.diamondCount = Number(payload.diamonds || 1);
+    data.repeatCount = Number(payload.repeatCount || 1);
+    data.repeatEnd = payload.repeatEnd !== false; // phong thu: coi nhu ket thuc combo
+    data.giftType = payload.giftType != null ? payload.giftType : 0;
+  } else if (payload.action === 'like' || payload.likeCount) {
+    kind = 'like';
+    data.likeCount = Number(payload.likeCount || payload.points || 1);
+  } else if (payload.action === 'share') {
+    kind = 'share';
+  } else if (payload.action === 'follow') {
+    kind = 'follow';
+  } else if (payload.comment || payload.text) {
+    kind = 'chat';
+    data.content = payload.comment || payload.text || '';
+  } else if (payload.action === 'join' || payload.action === 'member') {
+    kind = 'member';
+  } else {
+    // Khong co su kien ro rang -> coi nhu join de nguoi dung xuat hien trong chua
+    kind = 'member';
+  }
+  return routeToTempleIfNeeded(kind, data, screenId);
+}
+
+// Reset phong thu cho man Di Chua: dọn SẠCH buổi — ghế + công đức + bảng công đức + đồng hồ + đọc/quẻ.
+function resetSimulateTemple(screenId) {
+  if (!currentScreenIsTemple(screenId)) return false;
+  const temple = getTempleEngine();
+  if (temple) {
+    try {
+      // newSession đặt lại bảng công đức buổi, điểm, đồng hồ, mốc + dừng đọc/quẻ (stopAllOutput)
+      if (typeof temple.newSession === 'function') temple.newSession();
+      else if (typeof temple.clearSeats === 'function') temple.clearSeats(false);
+      // phát lại trạng thái mới để overlay cập nhật đồng hồ/điểm/bảng ngay
+      if (typeof temple.send === 'function' && typeof temple.snapshot === 'function') temple.send(temple.snapshot());
+    } catch (e) { console.error('[Di Chua] Loi reset Temple:', e.message); }
+  }
+  return true;
+}
+
 // Dieu phoi su kien TikTok vao vung nho game va broadcast cho Overlay qua Socket.IO
 function dispatchToGame(payload, screenId, overlayIo) {
   try {
@@ -476,5 +528,7 @@ module.exports = {
   connectToTikTok,
   disconnectFromTikTok,
   getTikTokStatus,
-  injectTikTokEvent
+  injectTikTokEvent,
+  routeSimulateToTemple,
+  resetSimulateTemple
 };

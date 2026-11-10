@@ -37,7 +37,7 @@ export class Voice {
   }
 
   /** Queue a line. prio: 2 = gift / fortune / milestone / operator, 1 = everything else. Returns a key the overlay echoes. */
-  say(text, { prio = 1, tag = '' } = {}) {
+  say(text, { prio = 1, tag = '', voice = '' } = {}) {
     text = String(text).replace(/\s+/g, ' ').trim().slice(0, 600);
     if (!text) return null;
     const key = `v${++this.seq}`;
@@ -47,45 +47,62 @@ export class Voice {
       if (i < 0 && prio < 2) { this.log('Hàng đợi giọng đọc đầy, bỏ qua 1 câu'); return null; }
       this.queue.splice(i < 0 ? 0 : i, 1);
     }
-    const item = { key, text, prio, tag, at: Date.now() };
+    const item = { key, text, prio, tag, voice, at: Date.now() };
     const pos = this.queue.findIndex(q => q.prio < prio);
     pos < 0 ? this.queue.push(item) : this.queue.splice(pos, 0, item);
     this.pump();
     return key;
   }
 
+  /** Xoá sạch hàng đợi giọng đọc (khi dọn dữ liệu / buổi mới). Câu đang render dở sẽ bị bỏ khi xong. */
+  clear() { this.queue = []; this.busy = false; }
+
   async pump() {
     if (this.busy || !this.queue.length) return;
     this.busy = true;
     const item = this.queue.shift();
+    let hold = 40;
     try {
       // low-priority lines that waited too long are no longer relevant
       if (item.prio < 2 && Date.now() - item.at > 60_000) throw Object.assign(new Error('stale'), { stale: true });
       if (this.disabled) throw new Error('TTS tắt (DISABLE_TTS)');
-      const url = await this.render(item.text);
+      const url = await this.render(item.text, item.voice);
       this.fails = 0;
       this.send({ t: 'tts', key: item.key, url, text: item.text, tag: item.tag });
+      hold = this.speakMs(item.text);
     } catch (e) {
       if (!e.stale) {
         this.fails++;
         if (this.fails <= 3 || this.fails % 20 === 0) this.log('Giọng đọc lỗi, dùng giọng trình duyệt: ' + (e?.message || e));
         this.send({ t: 'speak', key: item.key, text: item.text, tag: item.tag });
+        hold = this.speakMs(item.text);
       }
     }
-    this.busy = false;
-    setTimeout(() => this.pump(), 30);
+    // Phát LẦN LƯỢT: giữ hàng đợi tới khi câu hiện tại đọc gần xong mới gửi câu kế (tránh đọc chồng nhau)
+    setTimeout(() => { this.busy = false; this.pump(); }, hold);
   }
 
-  async render(text) {
+  /** Ước lượng thời gian giữ hàng đợi sau 1 câu (ms): thời lượng đọc + khoảng cách readGapSec. */
+  speakMs(text) {
+    let rate = 0, gap = 300;
+    try { const s = this.settings(); rate = +s.rate || 0; if (s.readGapSec != null) gap = Math.max(0, Math.min(6000, s.readGapSec * 1000)); } catch {}
+    const spoke = String(text).length * 62 + 250;           // ~ tốc độ đọc tiếng Việt (siết lại cho đỡ lặng)
+    const adj = spoke / (1 + Math.max(-40, Math.min(200, rate)) / 100);   // đọc nhanh hơn -> ngắn hơn
+    return Math.max(600 + gap, Math.min(16000, Math.round(adj) + gap));
+  }
+
+  async render(text, voiceOverride = '') {
     const s = this.settings();
-    const vieneu = String(s.voice).startsWith('vieneu:');
+    // Giọng riêng cho từng loại (vd đọc quẻ) — rỗng thì dùng giọng chính
+    const chosen = voiceOverride || s.voice;
+    const vieneu = String(chosen).startsWith('vieneu:');
     const tryVieneu = name => this.cached(`vieneu|${name}|${text}`, 'wav', () => this.synthVieneu(text, name));
     const tryEdge = voice => {
       const pitch = `${s.pitch >= 0 ? '+' : ''}${s.pitch}Hz`, rate = `${s.rate >= 0 ? '+' : ''}${s.rate}%`;
       return this.cached(`${voice}|${pitch}|${rate}|${text}`, 'mp3', () => this.edgeWithRetry(text, voice, pitch, rate));
     };
     try {
-      return vieneu ? await tryVieneu(s.voice.slice(7)) : await tryEdge(s.voice);
+      return vieneu ? await tryVieneu(chosen.slice(7)) : await tryEdge(chosen);
     } catch (first) {
       // the other engine, if it can help right now
       if (vieneu) { this.log('Giọng VieNeu lỗi, chuyển sang giọng Edge: ' + first.message); return tryEdge(EDGE_FALLBACK); }

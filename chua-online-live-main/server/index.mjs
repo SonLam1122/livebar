@@ -54,6 +54,7 @@ const voice = new Voice({
 const temple = new Temple({
   send: (m, role) => broadcast(m, role || 'all'),
   say: (text, o) => voice.say(text, o),
+  clearVoice: () => voice.clear(),
   log, settings: store.data.settings, allTime: store.data.allTime,
   onPersist: () => store.save(),
 });
