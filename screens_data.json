@@ -3337,11 +3337,10 @@
         "bgmUrl": "/assets/music/music1.mp3"
       },
       "templeSettings": {
-        "teacherNames": [
-          "Thầy Minh Đạo",
-          "Sư Trụ Trì",
-          "Thầy Tâm Từ"
-        ]
+        "fortuneMinCoins": 5,
+        "fortuneCooldownMin": 10,
+        "rate": 0,
+        "fortuneMode": "all"
       },
       "version": 1,
       "teams": [

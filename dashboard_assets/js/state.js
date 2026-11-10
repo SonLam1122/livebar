@@ -472,8 +472,12 @@ function populateAllConfigInputs() {
   setVal('cfg-dichua-extrawords', tSet.extraBadWords || '');
 
   // Các cài đặt mới (trước ở /chua/control.html): thời gian, đọc gì, giọng quẻ
+  const dChuaJoinEnter = document.getElementById('cfg-dichua-joinonenter');
+  if (dChuaJoinEnter) dChuaJoinEnter.checked = tSet.joinOnEnter === true;
   const dChuaReqGift = document.getElementById('cfg-dichua-requiregift');
   if (dChuaReqGift) dChuaReqGift.checked = tSet.requireGiftToJoin === true;
+  const dChuaRitualGift = document.getElementById('cfg-dichua-ritualsneedgift');
+  if (dChuaRitualGift) dChuaRitualGift.checked = tSet.ritualsNeedGift === true;
   setVal('cfg-dichua-nametagmode', tSet.nameTagMode || 'auto');
   setVal('cfg-dichua-nametagtopn', tSet.nameTagTopN != null ? tSet.nameTagTopN : 6);
   setVal('cfg-dichua-walkspeed', tSet.walkSpeed || 100);
@@ -873,7 +877,9 @@ function syncFormToConfig() {
     tSet.readGiftWish = document.getElementById('cfg-dichua-readgiftwish')?.checked !== false;
     tSet.extraBadWords = document.getElementById('cfg-dichua-extrawords')?.value || '';
 
+    tSet.joinOnEnter = document.getElementById('cfg-dichua-joinonenter')?.checked === true;
     tSet.requireGiftToJoin = document.getElementById('cfg-dichua-requiregift')?.checked === true;
+    tSet.ritualsNeedGift = document.getElementById('cfg-dichua-ritualsneedgift')?.checked === true;
     tSet.nameTagMode = document.getElementById('cfg-dichua-nametagmode')?.value || 'auto';
     tSet.nameTagTopN = Number(document.getElementById('cfg-dichua-nametagtopn')?.value);
     if (!Number.isFinite(tSet.nameTagTopN)) tSet.nameTagTopN = 6;

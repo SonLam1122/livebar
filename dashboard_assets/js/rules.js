@@ -526,10 +526,10 @@ const INTERACT_EFFECTS = [
   { v: 'fortune', label: '📜 Rút thẻ xăm' },
 ];
 const INTERACT_ROWS = [
-  { kind: 'comment', icon: '💬', name: 'Bình luận chứa từ khoá', extra: 'keyword' },
-  { kind: 'like',    icon: '💖', name: 'Thả tim',               extra: 'minCount' },
-  { kind: 'share',   icon: '🔁', name: 'Chia sẻ Live',          extra: null },
-  { kind: 'follow',  icon: '➕', name: 'Theo dõi kênh',          extra: null },
+  { kind: 'comment', icon: '💬', name: 'Bình luận chứa từ khoá', extra: 'keyword', rtext: 'Nam mô A Di Đà Phật. {name} thành tâm hướng Phật, nguyện thân tâm an lạc.' },
+  { kind: 'like',    icon: '💖', name: 'Thả tim',               extra: 'minCount', rtext: 'Cảm ơn {name} đã thả tim gửi lòng thành đến đạo tràng. Nam mô A Di Đà Phật.' },
+  { kind: 'share',   icon: '🔁', name: 'Chia sẻ Live',          extra: null,       rtext: 'Cảm ơn {name} đã chia sẻ đạo tràng, công đức vô lượng. Nam mô A Di Đà Phật.' },
+  { kind: 'follow',  icon: '➕', name: 'Theo dõi kênh',          extra: null,       rtext: 'Cảm ơn {name} đã theo dõi đạo tràng, nguyện được nhiều phúc lành. Nam mô A Di Đà Phật.' },
 ];
 function setDichuaInteraction(kind, patch) {
   if (!screenConfig.templeSettings) screenConfig.templeSettings = {};
@@ -561,7 +561,7 @@ function renderDichuaInteractionTable(container) {
         </div>
         <div class="flex items-center gap-2">
           <label class="flex items-center gap-1.5 text-[11px] text-slate-300 whitespace-nowrap"><input type="checkbox" data-ir-kind="${row.kind}" data-ir-field="read" ${r.read ? 'checked' : ''} class="accent-amber-500"> Đọc câu</label>
-          <input type="text" data-ir-kind="${row.kind}" data-ir-field="text" value="${esc(r.text)}" placeholder="vd: Cảm ơn {name} đã ${row.name.toLowerCase()}" class="${INP} flex-1">
+          <input type="text" data-ir-kind="${row.kind}" data-ir-field="text" value="${esc(r.text || row.rtext)}" placeholder="câu đọc khi ${row.name.toLowerCase()}" class="${INP} flex-1">
         </div>
         <label class="flex items-center gap-1.5 text-[11px] text-amber-300 whitespace-nowrap"><input type="checkbox" data-ir-kind="${row.kind}" data-ir-field="requireGift" ${r.requireGift ? 'checked' : ''} class="accent-amber-500"> 🎁 Chỉ khi đã tặng quà</label>
       </div>`;
@@ -582,7 +582,13 @@ function renderDichuaInteractionTable(container) {
       if (el.type === 'checkbox') val = el.checked;
       else if (el.type === 'number') val = Number(el.value) || 0;
       else val = el.value;
-      setDichuaInteraction(kind, { [field]: val });
+      const patch = { [field]: val };
+      // Bật "Đọc câu" -> lưu luôn câu đang hiển thị trong ô (câu mặc định) để engine đọc đúng câu đó.
+      if (field === 'read' && val === true) {
+        const ti = wrap.querySelector(`input[data-ir-kind="${kind}"][data-ir-field="text"]`);
+        if (ti && ti.value.trim()) patch.text = ti.value;
+      }
+      setDichuaInteraction(kind, patch);
     });
   });
 }

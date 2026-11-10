@@ -10,7 +10,7 @@ const FORTUNES = JSON.parse(fs.readFileSync(new URL('../data/fortunes.json', imp
 
 export const DEFAULT_SETTINGS = {
   title: 'Chánh Điện An Lạc', subtitle: 'Nam Mô A Di Đà Phật',
-  voice: 'vi-VN-NamMinhNeural', pitch: -18, rate: -20,
+  voice: 'vi-VN-NamMinhNeural', pitch: -18, rate: 0,
   music: true, mo: true, moBpm: 52, volume: 80,
   autoChant: true, chantEveryMin: 4,
   seatMode: 'auto', joinOnEnter: false,
@@ -25,6 +25,7 @@ export const DEFAULT_SETTINGS = {
   nameTagMode: 'auto',           // hiện tên: auto (đông thì ẩn bớt) | all (luôn hiện) | topOnly (chỉ top)
   nameTagTopN: 6,                // luôn hiện tên top N người tặng quà nhiều nhất
   requireGiftToJoin: false,      // bật: chỉ người đã tặng quà mới được ngồi vào chánh điện
+  ritualsNeedGift: false,        // bật: nghi lễ gõ chat (mõ/chuông/hương/lạy/xin xăm) chỉ chạy sau khi đã tặng quà -> tránh gõ chat lách luật quà
   showGuide: true, guideText: '', // bảng hướng dẫn người xem ('' = dùng mặc định dựng sẵn trong overlay)
   teacherNames: ['Thầy Minh Đạo', 'Sư Trụ Trì', 'Thầy Tâm Từ'], // tên 3 sư thầy (trái · giữa · phải)
   interactionRules: {},          // { like/share/follow/comment: { action, merit, read, text, requireGift, minCount?, keyword? } }
@@ -58,6 +59,7 @@ const SETTING_RULES = {
   nameTagMode: v => ['auto', 'all', 'topOnly'].includes(v) ? v : 'auto',
   nameTagTopN: v => clamp(v, 0, 100),
   requireGiftToJoin: bool,
+  ritualsNeedGift: bool,
   showGuide: bool,
   guideText: v => String(v ?? '').replace(/[\u0000-\u0009\u000b-\u001f\u007f-\u009f]/g, '').split('\n').slice(0, 24).map(l => l.trim().slice(0, 90)).join('\n').slice(0, 1600),
   teacherNames: (v, s) => { const d = s.teacherNames || ['Thầy Minh Đạo', 'Sư Trụ Trì', 'Thầy Tâm Từ']; return [0, 1, 2].map(i => clean((Array.isArray(v) ? v[i] : '') || '', 30) || d[i]); },
@@ -397,6 +399,10 @@ export class Temple {
     const ritual = ['bell', 'mo', 'incense', 'bow', 'walk', 'altar'].includes(cmd.intent);
     if (this.cooldown('chat', id, 10_000)) this.addMerit(id, v.name, ritual ? MERIT.ritual : MERIT.chat, { demo: v.demo });
     const free = this.settings.allowMove && !this.vip.includes(id) && !((this.walking.get(id)?.until || 0) > this.now());
+    // Chống lách luật quà: khi bật "nghi lễ chỉ khi đã tặng quà", các nghi lễ gõ chat miễn phí
+    // (gõ mõ/thỉnh chuông/dâng hương/lạy/xin xăm) bị chặn với người chưa tặng quà — đúng các hiệu ứng có thể gán cho quà.
+    const ritualGated = this.settings.ritualsNeedGift && !v.demo && !this.gifted.has(id);
+    if (ritualGated && ['bell', 'mo', 'incense', 'bow', 'fortune'].includes(cmd.intent)) return; // chặn im lặng, không hiện lời nhắc
     switch (cmd.intent) {
       case 'move': if (free && (isNew || this.cooldown('move', id, 3_000))) this.moveSeat(v, cmd.dir); break;
       case 'walk': if (this.settings.allowMove) this.startWalk(v, 'kinh'); break;
@@ -523,13 +529,13 @@ export class Temple {
   requestFortune(v, via) {
     const mode = this.settings.fortuneMode;
     if (mode === 'off') return;
-    if (via === 'comment') {
-      if (mode === 'gift') {
-        if (this.cooldown('fortuneHint', '*', 60_000)) this.send({ t: 'notice', text: `Rút thẻ an lạc: tặng quà từ ${this.settings.fortuneMinCoins} xu` });
-        return;
-      }
-      if (!this.cooldown('fortune', v.id, this.settings.fortuneCooldownMin * 60_000)) return;
+    // Chế độ "chỉ người tặng quà": gõ chat/luật tương tác của người chưa tặng bị chặn (không lách luật quà).
+    if (via !== 'gift' && mode === 'gift' && !this.gifted.has(String(v.id))) {
+      if (this.cooldown('fortuneHint', '*', 60_000)) this.send({ t: 'notice', text: `Rút thẻ an lạc: tặng quà từ ${this.settings.fortuneMinCoins} xu` });
+      return;
     }
+    // Cooldown mỗi người áp dụng cho MỌI đường rút — kể cả tặng quà — để không rút dồn dập gây loạn.
+    if (this.settings.fortuneCooldownMin > 0 && !this.cooldown('fortune', v.id, this.settings.fortuneCooldownMin * 60_000)) return;
     if (this.fortuneQ.some(q => q.id === v.id)) return;
     if (this.fortuneQ.length >= 8) {
       const i = this.fortuneQ.findIndex(q => q.via === 'comment');     // gifts are never dropped for a free draw
@@ -554,7 +560,7 @@ export class Temple {
     this.fortuneBusyUntil = this.now() + duration;
     // "Đọc thẻ an lạc" tắt -> vẫn hiện thẻ nhưng không đọc (key null -> overlay hiện ngay)
     const key = this.settings.readFortune
-      ? this.say(spoken, { prio: 2, tag: 'fortune', voice: this.settings.fortuneVoice || undefined })
+      ? this.say(spoken, { prio: 3, tag: 'fortune', voice: this.settings.fortuneVoice || undefined }) // prio 3: quẻ đọc trước, đồng bộ với lúc hiện thẻ
       : null;
     this.send({ t: 'fortune', id: q.id, name: q.name, card, duration, key, queue: this.fortuneQ.length });
     clearTimeout(this.fortuneTimer);

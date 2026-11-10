@@ -150,7 +150,8 @@ function pumpCards() {
   if (cardBusy || !cards.length) return;
   cardBusy = true; const m = cards.shift();
   const show = () => { if (m.shown) return; m.shown = true; waitingKey.delete(m.key); renderCard(m); };
-  if (m.key && AUDIO && AC) { waitingKey.set(m.key, show); setTimeout(show, 10_000); } else show();
+  // Thẻ hiện ĐÚNG lúc giọng đọc quẻ bắt đầu (đồng bộ). Lưới an toàn 18s phòng khi giọng lỗi/không có.
+  if (m.key && AUDIO && AC) { waitingKey.set(m.key, show); setTimeout(show, 18_000); } else show();
 }
 function renderCard(m) {
   const c = m.card, v = visitors.get(m.id);
@@ -208,7 +209,9 @@ const ttsQ = []; let ttsPlaying = false, curAudio = null;
 function queueTTS(m) {
   if (!AUDIO || !AC) { waitingKey.get(m.key)?.(); return; }       // silent preview / sound not enabled yet
   if (ttsQ.length >= 12) ttsQ.shift();
-  ttsQ.push(m); playTTS();
+  // Giọng đọc quẻ chen lên đầu hàng đợi -> đọc ngay sau câu hiện tại, đồng bộ với lúc hiện thẻ (không đợi lặng).
+  if (m.tag === 'fortune') ttsQ.unshift(m); else ttsQ.push(m);
+  playTTS();
 }
 // Dọn dữ liệu / buổi mới: dừng NGAY mọi thứ đang đọc & đang hiện
 function hush() {
